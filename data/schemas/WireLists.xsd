@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:IEEE-1671:2010:WireLists" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.11" xmlns:w="urn:IEEE-1671:2010:WireLists" xmlns:c="urn:IEEE-1671:2010:Common" xmlns:hc="urn:IEEE-1671:2010:HardwareCommon" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+
+This schema is specified in IEEE Std 1671-2010, "IEEE Standard
+for Automatic Test Markup Language (ATML) for Exchanging Automatic Test 
+Equipment and Test Information via XML."
+ 
+This schema is a World Wide Web Consortium (W3C) Extensible 
+Markup Language (XML) binding of the ATML Wire Lists component defined in IEEE
+Std 1671-2010,"IEEE Standard for Automatic Test Markup 
+Language (ATML) for Exchanging Automatic Test Equipment and Test
+Information via XML."
+
+The purpose of this schema is to allow the creation of IEEE Std 1671-2010
+Wire Lists instance documents.
+This schema uses the W3C XML Schema definition
+language as the encoding. This allows for interoperability and 
+the exchange of ATML component instances between various systems.
+This schema shall not be modified but may be included in 
+derivative works. 
+
+Copyright (c) 2010 Institute of Electrical and Electronics 
+Engineers, Inc.
+
+USE AT YOUR OWN RISK
+
+</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="urn:IEEE-1671:2010:Common" schemaLocation="Common.xsd"/>
+	<xs:import namespace="urn:IEEE-1671:2010:HardwareCommon" schemaLocation="HardwareCommon.xsd"/>
+	<xs:element name="WireLists">
+		<xs:annotation>
+			<xs:documentation>Base type: Extension of w:Wirelists 
+Properties: content complex
+The WireLists element is used as a collector of one or more wire lists and/or test wire lists.  
+Figure C.2 illustrates the XML types inherited and the XML types (both simple and complex) that shall be defined in this standard that together constitute WireLists.
+Within Figure C.2, “solid lined boxes” indicate that the XML element shall be required.
+
+Figure C.2—WireLists element
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="w:WireLists">
+					<xs:attribute name="version" type="c:NonBlankString" use="optional">
+						<xs:annotation>
+							<xs:documentation>The version of the instance document. Example: 2.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="name" type="c:NonBlankString" use="optional">
+						<xs:annotation>
+							<xs:documentation>The name of the instance document. Example: Test Oriented Wire List for Test 0500.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attributeGroup ref="c:DocumentRootAttributes"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="WireLists">
+		<xs:annotation>
+			<xs:documentation>The WireLists complex type is used as a container of one or more WireList complex types. 
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Items">
+				<xs:annotation>
+					<xs:documentation>Properties: isRef 0, content complex 
+The WireLists/Items element identifies a list of item description or item instance documents that contain the nodes referenced in the wire list. 
+</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Item" type="c:DocumentReference" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Base type: c:DocumentReference
+Properties: isRef 0, content complex 
+The WireList/Items/Item element identifies an item description or item instance document that contains the nodes referenced in the wire list. 
+</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="TestDescription" type="c:DocumentReference" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Base type: c:DocumentReference
+Properties: isRef 0, content complex 
+The WireLists/TestDescription element identifies the ATML Test Description instance document that describes the tests referenced in the w:TestWireList. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="WireList" type="w:WireList">
+					<xs:annotation>
+						<xs:documentation>Base type: w:WireList
+Properties: isRef 0, content complex 
+The WireLists/WireList element identifies a list of connections that associate the interface pins from one XML instance document to another XML instance document (e.g., a UUTDescription XML instance document to a TestAdapter instance document). 
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TestWireList" type="w:TestWireList">
+					<xs:annotation>
+						<xs:documentation>Base type: w:TestWireList
+Properties: isRef 0, content complex 
+The WireLists/TestWireList element identifies a list of test-oriented wires. 
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WireList">
+		<xs:annotation>
+			<xs:documentation>The WireList complex type is used as a container of one or more wires. 
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Wire" type="hc:Network" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Base type: hc:Network
+Properties: isRef 0, content complex 
+The WireList/Wire element identifies a particular wire. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TestWireList">
+		<xs:annotation>
+			<xs:documentation>The TestWireList complex type is used as a container of wires associated with a test. 
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Test" type="hc:NetworkNode">
+				<xs:annotation>
+					<xs:documentation>Base type: hc:NetworkNode
+Properties: isRef 0, content complex 
+The TestWireList/Test element identifies the particular test. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AssetWireList" type="w:AssetWireList" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Base type: w:AssetWireList
+Properties: isRef 0, content complex 
+The TestWireList/AssetWireList element identifies, for a particular test, the wires associated with an asset. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AssetWireList">
+		<xs:annotation>
+			<xs:documentation>The AssetWireList complex type is used as a container of wires associated with an asset. 
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Asset" type="hc:NetworkNode">
+				<xs:annotation>
+					<xs:documentation>Base type: hc:NetworkNode
+Properties: isRef 0, content complex 
+The AssetWireList/Asset element identifies an asset. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Wire" type="hc:Network" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Base type: hc:Network
+Properties: isRef 0, content complex 
+The AssetWireList/Wire element identifies the wires to and from the identified asset. The signal(s) on the wire(s) may be identified via XPath reference to either the actual IEEE 1641 signal or the signal in the TP. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

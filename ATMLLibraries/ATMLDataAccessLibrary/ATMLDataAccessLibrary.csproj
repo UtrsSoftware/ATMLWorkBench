@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F48E6BE2-2E30-4048-8E38-F4F3DEF51D03}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ATMLDataAccessLibrary</RootNamespace>
+    <AssemblyName>ATMLDataAccessLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\common\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\common\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>utrs_ATMLDataAccessLibrary.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug%28x64%29|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\common\Debug%28x64%29\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release%28x64%29|AnyCPU'">
+    <OutputPath>..\..\common\Release%28x64%29\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="db\beans\AssetIdentificationBean.cs" />
+    <Compile Include="db\beans\BaseBean.cs" />
+    <Compile Include="db\beans\DocumentBean.cs" />
+    <Compile Include="db\beans\DocumentTypeLibraryBean.cs" />
+    <Compile Include="db\beans\EquipmentInstrumentBean.cs" />
+    <Compile Include="db\beans\HelpMessageBean.cs" />
+    <Compile Include="db\beans\InstrumentBean.cs" />
+    <Compile Include="db\beans\InstrumentCapabilitiesBean.cs" />
+    <Compile Include="db\beans\LuConnectorBean.cs" />
+    <Compile Include="db\beans\LuConnectorConfigurationBean.cs" />
+    <Compile Include="db\beans\LuConnectorPinBean.cs" />
+    <Compile Include="db\beans\LuCountryBean.cs" />
+    <Compile Include="db\beans\LuDocumentTypeBean.cs" />
+    <Compile Include="db\beans\LuNamespaceBean.cs" />
+    <Compile Include="db\beans\LuStateBean.cs" />
+    <Compile Include="db\beans\SchemasBean.cs" />
+    <Compile Include="db\beans\SignalAttributeMasterBean.cs" />
+    <Compile Include="db\beans\SignalMasterBean.cs" />
+    <Compile Include="db\beans\SourceSignalAttributeMapBean.cs" />
+    <Compile Include="db\beans\SourceSignalMapBean.cs" />
+    <Compile Include="db\beans\StandardUnitMeasurementBean.cs" />
+    <Compile Include="db\beans\StandardUnitPrefixBean.cs" />
+    <Compile Include="db\beans\TestEquipmentBean.cs" />
+    <Compile Include="db\beans\TestSignalBean.cs" />
+    <Compile Include="db\beans\TestSignalLibraryBean.cs" />
+    <Compile Include="db\beans\TestSignalSignalBean.cs" />
+    <Compile Include="db\daos\DocumentDAO.cs" />
+    <Compile Include="db\daos\DocumentTypeLibraryDAO.cs" />
+    <Compile Include="db\daos\InstrumentDAO.cs" />
+    <Compile Include="db\daos\LookupTablesDAO.cs" />
+    <Compile Include="db\daos\SchemaDAO.cs" />
+    <Compile Include="db\daos\SignalMappingDAO.cs" />
+    <Compile Include="db\daos\StandardUnitMeasurementDAO.cs" />
+    <Compile Include="db\daos\DAO.cs" />
+    <Compile Include="db\daos\EquipmentDAO.cs" />
+    <Compile Include="db\daos\HelpDAO.cs" />
+    <Compile Include="db\daos\SignalDAO.cs" />
+    <Compile Include="managers\DataManager.cs" />
+    <Compile Include="model\AssetIdentificationBean.cs" />
+    <Compile Include="model\dbConnector.cs" />
+    <Compile Include="model\dbConnectorConfiguration.cs" />
+    <Compile Include="model\dbConnectorPin.cs" />
+    <Compile Include="model\dbCountry.cs" />
+    <Compile Include="model\dbDocument.cs" />
+    <Compile Include="model\dbSignal.cs" />
+    <Compile Include="model\dbSignalAttribute.cs" />
+    <Compile Include="model\dbState.cs" />
+    <Compile Include="model\dbTSFLibrary.cs" />
+    <Compile Include="model\dbTSFSignal.cs" />
+    <Compile Include="model\dbTSFSignalSignal.cs" />
+    <Compile Include="model\DocumentType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="utrs_ATMLDataAccessLibrary.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ATMLUtilities\ATMLUtilitiesLibrary.csproj">
+      <Project>{42F58F52-995B-4244-A4FB-17EF4C09A874}</Project>
+      <Name>ATMLUtilitiesLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

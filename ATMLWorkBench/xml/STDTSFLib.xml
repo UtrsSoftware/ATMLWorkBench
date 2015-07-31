@@ -1,0 +1,2596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tsf:TSFLibrary name="STDTSFLib" targetNamespace="urn:IEEE-1641:2010:STDTSFLib" uuid="{AC957F30-5073-405F-9C1C-C59DB7F0CCD4}" version="2.01" xmlns:tsf="urn:IEEE-1641:2010:STDTSF" xmlns="urn:IEEE-1641:2010:STDBSC" xmlns:std="urn:IEEE-1641:2010:STDBSC" xmlns:std1="urn:IEEE-1641:2010:STDBSC" xmlns:this="urn:IEEE-1641:2010:STDTSFLib" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:IEEE-1641:2010:STDBSC STDBSC.xsd urn:IEEE-1641:2010:STDTSF STDTSF.xsd urn:IEEE-1641:2010:STDTSFLib STDTSFLib.xsd http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+	<tsf:description>
+	The IEEE P1641 default Test Signal Framework Library for compatable IEEE716-95 Signals
+This XML instance file is specified in IEEE Std 1641-20XX, "IEEE Standard for Signal and Test Definition." This schema is a World Wide Web Consortium (W3C) Extensible Markup Language (XML) binding of Annex E Test signal framework (TSF) for ATLAS Clause E.2 TSF library definition in XML" The purpose of this XML file is to provide unique TSF definitions inline with legacy ATLAS 716 signals.This files uses the W3C XML Schema definition language as the encoding. This allows for interoperability and the exchange of TSF component instances between various systems.This file shall not be modified but may be included in derivative works. 
+Copyright (c) 2009 Institute of Electrical and Electronics Engineers, Inc. USE AT YOUR OWN RISK	
+	</tsf:description>
+	<tsf:TSF name="AC_SIGNAL" uuid="{CA4F7FD8-D05E-11D6-860D-00010214C4D2}" >
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="AC_SIGNAL">
+					<xs:annotation>
+						<xs:documentation>A sinusoidal time-varying electrical signal.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="ac_ampl" type="Physical">
+									<xs:annotation>
+										<xs:documentation>AC Signal amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="dc_offset" type="Physical" default="0">
+									<xs:annotation>
+										<xs:documentation>DC Offset</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="freq" type="Frequency">
+									<xs:annotation>
+										<xs:documentation>AC Signal frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="phase" default="0 rad">
+									<xs:annotation>
+										<xs:documentation>AC Signal phase angle</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="PlaneAngle" std1:minInclusive="0" std1:maxInclusive="2*pi rad"/>
+									</xs:simpleType>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="AC_Signal" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Constant name="DC_Offset" amplitude="dc_offset"/>
+				<Sinusoid name="AC_Component" amplitude="ac_ampl" frequency="freq" phase="phase"/>
+				<Sum name="AC_Signal" In="DC_Offset AC_Component"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes/>
+			<rules>For this signal, the allowable types are Voltage, Current and Power. All types must be consistent, thus for example, if ac signal amplitude is specified in volts then the dc offset must also be specified in volts.</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="AM_SIGNAL" uuid="{D7FAB36D-D075-11D6-860D-00010214C4D2}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="AM_SIGNAL">
+					<xs:annotation>
+						<xs:documentation>A continuous sinusoidal (carrier) wave whose amplitude is varied as a function of the instantaneous value of a second (modulating) wave.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="car_ampl" type="Voltage">
+									<xs:annotation>
+										<xs:documentation>Carrier amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="car_freq" type="Frequency">
+									<xs:annotation>
+										<xs:documentation>Carrier frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="mod_freq" type="Frequency">
+									<xs:annotation>
+										<xs:documentation>Modulation frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="mod_depth">
+									<xs:annotation>
+										<xs:documentation>Depth of modulation</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Ratio" std1:minInclusive="0 " std1:maxInclusive=" 1"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="mod_ampl" type="Voltage" default="1 V">
+									<xs:annotation>
+										<xs:documentation>Modulation amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="AM_Signal" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Sinusoid name="Modulation" amplitude="mod_ampl" frequency="mod_freq"/>
+				<Sinusoid name="Carrier" amplitude="car_ampl" frequency="car_freq"/>
+				<AM name="AM_Signal" modIndex="mod_depth" Carrier="Carrier" In="Modulation"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes/>
+			<rules>
+				<p>The output is given by the equation:</p>
+				<p>
+					<i>e</i> = <i>E<sub>c</sub>
+					</i>(1+<i>m<sub>a</sub>E<sub>m</sub>
+					</i>sin(<i>&#969;<sub>m</sub>t</i>))sin(<i>&#969;<sub>c</sub>t</i>)</p>
+				<p>where</p>
+				<p>
+					<i>E<sub>c</sub>
+					</i> is the carrier amplitude (unmodulated)</p>
+				<p>
+					<i>E<sub>m</sub>
+					</i> is the modulation amplitude )</p>
+				<p>
+					<i>m<sub>a</sub>
+					</i> is the depth of modulation (&#8801; modulation index)</p>
+				<p>
+					<i>&#969;<sub>m</sub>
+					</i> is 2<i>&#960;</i> x modulating frequency </p>
+				<p>
+					<i>&#969;</i>
+					<i>
+						<sub>c</sub>
+					</i> is 2<i>&#960;</i> x carrier frequency </p>
+			</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="DC_SIGNAL" uuid="{B598AC87-86F1-44C4-A395-C0AD107FE85B}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="DC_SIGNAL">
+					<xs:annotation>
+						<xs:documentation>An unvarying electrical signal with an optional ac component.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="dc_ampl" type="Physical">
+									<xs:annotation>
+										<xs:documentation>DC Level</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="ac_ampl" type="Physical" default="0">
+									<xs:annotation>
+										<xs:documentation>AC Component amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="freq" type="Frequency" default="0 Hz">
+									<xs:annotation>
+										<xs:documentation>AC Component frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="phase" default="0 rad">
+									<xs:annotation>
+										<xs:documentation>AC Component phase angle</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="PlaneAngle" std1:minInclusive="0 " std1:maxInclusive="2*pi rad"/>
+									</xs:simpleType>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="DC_Signal" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Sinusoid name="DC_AC_Component" amplitude="ac_ampl" frequency="freq" phase="phase"/>
+				<Constant name="DC_Level" amplitude="dc_ampl"/>
+				<Sum name="DC_Signal" In="DC_Level DC_AC_Component"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes/>
+			<rules>For this signal, the allowable types are Voltage, Current and Power. All types must be consistent, thus for example, if dc level is specified in volts then the ac component amplitude must also be specified in volts.</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="DIGITAL_PARALLEL" uuid="{A6B62348-B0BE-4900-95B1-FF513B8A6B17}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="DIGITAL_PARALLEL">
+					<xs:annotation>
+						<xs:documentation>A parallel digital source that creates a digital logic signal in which the physical values for logic 1, logic 0 and high impedance data values are determined by the logic threshold values specified.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="data_value" type="digitalString">
+									<xs:annotation>
+										<xs:documentation>Data Value</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="clock_period" type="Time">
+									<xs:annotation>
+										<xs:documentation>Clock period</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="logic_one_value" type="Voltage">
+									<xs:annotation>
+										<xs:documentation>Logic One level</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="logic_zero_value" type="Voltage">
+									<xs:annotation>
+										<xs:documentation>Logic Zero level</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Digital_Stream" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<ParallelDigital name="Digital_Stream" data="data_value" period="clock_period" logic_H_value="logic_one_value" logic_L_value="logic_zero_value"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>The width of the signal (and hence the minimum associated connection width) is implied by the number of logic elements in each array element.
+
+The default condition for clock period (clock_period = 0) denotes infinite time for static digital data.
+</notes>
+			<rules>A high impedance is generated when the digital signal value character is "Z", i.e., no digital signal is present.
+A logic 1 (output voltage is equal to logic_one_value) is generated when the digital signal value character is "H". 
+A logic 0 (output voltage is equal to logic_zero_value) is generated when the digital signal value character is "L".  
+An unknown value cannot be generated by the digital source model. When the digital signal value character is "X" the model may generate a logic one or a logic zero.
+The output values are held at the defined levels for the duration of the clock_period.
+For this signal the data values are transmitted via the parallel connections. Data received via these connections will be available when the signal is used in a measurement.
+</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="DIGITAL_SERIAL" uuid="{3BEF21EF-C09C-4190-962B-24D90C301B17}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="DIGITAL_SERIAL">
+					<xs:annotation>
+						<xs:documentation>A serial digital source that creates a digital logic signal in which the physical values for logic one, logic zero and high impedance data values are determined by the logic threshold values specified.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="data_value" type="digitalString">
+									<xs:annotation>
+										<xs:documentation>Data Value</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="clock_period" type="Time">
+									<xs:annotation>
+										<xs:documentation>Clock period. Zero denotes infinite time for static digital data.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="logic_one_value" type="Voltage">
+									<xs:annotation>
+										<xs:documentation>Logic One level</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="logic_zero_value" type="Voltage">
+									<xs:annotation>
+										<xs:documentation>Logic Zero level</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Serial_Stream" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<SerialDigital name="Serial_Stream" data="data_value" period="clock_period" logic_H_value="logic_one_value" logic_L_value="logic_zero_value"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>The default condition for clock period (clock_period = 0) denotes infinite time for static digital data.
+
+The Serial TSF deals only with serial data where the data value is conveyed as the value of the signal rather than any transition of the signal.
+</notes>
+			<rules>A high impedance is generated when the digital signal value character is "Z", i.e., no digital signal present.
+A logic 1 (output voltage is equal to logic_one_value) is generated when the digital signal value character is "H". 
+A logic 0 (output voltage is equal to logic_zero_value) is generated when the digital signal value character is "L".  
+An unknown value cannot be generated by the digital source model. When the digital signal value character is "X" the model may generate a logic one or a logic zero.
+The output values are held at the defined levels for the duration of the clock_period.
+For this signal the data value supplied is transmitted via the serial connections. Data received via the serial connections will be available when the signal is used in a measurement. 
+</rules>
+		</tsf:description>
+	</tsf:TSF>
+		<tsf:TSF name="DIGITAL_TEST" uuid="{911D7A49-2B11-45EF-A393-A4AE82538562}" xmlns:tsf="urn:IEEE-1641:2010:STDTSF" xmlns:std="urn:IEEE-1641:2010:STDBSC" xmlns="urn:IEEE-1641:2010:STDBSC">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="DIGITAL_TEST">
+					<xs:annotation>
+						<xs:documentation>Generate and measure digital data on the same pins.  By default, this TSF defines a pin monitor capability on pins that are being STIMmed, in order that faulty pin drivers may be detected.
+
+If this feature is not required, then the script in the data value of the ParallelDigital BSC DT_Sense should be modified so that 'H' and 'L' are both substituted with 'X' instead of being passed unchanged.
+						</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="period" type="Time">
+									<xs:annotation>
+										<xs:documentation>The duration of the digital step.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="stim_H_value" type="Physical">
+									<xs:annotation>
+										<xs:documentation>Value of logic High in the output stream (voltage or current).</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="stim_L_value" type="Physical">
+									<xs:annotation>
+										<xs:documentation>Value of logic Low in the output stream (voltage or current).</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="resp_L_value" type="Physical">
+									<xs:annotation>
+										<xs:documentation>Threshold value of logic Low in the measurement (voltage or current).</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="resp_H_value" type="Physical">
+									<xs:annotation>
+										<xs:documentation>Threshold value of logic High in the measurement (voltage or current).</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="data" type="digitalString">
+									<xs:annotation>
+										<xs:documentation>The digital data to be generated or measured.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="DT_Source" In="resp">
+				<ParallelDigital name="DT_Sense" data='{Replace(Replace(Replace(Replace(Replace(Replace(data, "z", "Z"), "x", "X"), "Z", "X"), "X", "X"), "h", "H"), "l", "L")}' period="period" logic_H_value="resp_H_value" logic_L_value="resp_L_value"/>
+				<ParallelDigital name="DT_Source" data='{Replace(Replace(Replace(Replace(data, "h", "Z"), "l", "Z"), "z", "Z"), "x", "Z")}' period="period" logic_H_value="stim_H_value" logic_L_value="stim_L_value"/>
+				<Measure name="DT_Digital_Measure" As="DT_Sense" In="resp"/>
+			</Signal>
+		</tsf:model>
+	</tsf:TSF>
+	<tsf:TSF name="DME_INTERROGATION" uuid="{61911490-F7E1-4E43-A2DA-32BB8C29FAFC}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="DME_INTERROGATION">
+					<xs:annotation>
+						<xs:documentation>A radio aid to air navigation that provides distance information by measuring the time of transmission from an interrogator to a transponder and return. 
+
+The DME system is composed of a transponder in the ground based unit and an interrogator in the airborne unit. The interrogator on the aircraft emits a pulse signal that, once received by the DME transponder on the ground, starts a response sequence that sends a return pulse signal on a different (paired) channel to the aircraft. The aircraft equipment receives the response from the ground station, computes the elapsed time between interrogation and response, subtracts 50 µs (to cover ground station processing time), and divides the result by 2. This result is then displayed on the DME indicator.
+
+The DME operates on the UHF band in the range 962 MHz to 1213 MHz with a step of 1 MHz. The frequencies used by the interrogator are between 1025 MHz and 1150 MHz, and the transponder on the ground replies using two set frequencies: the first from 962 MHz to 1024 MHz and the second from 1151 MHz to 1213 MHz. The number of available frequencies is 252, making 126 available channels. Each channel has 2 frequencies: one for interrogation and the other for the response from the ground station. On each pair of frequencies, the difference between the interrogator frequency and the response frequency is always 63 MHz. For the channels between 1 and 63, the interrogation frequency is 63 MHz higher than the response frequency and for channels from 63 to 126 the response frequency is 63 MHz higher than the interrogator frequency.
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="car_ampl" type="Voltage">
+									<xs:annotation>
+										<xs:documentation>Carrier Amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="int_freq" default="1025 MHz">
+									<xs:annotation>
+										<xs:documentation>Interrogator Frequency</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Frequency" std1:minInclusive="1025 MHz " std1:maxInclusive=" 1150 MHz"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="int_rate" type="Frequency" default="27 Hz">
+									<xs:annotation>
+										<xs:documentation>Interrogation Rate</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="DME_Interrogation" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<TimedEvent type="Time" name="Int_Event" delay="0 s" duration="20 µs" period="{1/int_rate.magnitude}"/>
+				<Sinusoid name="Int_Carrier" amplitude="car_ampl" frequency="int_freq"/>
+				<PulseTrain name="DME_Interrogation" pulses="(0 us, 3.5 us, 1), (15.5 us, 3.5 us,1)" repetition="1" Sync="Int_Event" In="Int_Carrier"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>This model has limited functionality. It does not provide for the variation of some of the parameters (such as the pulse timing and level). The model may be modified by the user to include such parameters in the interface properties.</notes>
+			<rules/>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="DME_RESPONSE" uuid="{49DEA8E3-CD12-4A5E-9055-0DE92E731505}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="DME_RESPONSE">
+					<xs:annotation>
+						<xs:documentation>A radio aid to air navigation that provides distance information by measuring the time of transmission from an interrogator to a transponder and return.
+
+The DME system is composed of a transponder in the ground based unit and an interrogator in the airborne unit. The interrogator on the aircraft emits a pulse signal that once received by the DME transponder on the ground, starts a response sequence which sends a return pulse signal on a different (paired) channel to the aircraft. The aircraft equipment receives the response from the ground station, computes the elapsed time between interrogation and response, subtracts 50 µs (to cover ground station processing time), and divides the result by 2. This result is then displayed on the DME indicator.
+
+The DME operates on the UHF band in the range 962 MHz to 1213 MHz with a step of 1 MHz. The frequencies used by the interrogator are between 1025 MHz and 1150 MHz, and the transponder on the ground replies using two set frequencies, the first from 962 MHz to 1024 MHz and the second from 1151 MHz to 1213 MHz. The number of available frequencies is 252, making 126 available channels. Each channel has 2 frequencies: one for interrogation and the other for the response from the ground station. On each pair of frequencies the difference between the interrogator frequency and the response frequency is always 63 MHz. For the channels between 1 and 63, the interrogation frequency is 63 MHz higher than the response frequency; and for channels from 63 to 126 the response frequency is 63 MHz higher than the interrogator frequency.
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="resp_freq" default="962 MHz">
+									<xs:annotation>
+										<xs:documentation>Transponder Frequency</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Frequency" std1:minInclusive="962 MHz " std1:maxInclusive=" 1213 MHz"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="car_ampl" type="Voltage">
+									<xs:annotation>
+										<xs:documentation>Carrier Amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="range" type="Distance" default="0 m">
+									<xs:annotation>
+										<xs:documentation>Slant Range</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="rate" type="Speed" default="0 m/s">
+									<xs:annotation>
+										<xs:documentation>Range Rate</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="accn" type="Acceleration" default="0 m/s2">
+									<xs:annotation>
+										<xs:documentation>Rate of Change of Range Rate</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="DME_Response" In="dme_Interrogation" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<RMS name="Interrogation_Event_Window" gateTime="1.0e-8" nominal="0.1" condition="GE" In="dme_Interrogation"/>
+				<SignalDelay name="DME_P2_Detect" acceleration="0 Hz" delay="15.5 us" rate="0%" In="Interrogation_Event_Window"/>
+				<TimedEvent type="Time" name="Resp_Event_A" delay="0 s" duration="20 us" period="37 us"/>
+				<AndEvent name="DME_Pulse_Detect" In="Interrogation_Event_Window DME_P2_Detect"/>
+				<ProbabilityEvent name="Resp_Event_B" probability="10%" In="Resp_Event_A"/>
+				<OrEvent name="Resp_Event_Train" In="Resp_Event_B DME_Pulse_Detect"/>
+				<Sinusoid name="Resp_Carrier" amplitude="car_ampl" frequency="resp_freq" phase="0 rad"/>
+				<PulseTrain name="Response_Train" pulses="(0 us, 3.5 us,1), (15.5us, 3.5 us,1)" repetition="1" Sync="Resp_Event_Train" In="Resp_Carrier"/>
+				<SignalDelay name="Response_Delay" acceleration="0 Hz" delay="50 us" rate="0%" In="Response_Train"/>
+				<SignalDelay name="DME_Response" acceleration="{accn.magnitude*2/3.0e8}" delay="{range.magnitude*2/3.0e8}" rate="{(rate.magnitude*2)/3.0e8}" In="Response_Delay"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>
+				<p>Slant range of DME is dependent on aircraft height, transponder location and its associated environment, and geographical topography. Maximum range in ARINC 568 is quoted as up to 300 nmi up to an altitude of 75000 ft. The delay range quoted will allow for a transponder transmission range of approximately 400 nmi and its lower value is 0 nmi,(the default 50 µs usually allowed from receipt of an interrogator signal to the transponder response within the transponder itself). These values must not be exceeded. </p>
+				<p>This model has limited functionality. It does not provide for the variation of some of the parameters (such as the pulse timing and level). The model may be modified by the user to include such parameters in the interface properties.</p>
+			</notes>
+			<rules/>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="FM_SIGNAL" uuid="{C4DE5309-7194-45C0-9A2A-BC2FB7EE832C}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="FM_SIGNAL">
+					<xs:annotation>
+						<xs:documentation>A continuous sinusoidal (carrier)wave generated when the frequency of one wave is varied in accordance with the amplitude of another (modulating)wave.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="car_ampl" type="Physical">
+									<xs:annotation>
+										<xs:documentation>Carrier amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="car_freq" type="Frequency">
+									<xs:annotation>
+										<xs:documentation>Carrier frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="freq_dev" type="Frequency">
+									<xs:annotation>
+										<xs:documentation>Frequency Deviation</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="mod_freq" type="Frequency">
+									<xs:annotation>
+										<xs:documentation>Modulation frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="mod_ampl" type="Physical">
+									<xs:annotation>
+										<xs:documentation>Modulation amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="FM_Signal" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Sinusoid name="Modulating_Signal" amplitude="mod_ampl" frequency="mod_freq"/>
+				<FM name="FM_Signal" amplitude="car_ampl" carrierFrequency="car_freq" frequencyDeviation="freq_dev" In="Modulating_Signal"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes/>
+			<rules>
+				<p>
+					<i>e</i> = <i>E<sub>c</sub>
+					</i> sin (<i>&#969;<sub>c</sub>t</i> + <i>m<sub>f</sub>
+					</i> sin (<i>&#969;<sub>m</sub>t</i>) )</p>
+				<p>
+					<i>m<sub>f</sub>
+					</i> = <i>k<sub>f</sub>
+					</i>(<i>E<sub>m</sub>
+					</i>/<i>&#969;<sub>m</sub>
+					</i>)
+					</p>
+				<p>where:</p>
+				<p>
+					<i>E<sub>c</sub>
+					</i> = carrier amplitude (unmodulated)</p>
+				<p>
+					<i>E<sub>m</sub>
+					</i> = modulation amplitude </p>
+				<p>
+					<i>&#969;<sub>c</sub>
+					</i> = 2<i>&#960;</i>x carrier frequency</p>
+				<p>
+					<i>m<sub>f</sub>
+					</i> = deviation ratio (&#8801; modulation index)</p>
+				<p>
+					<i>&#969;<sub>m</sub>
+					</i> = 2<i>&#960;</i> x modulating frequency</p>
+				<p>
+					<i>k<sub>f</sub>
+					</i> = frequency deviation </p>
+			</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="ILS_GLIDE_SLOPE" uuid="{9A319ED0-E8B1-4F27-998F-E670CB80EEDF}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="ILS_GLIDE_SLOPE">
+					<xs:annotation>
+						<xs:documentation>The glide slope is the vertical guidance portion of an ILS.
+
+At present, 40 glide slope channels exist with 150 kHz channel separation in the frequency range from 328.6 MHz to 335.4 MHz. The carrier is amplitude modulated at 90 Hz and 150 Hz in a spatial pattern, with the 90 Hz modulation predominant when the airplane is above the glide path, and the 150 Hz modulation predominant if the airplane is below the glide path. This glide slope signal is achieved by transmitting 2 beams with equal offset about the correct glide slope angle. The upper beam is modulated to a depth of 40% with a 90 Hz tone, and the lower beam is modulated to a depth of 40% with a 150 Hz tone. The carrier of both beams is phase-locked so that any receiver will treat them as a single-carrier signal with two modulating tones. If the aircraft is positioned off the glide slope, the ILS receiver will detect one signal as stronger than the other. As a result, the demodulated amplitude (or apparent depth of modulation) of one tone will be greater than that of the other. If the receiver is exactly on the glide slope, it will receive an RF carrier where the 90 Hz and 150 Hz modulation depths appear exactly the same. The greater the deviation from the glide slope, the greater will be the difference in amplitude of the tones.
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="car_ampl" type="Physical" default="2 mV">
+									<xs:annotation>
+										<xs:documentation>Carrier amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="car_freq" default="328.6 MHz">
+									<xs:annotation>
+										<xs:documentation>Frequency</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Frequency" std1:minInclusive="328.6 MHz " std1:maxInclusive=" 335.4 MHz"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="onefifty_level" default="1">
+									<xs:annotation>
+										<xs:documentation>150 Hz attenuation depth</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Ratio" std1:minInclusive="0 " std1:maxInclusive=" 1"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="ninety_level" default="1">
+									<xs:annotation>
+										<xs:documentation>90 Hz attenuation depth</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Ratio" std1:minInclusive="0 " std1:maxInclusive=" 1"/>
+									</xs:simpleType>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Glide_Slope" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Sinusoid name="Glide_150Hz_Tone" amplitude="1" frequency="150 Hz" phase="0 rad"/>
+				<Sinusoid name="Glide_90Hz_Tone" amplitude="1" frequency="90 Hz" phase="0 rad"/>
+				<Sinusoid name="Glide_Slope_Carrier" amplitude="car_ampl" frequency="car_freq" phase="0"/>
+				<AM name="Glide_150_Hz_Modulated_Signal" modIndex="0.4" Carrier="Glide_Slope_Carrier" In="Glide_150Hz_Tone"/>
+				<AM name="Glide_90_Hz_Modulated_Signal" modIndex="0.4" Carrier="Glide_Slope_Carrier" In="Glide_90Hz_Tone"/>
+				<Attenuator name="Glide_Slope_Lo" gain="onefifty_level" In="Glide_150_Hz_Modulated_Signal"/>
+				<Attenuator name="Glide_Slope_Hi" gain="ninety_level" In="Glide_90_Hz_Modulated_Signal"/>
+				<Sum name="Glide_Slope" In="Glide_Slope_Lo Glide_Slope_Hi"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>This model has limited functionality. It does not provide for the variation of some of the parameters (such as the tone frequencies). The model may be modified by the user to include such parameters in the interface properties.</notes>
+			<rules>For this signal, the allowable types for carrier amplitudes are Voltage and Power.</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="ILS_LOCALIZER" uuid="{19D4E568-E533-4232-AEC2-B319D7DB0E12}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="ILS_LOCALIZER">
+					<xs:annotation>
+						<xs:documentation>The localizer is the lateral guidance portion of the ILS, giving azimuth guidance with reference to the runway centre line. It operates using the same principles as the Glide Slope but with forty channels in the VHF band 108.0 MHz to 112.0 MHz. Each localizer channel is paired with a glide slope channel. The carrier is modulated with  90 Hz and 150 Hz tones in a spatial pattern that makes the 90 Hz tone predominant when the aircraft is to the left of the course and the 150 Hz tone predominant when the aircraft is to the right of the course. The localizer carrier contains a Morse coded signal identifying the runway and approach direction and also may carry a ground-to-air communication channel.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="car_ampl" type="Physical" default="2 mW">
+									<xs:annotation>
+										<xs:documentation>Carrier Amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="car_freq" default="108.1 MHz">
+									<xs:annotation>
+										<xs:documentation>Carrier frequency</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Frequency" std1:minInclusive="108.1 MHz" std1:maxInclusive="111.9 MHz"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="onefifty_level" default="1">
+									<xs:annotation>
+										<xs:documentation>150 Hz attenuation depth</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Ratio" std1:minInclusive="0" std1:maxInclusive="1"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="ninety_level" default="1">
+									<xs:annotation>
+										<xs:documentation>90 Hz attenuation depth</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Ratio" std1:minInclusive="0" std1:maxInclusive="1"/>
+									</xs:simpleType>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="ILS_Localizer" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Sinusoid name="Localizer_Carrier" amplitude="car_ampl" frequency="car_freq" phase="0 rad"/>
+				<Sinusoid name="ILS_90Hz_Tone" amplitude="1" frequency="90 Hz" phase="0 rad"/>
+				<Sinusoid name="ILS_150Hz_Tone" amplitude="1" frequency="150Hz" phase="0 rad"/>
+				<AM name="ILS_90Hz_Modulated_Signal" modIndex="0.2" Carrier="Localizer_Carrier" In="ILS_90Hz_Tone"/>
+				<AM name="ILS_150Hz_Modulated_Signal" modIndex="0.2" Carrier="Localizer_Carrier" In="ILS_150Hz_Tone"/>
+				<Attenuator name="Localizer_L" gain="ninety_level" In="ILS_90Hz_Modulated_Signal"/>
+				<Attenuator name="Localizer_R" gain="onefifty_level" In="ILS_150Hz_Modulated_Signal"/>
+				<Sum name="ILS_Localizer" In="Localizer_L Localizer_R"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>This model represents a limited implementation of the signal. It only represents the two tone directional signal and does not allow for inclusion of coded information. It does not provide for the variation of some of the parameters (such as the tone frequencies). The model may be modified by the user to include such parameters in the interface properties.</notes>
+			<rules>For this signal, the allowable types for carrier amplitudes are Voltage and Power.</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="ILS_MARKER" uuid="{627E9A00-4B31-477F-9E57-CAB38DB31E39}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="ILS_MARKER">
+					<xs:annotation>
+						<xs:documentation>Two or three marker beacons operate at 75 MHz to give range with reference to the touch-down point. The outer marker is modulated with a 400 Hz tone to a depth of 95%. It is located 3.5 nmi  to 6 nmi  (6 km to 11 km)from the end of the runway where the glide slope intersects the procedure turn altitude ± 50 ft (15 m)vertically. It radiates a fan shaped pattern vertically and normal to the localizer and activates a marker receiver when the aircraft passes through.
+
+The middle marker is a second fan shaped marker similar to the outer marker. It is located approximately 0.5 nmi to 0.8 nmi  (1 km to 1.5 km)from the ILS approach end of the runway and modulated at 1300 Hz. The inner marker, when used for category II approaches, intercepts the glide path at about the 100 ft (30 m)height to mark the over-shoot decision point (if the runway is still not visible). The marker is recognized by its 3000 Hz modulation. Category II approaches allow operation down to 100 ft (30 m)and 1300 ft (400 m) visibility.
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="marker_freq" type="Frequency" default="400 Hz">
+									<xs:annotation>
+										<xs:documentation>Marker Frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="car_ampl" type="Power" default="2 mW">
+									<xs:annotation>
+										<xs:documentation>Carrier Frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Marker_Signal" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Sinusoid name="Marker_Tone" amplitude="1 V" frequency="marker_freq" phase="0 rad"/>
+				<Sinusoid name="Marker_Carrier" amplitude="car_ampl" frequency="75 MHz" phase="0 rad"/>
+				<AM name="Marker_Signal" modIndex="0.95" Carrier="Marker_Carrier" In="Marker_Tone"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>This model represents a limited implementation of the signal. It does not provide for the variation of some of the parameters (such as the carrier frequency). The model may be modified by the user to include such parameters in the interface properties.</notes>
+			<rules>For this signal, the carrier amplitudes can only be expressed in terms of power.</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="PM_SIGNAL" uuid="{2636CC15-81A4-43B7-8A7F-0F7CD9C5B442}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="PM_SIGNAL">
+					<xs:annotation>
+						<xs:documentation>A continuous sinusoidal wave (carrier) whose phase is varied in accordance with the amplitude of another wave.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="car_ampl" type="Voltage">
+									<xs:annotation>
+										<xs:documentation>Carrier amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="car_freq" type="Frequency">
+									<xs:annotation>
+										<xs:documentation>Carrier frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="phase_dev" type="PlaneAngle">
+									<xs:annotation>
+										<xs:documentation>Phase Deviation</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="mod_freq" type="Frequency">
+									<xs:annotation>
+										<xs:documentation>Modulation frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="mod_ampl" type="Voltage" default="1 V">
+									<xs:annotation>
+										<xs:documentation>Modulation amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="PM_Signal" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Sinusoid name="PModulating_Signal" amplitude="mod_ampl" frequency="mod_freq" phase="0 rad"/>
+				<PM name="PM_Signal" amplitude="car_ampl" carrierFrequency="car_freq" phaseDeviation="phase_dev" In="PModulating_Signal"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes/>
+			<rules>
+				<p>
+					<i>e</i> = <i>E<sub>c</sub>
+					</i> sin (<i>&#969;<sub>c</sub>t</i> + <i>k<sub>p</sub>E<sub>m</sub>
+					</i> sin (<i>&#969;<sub>m</sub>t</i>) )</p>
+				<p>where:</p>
+				<p>
+					<i>E<sub>c</sub>
+					</i> = carrier amplitude (unmodulated)</p>
+				<p>
+					<i>E<sub>m</sub>
+					</i> = modulation amplitude </p>
+				<p>
+					<i>&#969;<sub>c</sub>
+					</i> = 2<i>&#960;</i>x carrier frequency</p>
+				<p>
+					<i>&#969;<sub>m</sub>
+					</i> = 2<i>&#960;</i> x modulating frequency</p>
+				<p>
+					<i>k<sub>p</sub>
+					</i> = phase deviation </p>
+			</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="PULSED_AC_SIGNAL" uuid="{1764E313-2284-41F7-872D-C34C9FF4B6FA}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="PULSED_AC_SIGNAL">
+					<xs:annotation>
+						<xs:documentation>A signal characterized by short duration periods of (sinusoidal) ac electrical potential.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="ac_ampl" type="Physical">
+									<xs:annotation>
+										<xs:documentation>AC Signal amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="freq" type="Frequency">
+									<xs:annotation>
+										<xs:documentation>AC Signal frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="dc_offset" type="Physical" default="0">
+									<xs:annotation>
+										<xs:documentation>DC offset</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="p_delay" type="Time" default="0 s">
+									<xs:annotation>
+										<xs:documentation>Initial delay</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="p_duration" type="Time">
+									<xs:annotation>
+										<xs:documentation>Pulse width</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="prf" type="Frequency">
+									<xs:annotation>
+										<xs:documentation>Pulse repetition frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="p_repetition" type="xs:int" default="0">
+									<xs:annotation>
+										<xs:documentation>Number of pulses</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Pulsed_AC_Signal" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<TimedEvent type="Time" name="Pulse" delay="p_delay" duration="p_duration" period="{1/prf.magnitude}" repetition="p_repetition"/>
+				<Constant name="PAC_DC_Offset" amplitude="dc_offset"/>
+				<Sinusoid name="PAC_AC_Component" amplitude="ac_ampl" frequency="freq" phase="phase" Gate="Pulse"/>
+				<Sum name="Pulsed_AC_Signal" In="PAC_DC_Offset PAC_AC_Component"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>Default condition (where p_repetition = 0) is for continuously repeating pulses.
+
+This model represents a pulsed ac signal with a permanent dc offset. An alternative model may be created where only the pulses have a dc offset.
+</notes>
+			<rules>
+				<p>For this signal, the allowable types are Voltage, Current and Power. All types must be consistent, thus for example, if the ac signal amplitude is specified in volts then the dc offset amplitude must also be specified in volts.</p>
+			</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="PULSED_AC_TRAIN" uuid="{7ED5ECB7-1B38-4E31-90E8-21DCDCA55F92}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="PULSED_AC_TRAIN">
+					<xs:annotation>
+						<xs:documentation>A signal, characterized by a train of pulses of sinusoidal electrical ac activity with different durations and amplitudes.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="ac_ampl" type="Physical">
+									<xs:annotation>
+										<xs:documentation>AC amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="freq" type="Frequency">
+									<xs:annotation>
+										<xs:documentation>AC frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="dc_offset" type="Physical" default="0">
+									<xs:annotation>
+										<xs:documentation>DC offset</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="pulse_train" type="PulseDefns">
+									<xs:annotation>
+										<xs:documentation>Pulse train</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Pulsed_AC_Train" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Sinusoid name="PACT_AC_Component" amplitude="ac_ampl" frequency="freq" phase="phase"/>
+				<Constant name="PACT_DC_Offset" amplitude="dc_offset"/>
+				<PulseTrain name="Pulsed_AC" pulses="pulse_train" repetition="1" In="PACT_AC_Component"/>
+				<Sum name="Pulsed_AC_Train" In="PACT_DC_Offset Pulsed_AC"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>This model represents a pulsed ac train with a permanent dc offset. An alternative model may be created where only the pulses have a dc offset.</notes>
+			<rules>For this signal, the allowable types are Voltage, Current and Power. All types must be consistent, thus for example, if the ac signal amplitude is specified in volts then the dc offset must also be specified in volts.</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="PULSED_DC_SIGNAL" uuid="{EB5BB2D2-24A2-4DCA-96F3-4090B5FFD68B}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="PULSED_DC_SIGNAL">
+					<xs:annotation>
+						<xs:documentation>A signal characterized by a train of pulses of electrical dc activity with different durations and amplitudes with an optional ac component.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="dc_ampl" type="Physical">
+									<xs:annotation>
+										<xs:documentation>DC level</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="ac_ampl" type="Physical" default="0">
+									<xs:annotation>
+										<xs:documentation>AC component amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="freq" type="Frequency" default="0 Hz">
+									<xs:annotation>
+										<xs:documentation>AC component frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="p_delay" type="Time" default="0 s">
+									<xs:annotation>
+										<xs:documentation>Delay before first pulse</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="p_duration" type="Time">
+									<xs:annotation>
+										<xs:documentation>Pulse width</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="prf" type="Frequency">
+									<xs:annotation>
+										<xs:documentation>Pulse repetition frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="p_repetition" type="xs:int" default="0">
+									<xs:annotation>
+										<xs:documentation>Number of pulses</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Pulsed_DC_Signal" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<TimedEvent type="Time" name="PDC_Pulse" delay="p_delay" duration="p_duration" period="{1/prf.magnitude}" repetition="p_repetition"/>
+				<Sinusoid name="PDC_AC_Component" amplitude="ac_ampl" frequency="freq" phase="0 rad"/>
+				<Constant name="PDC_DC_Level" amplitude="dc_ampl" Gate="PDC_Pulse"/>
+				<Sum name="Pulsed_DC_Signal" In="PDC_AC_Component PDC_DC_Level"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>Default condition (where p_repetition = 0) is for continuously repeating pulses.
+
+This model represents a pulsed dc signal with a permanent ac component (ripple). An alternative model may be created where only the pulses have an ac component.
+l.</notes>
+			<rules>For this signal, the allowable types are Voltage, Current and Power. All types must be consistent, thus for example, if a dc level is specified in volts then the ac component amplitude must also be specified in volts.</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="PULSED_DC_TRAIN" uuid="{5A00D58E-F7A7-4285-AB6D-55D533A63239}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="PULSED_DC_TRAIN">
+					<xs:annotation>
+						<xs:documentation>A signal, characterized by a train of different, short duration periods of dc electrical activity.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="dc_ampl" type="Physical">
+									<xs:annotation>
+										<xs:documentation>DC level</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="pulse_train" type="PulseDefns">
+									<xs:annotation>
+										<xs:documentation>Pulse train</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="ac_ampl" type="Physical" default="0">
+									<xs:annotation>
+										<xs:documentation>AC Component amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="freq" type="Frequency" default="0 Hz">
+									<xs:annotation>
+										<xs:documentation>AC Component frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Pulsed_DC_Train" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Constant name="PDCT_DC_Level" amplitude="dc_ampl"/>
+				<Sinusoid name="PDCT_AC_Component" amplitude="ac_ampl" frequency="freq" phase="0 rad"/>
+				<PulseTrain name="PDCT_Pulsed_DC" pulses="pulse_train" repetition="1" In="PDCT_DC_Level"/>
+				<Sum name="Pulsed_DC_Train" In="PDCT_AC_Component PDCT_Pulsed_DC"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>For this signal, the allowable types are Voltage, Current and Power. All types must be consistent, thus for example, if dc level is specified in volts then the ac component amplitude must also be specified in volts.
+
+This model represents a pulsed dc train with a permanent ac component (ripple). An alternative model may be created where only the pulses have an ac component.
+</notes>
+			<rules/>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="RADAR_RX_SIGNAL" uuid="{7D866851-EDFA-4A99-9801-658439350C9C}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="RADAR_RX_SIGNAL">
+					<xs:annotation>
+						<xs:documentation>An appropriately delayed signal response to an input radar signal.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="atten" type="Ratio" default="1">
+									<xs:annotation>
+										<xs:documentation>Atten</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="range" type="Distance">
+									<xs:annotation>
+										<xs:documentation>Range of simulated target</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="range_accn" type="Acceleration" default="0">
+									<xs:annotation>
+										<xs:documentation>Rate of change of rate change</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="range_rate" type="Speed" default="0">
+									<xs:annotation>
+										<xs:documentation>Rate of change of target range</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="reply_eff" default="100%">
+									<xs:annotation>
+										<xs:documentation>Proportion of Tx pulses returned</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Ratio" std1:minInclusive="0 " std1:maxInclusive=" 100%"/>
+									</xs:simpleType>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Radar_RX_Signal" In="radar_TX_Signal" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<RMS name="Event_Train" gateTime="1.0e-8" nominal="0.1" condition="GE" In="radar_TX_Signal"/>
+				<ProbabilityEvent name="Suppressed_Event_Train" probability="reply_eff" In="Event_Train"/>
+				<Attenuator name="Car_Pulse" gain="atten" Gate="Suppressed_Event_Train" In="radar_TX_Signal"/>
+				<SignalDelay name="Radar_RX_Signal" acceleration="{range_accn.magnitude*2/3.0e8}" delay="{range.magnitude*2/3.0e8}" rate="{range_rate.magnitude*2/3.0e8}" In="Car_Pulse"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>This annex describes a transmitted signal as a reference. Thus, the TSF library provides a description for both the transmitted (i.e., Radar_TX_Signal) and received (i.e., Radar_RX_Signal) signals.
+
+The Radar_RX_Signal, takes an input Radar signal and delays the signal response. In addition, the signal does not respond to all transmitted radar pulses (a feature that gives rise to a <i>reply efficiency</i>). 
+
+To achieve reply efficiency, the Radar_RX_Signal must detect the incoming radar pulses and suppress some individual pulses. To detect a radar pulse an RMS monitor is used with a selected gate_time.  This monitoring provides an event while the continuous rms value is greater than a nominal threshold value. This rms monitor is used solely to detect a signal.
+
+The default values for range_rate and range_accn (i.e., range_rate = 0 and range_accn = 0) represent a stationary target.
+</notes>
+			<rules>For this signal, the allowable types are Voltage, Current and Power. However, for this signal the type is determined by the RADAR_TX_SIGNAL to which it is referenced.</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="RADAR_TX_SIGNAL" uuid="{333E8A10-DB09-4E9E-A924-DEDA53F34DA2}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="RADAR_TX_SIGNAL">
+					<xs:annotation>
+						<xs:documentation>A pulsed ac signal used as a reference for received radar signals (i.e., Radar_RX_Signal).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="ampl" type="Physical">
+									<xs:annotation>
+										<xs:documentation>Tx signal amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="freq" type="Frequency">
+									<xs:annotation>
+										<xs:documentation>Tx signal frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="delay" type="Time" default="0 s">
+									<xs:annotation>
+										<xs:documentation>Initial delay</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="duration" type="Time">
+									<xs:annotation>
+										<xs:documentation>Pulse duration</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="prf" type="Frequency">
+									<xs:annotation>
+										<xs:documentation>Pulse repetition frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="repetition" type="xs:int" default="0">
+									<xs:annotation>
+										<xs:documentation>Number of pulses</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="RADAR_TX_Signal" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<TimedEvent name="RTX_Event_Train" delay="delay" duration="duration" period="{1/prf.magnitude}" repetition="repetition"/>
+				<Sinusoid name="RADAR_TX_Signal" amplitude="ampl" frequency="freq" Gate="RTX_Event_Train"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>Default condition (where repetition = 0) is for continuously repeating pulses</notes>
+			<rules>
+				<p>For this signal, the allowable types are Voltage, Current and Power.</p>
+			</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="RAMP_SIGNAL" uuid="{C4E0A145-A6DE-454C-A3EF-D9959F8D4959}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="RAMP_SIGNAL">
+					<xs:annotation>
+						<xs:documentation>A periodic wave whose instantaneous value varies alternately and linearly between two specified values (i.e., initial and alternate).  </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="ampl" type="Physical">
+									<xs:annotation>
+										<xs:documentation>Ramp signal amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="dc_offset" type="Physical" default="0">
+									<xs:annotation>
+										<xs:documentation>DC offset</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="period" type="Time">
+									<xs:annotation>
+										<xs:documentation>Ramp signal period</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="rise_time" type="Time">
+									<xs:annotation>
+										<xs:documentation>Ramp signal time to rise</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Ramp_Signal" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Constant name="Ramp_DC_Offset" amplitude="dc_offset"/>
+				<Ramp name="Ramp_Component" amplitude="ampl" period="period" riseTime="rise_time"/>
+				<Sum name="Ramp_Signal" In="Ramp_DC_Offset Ramp_Component"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes/>
+			<rules>
+				<p>For this signal, the allowable types are Voltage, Current and Power. All types must be consistent. Thus for example, if the ramp signal amplitude is specified in volts then the dc offset must also be specified in volts.</p>
+			</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="RANDOM_NOISE" uuid="{29C8F5CF-0539-4986-A104-52D65E89C5E3}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="RANDOM_NOISE">
+					<xs:annotation>
+						<xs:documentation>Transient disturbances occurring unpredictably, except in a statistical sense.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="ampl" type="Physical">
+									<xs:annotation>
+										<xs:documentation>Noise signal amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="freq" type="Frequency" default="0">
+									<xs:annotation>
+										<xs:documentation>Pseudo random noise frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="seed" type="xs:long" default="0">
+									<xs:annotation>
+										<xs:documentation>Pseudo random noise seed</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Noise" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Noise name="Noise" amplitude="ampl" seed="seed" frequency="freq"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>The default for random noise is white noise (characterised by a flat frequency spectrum in the frequency range of interest). White noise needs only noise signal amplitude to be defined.
+
+For repeatable pseudo-random noise, both the frequency upper bound and seed need to be specified. Specifying the frequency upper bound provides noise in the frequency band bounded by the frequency value. If no seed is specified, this signal may not be repeatable.
+</notes>
+			<rules>
+				<p>For this signal, the allowable types are Voltage and Power.</p>
+			</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="RESOLVER" uuid="{8899C7D8-F946-46AF-9698-3B3FDE0C026F}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="RESOLVER">
+					<xs:annotation>
+						<xs:documentation>Two ac sine wave voltages whose relationships of amplitude represent the rotation of a shaft position of an electro-mechanical transducer,</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="angle" type="PlaneAngle" default="0">
+									<xs:annotation>
+										<xs:documentation>Shaft angle</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="ampl" default="26 V">
+									<xs:annotation>
+										<xs:documentation>Reference amplitude</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Voltage" std1:minInclusive="26 V" std1:maxInclusive="119 V"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="freq" default="400 Hz">
+									<xs:annotation>
+										<xs:documentation>Reference frequency</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Frequency" std1:minInclusive="30 Hz" std1:maxInclusive="54 kHz"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="zero_index" default="0 rad">
+									<xs:annotation>
+										<xs:documentation>Zero index</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="PlaneAngle" std1:minInclusive="0 " std1:maxInclusive="2*pi rad"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="angle_rate" type="Frequency" default="0 Hz">
+									<xs:annotation>
+										<xs:documentation>Shaft angle rate</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="trans_ratio" type="Ratio" default="1">
+									<xs:annotation>
+										<xs:documentation>Transformer Ratio</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Four_Wire_Resolver" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Sinusoid name="Field1" amplitude="trans_ratio" frequency="angle_rate" phase="angle"/>
+				<Sinusoid name="Rotor" amplitude="ampl" frequency="freq" phase="zero_index"/>
+				<Sinusoid name="Field2" amplitude="trans_ratio" frequency="angle_rate" phase="{angle.magnitude+(pi/2)}"/>
+				<Product name="S1" In="Field1 Rotor"/>
+				<Product name="S2" In="Field2 Rotor"/>
+				<FourWireResolver name="Four_Wire_Resolver" channelWidth="2" In="S1 S2"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>This model does not consider the effects of angular velocity of the rotor and the quadrature voltages generated in the secondaries.</notes>
+			<rules>
+				<p>The outputs of the resolver secondaries are given by the following two equations:</p>
+				<p>Sine output</p>
+				<p>
+					<i>e<sub>s1</sub>
+					</i> = <i>KE<sub>r</sub>
+					</i>sin<i>&#952;</i> sin(2<i>&#960;f<sub>r</sub>t</i>+<i>&#966;</i>)</p>
+				<p>Cosine output</p>
+				<p>
+					<i>e<sub>s2</sub>
+					</i> = <i>KE<sub>r</sub>
+					</i>cos<i>&#952;</i> sin(2<i>&#960;f<sub>r</sub>t</i>+<i>&#966;</i>)</p>
+				<p>or </p>
+				<p>
+					<i>e<sub>s2</sub>
+					</i> = <i>KE<sub>r</sub>
+					</i>sin(<i>&#952;</i>+<i>&#960;</i>/2)sin(2<i>&#960;f<sub>r</sub>t</i>+<i>&#966;</i>)</p>
+				<p>where</p>
+				<p>
+					<i>K</i> is the transformer ratio (trans_ratio), assuming K to be the same for both secondaries</p>
+				<p>
+					<i>E <sub>r</sub>
+					</i> is the reference amplitude in the primary (ampl)</p>
+				<p>
+					<i>q</i> is angular displacement of the rotor (angle)</p>
+				<p>
+					<i>f<sub>r</sub>
+					</i> is the reference frequency of the signal in the primary (freq) </p>
+				<p>
+					<i>j</i> is the zero index position of the rotor (zero_index)</p>
+				<p>Thus the operation of the resolver may be modeled as the product of two signals for each output.</p>
+				<p>Sine output</p>
+				<p>
+					<i>e<sub>s1</sub>
+					</i> = (<i>E<sub>r</sub>
+					</i>sin(2<i>&#960;f<sub>r</sub>t</i>+<i>&#966;</i>)) x (<i>K</i>sin<i>&#952;</i>)</p>
+				<p>Cosine output</p>
+				<p>
+					<i>e<sub>s2</sub>
+					</i> = (<i>E<sub>r</sub>
+					</i>sin(2<i>&#960;f<sub>r</sub>t</i>+<i>&#966;</i>)) x (<i>K</i>sin(<i>&#952;</i>+<i>&#960;</i>/2))</p>
+			</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="RS_232" uuid="{444194DE-209D-487C-B37C-5D6FD1F14E53}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="RS_232">
+					<xs:annotation>
+						<xs:documentation>A serial databus signal that transmits and receives strings of characters and operates according to the specification TIA-232. </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="data_word" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>Data Word</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="baud_rate" type="int" default="9600">
+									<xs:annotation>
+										<xs:documentation>Baud Rate</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="data_bits" type="int" default="8">
+									<xs:annotation>
+										<xs:documentation>Data Bits</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="parity" type="xs:string" default="None">
+									<xs:annotation>
+										<xs:documentation>Parity</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="stop_bits" type="xs:string" default="1">
+									<xs:annotation>
+										<xs:documentation>Stop Bits</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="flow_control" type="xs:string" default="None">
+									<xs:annotation>
+										<xs:documentation>Flow Control</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="TIA_EIA_232" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<this:RS_232 name="TIA_EIA_232" data_word="data_word" baud_rate="baud_rate" data_bits="data_bits" parity="parity" stop_bits="stop_bits" flow_control="flow_control"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>When using the RS_232 TSF model, only the active data connection (and its ground) are considered, i.e., the connections hi and lo may be used. Some or all of the other control connections required by the TIA-232 specification may need to physically connected, but are not considered by this TSF. 
+</notes>
+			<rules>For this signal the data word supplied is transmitted via the serial bus connections according to the rules specified in TIA-232. Data received via the serial bus connections will be available when the signal is used in a measurement. </rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="SQUARE_WAVE" uuid="{A978E1A2-3B51-4122-A0AB-2FD4F8A1AF22}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="SQUARE_WAVE">
+					<xs:annotation>
+						<xs:documentation>A periodic wave that alternately assumes one of two fixed values of amplitude for equal lengths of time. </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="ampl" type="Physical">
+									<xs:annotation>
+										<xs:documentation>Square wave amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="period" type="Time">
+									<xs:annotation>
+										<xs:documentation>Square wave period</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="dc_offset" type="Physical" default="0 V">
+									<xs:annotation>
+										<xs:documentation>DC offset</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Square_Wave" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Constant name="Square_DC_Offset" amplitude="dc_offset"/>
+				<SquareWave name="Square_Wave_Component" amplitude="ampl" period="period" dutyCycle="50 %"/>
+				<Sum name="Square_Wave" In="Square_DC_Offset Square_Wave_Component"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes/>
+			<rules>
+				<p>For this signal, the allowable types are Voltage, Current and Power. All types must be consistent. Thus, for example, if the square wave amplitude is specified in volts then the DC Offset must also be specified in volts.</p>
+			</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="SSR_INTERROGATION" uuid="{F947BEDD-0BC7-4419-9846-E90374E36AC9}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="SSR_INTERROGATION">
+					<xs:annotation>
+						<xs:documentation>Secondary Surveillance Radar (SSR) provides information to supplement the information obtained from a primary radar. Governing documents for civilian air traffic control (ATC) are ARINC Specification 572 and ARINC Specification 711 and for the military's identification, friend or foe system (IFF),  STANAG 4193. An aircraft on-board transponder will sense an interrogation from a ground (or airborne) station on a specific frequency (i.e., 1030 MHz) and responds with coded signals on another frequency (i.e., 1090 MHz). </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="ampl" type="Physical">
+									<xs:annotation>
+										<xs:documentation>P1 Amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="mode" type="xs:string" default="1">
+									<xs:annotation>
+										<xs:documentation>Interrogation mode</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="p3_start" type="Time" default="3 us">
+									<xs:annotation>
+										<xs:documentation>P3 Start Time </xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="p3_level" type="Ratio" default="1">
+									<xs:annotation>
+										<xs:documentation>P3 level</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="sls_dev" type="Time" default="0 us">
+									<xs:annotation>
+										<xs:documentation>SLS Deviation</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="sls_level" type="Ratio" default="1">
+									<xs:annotation>
+										<xs:documentation>SLS Level</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="PulseTrain" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Sinusoid name="SSR_Carrier" amplitude="ampl" frequency="1030 MHz" phase="0 rad"/>
+				<PulseTrain name="PulseTrain" pulses="(0 us, 0.8 us,1), ({0.000002+ sls_dev.magnitude}, 0.8 us, {sls_level}), ({p3_start}, 0.8 us, {p3_level})" repetition="1" In="SSR_Carrier"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>The interrogation signal comprises three pulses, called P1, P2, and P3, respectively. The normal spacing between P1 and P2 is 2 µs. Normal spacing between P1 and P3 depends on the choice of mode.
+
+While interrogators will repeat the interrogation sequence approximately every 2 ms and are capable of interlacing several modes alternately (most commonly 3-A and C, known as Mode 3-C), the model is set up for a single interrogation thus allowing each mode to be interrogated individually to ensure the correct response.
+</notes>
+			<rules>
+				<p>SSR_pulses = (0 us ,0.8 us, 1),</p>
+				<p> ({0.000002+<i>sls_dev</i>}, 0.8 us, {<i>sls_level</i>}), </p>
+				<p> ({<i>p3_start</i>},  0.8 us, {<i>p3_level</i>}) </p>
+				<p>where</p>
+				<p>
+					<i>sls_dev</i> is the SLS Deviation from the interface properties</p>
+				<p>
+					<i>sls_level</i> is the SLS Level from the interface properties</p>
+				<p>
+					<i>p3_start </i> is the P3 Start Time as determined by the value of Interrogation Mode from the table below.</p>
+				<p>
+					<i>p3_level</i> is the P3 Level from the interface properties</p>
+				<table>
+					<tr>
+						<td>
+							<p>
+								<b>Interrogation mode (mode)</b>
+							</p>
+						</td>
+						<td>
+							<p>
+								<b>P3 Start Time (p3_start)</b>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>1</p>
+						</td>
+						<td>
+							<p>3µs</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>2</p>
+						</td>
+						<td>
+							<p>5µs</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>3</p>
+						</td>
+						<td>
+							<p>8µs</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>A</p>
+						</td>
+						<td>
+							<p>8µs</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>B</p>
+						</td>
+						<td>
+							<p>17µs</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>C</p>
+						</td>
+						<td>
+							<p>21µs</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>D</p>
+						</td>
+						<td>
+							<p>25µs</p>
+						</td>
+					</tr>
+				</table>
+				<p>For this signal, the allowable types are Voltage, Current and Power.</p>
+			</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="SSR_RESPONSE" uuid="{C2A1609E-55BB-4098-AD3B-08AB6C21F92A}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="SSR_RESPONSE">
+					<xs:annotation>
+						<xs:documentation>The transponder response to a valid SSR interrogation. It consists of an encoded pulse train. Each pulse train consists of a number of data pulses. The number and position of these data pulses (after the start pulse) are determined by the mode selected. There are 16 pulse positions in the pulse train; however, the code or (height) information carried by the response will determine which pulses are present.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="ampl" type="Physical" default="1">
+									<xs:annotation>
+										<xs:documentation>Carrier Amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="p3_start" type="Time" default="3 us">
+									<xs:annotation>
+										<xs:documentation>P3 pulse start time</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="pulses" type="PulseDefns" default="[]">
+									<xs:annotation>
+										<xs:documentation>SSR Response Pulse Train</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Pulse_Train_Response" In="ssr_interrogation" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<RMS name="SSR_Detect" gateTime="10.0e-9" nominal="0.1" condition="GE" In="ssr_interrogation"/>
+				<SignalDelay name="P2_Detect" delay="{p3_start.magnitude-2.0e-6}" In="SSR_Detect"/>
+				<SignalDelay name="P3_Detect" delay="p3_start" In="SSR_Detect"/>
+				<AndEvent name="SSR_Mode_Detect" In="SSR_Detect P2_Detect P3_Detect"/>
+				<SignalDelay name="SSR_Response_Delay" delay="3 us" In="SSR_Mode_Detect"/>
+				<Sinusoid name="Responder_carrier_frequency" amplitude="ampl" frequency="1090 MHz" phase="0"/>
+				<PulseTrain name="Pulse_Train_Response" pulses="pulses" repetition="1" Sync="SSR_Response_Delay" In="Responder_carrier_frequency"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>
+				<p>The response is initiated 3 us after the third pulse of a valid interrogation is received.</p>
+				<p>The parameters of the array of pulses are defined in the table.  Pulses F1 and F2 must be present. Pulse X is not currently used and should be omitted, other pulses may be specified as required.</p>
+				<p class="paragraph" style="margin-top: 0cm">
+					<span style="color:blue">&amp;nbsp;</span>
+				</p>
+				<div align="center">
+					<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" style="border-collapse: collapse; border: medium none">
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal">Pulse</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">Start_Time</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">Pulse_Width</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">Level_Factor</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" align="center" style="text-align:center;line-height:150%">
+      F1</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0.45<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">1</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" align="center" style="text-align:center;line-height:150%">
+      C1</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal">
+									<span style="color:black">1.45</span>
+									<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0.45<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">1</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" align="center" style="text-align:center;line-height:150%">
+      A1</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal">
+									<span style="color:black">2.9</span>
+									<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0.45<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">1</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" align="center" style="text-align:center;line-height:150%">
+      C2</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal">
+									<span style="color:black">4.35</span>
+									<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0.45<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">1</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" align="center" style="text-align:center;line-height:150%">
+      A2</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal">
+									<span style="color:black">5.8</span>
+									<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0.45<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">1</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" align="center" style="text-align:center;line-height:150%">
+      C4</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal">
+									<span style="color:black">7.25</span>
+									<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0.45<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">1</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" align="center" style="text-align:center;line-height:150%">
+      A4</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal">
+									<span style="color:black">8.7</span>
+									<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0.45<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">1</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" align="center" style="text-align:center;line-height:150%">
+      X</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal">
+									<span style="color:black">10.15</span>
+									<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0.45<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">1</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" align="center" style="text-align:center;line-height:150%">
+      B1</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal">
+									<span style="color:black">11.6</span>
+									<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0.45<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">1</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" align="center" style="text-align:center;line-height:150%">
+      D1</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal">
+									<span style="color:black">13.05</span>
+									<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0.45<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">1</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" align="center" style="text-align:center;line-height:150%">
+      B2</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal">
+									<span style="color:black">14.5</span>
+									<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0.45<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">1</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" align="center" style="text-align:center;line-height:150%">
+      D2</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal">
+									<span style="color:black">15.95</span>
+									<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0.45<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">1</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" align="center" style="text-align:center;line-height:150%">
+      B4</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal">
+									<span style="color:black">17.4</span>
+									<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0.45<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">1</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" align="center" style="text-align:center;line-height:150%">
+      D4</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal">
+									<span style="color:black">18.85</span>
+									<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0.45<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">1</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" align="center" style="text-align:center;line-height:150%">
+      F2</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal">
+									<span style="color:black">20.3</span>
+									<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0.45<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">1</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="64" valign="top" style="width: 47.95pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" align="center" style="text-align:center;line-height:150%">
+      P1</p>
+							</td>
+							<td width="94" valign="top" style="width: 70.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">24.65<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="104" valign="top" style="width: 77.75pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="line-height:150%">0.45<span style="font-family: Symbol">m</span>s</p>
+							</td>
+							<td width="103" valign="top" style="width: 77.6pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm">
+								<p class="MsoNormal" style="text-indent:1.9pt;line-height:150%">1</p>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<p class="paragraph" style="margin-top: 0cm">
+					&amp;nbsp;</p>
+				<p class="paragraph">
+					<span style="color:blue">&amp;nbsp;</span>
+				</p>
+			</notes>
+			<rules>For this signal, the allowable types are Voltage, Current and Power. The type selected must agree with the type of the SSR_INTERROGATION signal that triggers the SSR_RESPONSE.</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="STEP_SIGNAL" uuid="{DA473EFE-2F0F-4A4F-96FE-A39BA96DB523}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="STEP_SIGNAL">
+					<xs:annotation>
+						<xs:documentation>A change of dc electrical potential from one level to another, either positive or negative.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="ampl" type="Voltage">
+									<xs:annotation>
+										<xs:documentation>Step size</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="dc_offset" type="Voltage" default="0">
+									<xs:annotation>
+										<xs:documentation>DC offset</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="start_time" type="Time">
+									<xs:annotation>
+										<xs:documentation>Step time</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Step_Signal" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Constant name="Step_DC_Offset" amplitude="dc_offset"/>
+				<Step name="Step_Component" amplitude="ampl" startTime="start_time"/>
+				<Sum name="Step_Signal" In="Step_DC_Offset Step_Component"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes/>
+			<rules/>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="SUP_CAR_SIGNAL" uuid="{DCCE2F12-CFC2-11D6-860C-00010214C4D2}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="SUP_CAR_SIGNAL">
+					<xs:annotation>
+						<xs:documentation>An amplitude modulated signal in which the carrier is suppressed.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="car_ampl" type="Voltage">
+									<xs:annotation>
+										<xs:documentation>Carrier amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="car_freq" type="Frequency">
+									<xs:annotation>
+										<xs:documentation>Carrier frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="mod_freq" type="Frequency">
+									<xs:annotation>
+										<xs:documentation>Modulation frequency</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="mod_depth" type="Ratio">
+									<xs:annotation>
+										<xs:documentation>Depth of modulation</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Suppressed_Carrier_Signal" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Sinusoid name="SUP_Carrier" amplitude="car_ampl" frequency="car_freq" phase="0 rad"/>
+				<Sinusoid name="SUP_Modulation" amplitude="1" frequency="mod_freq" phase="0 rad"/>
+				<AM name="SUP_AM_Signal" modIndex="mod_depth" Carrier="SUP_Carrier" In="SUP_Modulation"/>
+				<Negate name="SUP_Inverted_Carrier" In="SUP_Carrier"/>
+				<Sum name="Suppressed_Carrier_Signal" In="SUP_AM_Signal SUP_Inverted_Carrier"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes/>
+			<rules>
+				<p>
+					<i>e</i> = (<i>E<sub>m</sub>E<sub>c</sub>
+					</i>/2)cos(<i>&#969;<sub>c</sub>
+					</i>+<i>&#969;<sub>m</sub>
+					</i>)<i>t</i>+(<i>E<sub>m</sub>E<sub>c</sub>
+					</i>/2)cos(<i>&#969;<sub>c</sub>
+					</i>-<i>&#969;<sub>m</sub>
+					</i>)<i>t</i>
+				</p>
+				<p>where</p>
+				<p>
+					<i>E<sub>m</sub>
+					</i> is the modulation signal amplitude</p>
+				<p>
+					<i>E <sub>c</sub>
+					</i> is the carrier amplitude (unmodulated)</p>
+				<p>
+					<i>&#969;<sub>m</sub>
+					</i> is 2<i>&#960;</i> x modulating frequency</p>
+				<p>
+					<i>&#969;<sub>c</sub>
+					</i> is 2<i>&#960;</i> x carrier frequency</p>
+			</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="SYNCHRO" uuid="{30034740-EA13-4F52-A4EF-47C4CDA96FEE}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="SYNCHRO">
+					<xs:annotation>
+						<xs:documentation>Three ac sinusoid voltages whose relationship of amplitudes represent the rotational shaft position of an electro-mechanical transducer.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="angle" type="PlaneAngle" default="0 rad">
+									<xs:annotation>
+										<xs:documentation>Shaft angle</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="ampl" default="26 V">
+									<xs:annotation>
+										<xs:documentation>Reference amplitude</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Voltage" std1:minInclusive="26 V " std1:maxInclusive=" 119 V"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="freq" default="400 Hz">
+									<xs:annotation>
+										<xs:documentation>Reference frequency</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Frequency" std1:minInclusive="30 Hz " std1:maxInclusive=" 54 kHz"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="zero_index" type="PlaneAngle" default="0 rad">
+									<xs:annotation>
+										<xs:documentation>Zero index</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="angle_rate" type="Frequency" default="0 rad">
+									<xs:annotation>
+										<xs:documentation>Shaft angle rate</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="trans_ratio" type="Ratio" default="1">
+									<xs:annotation>
+										<xs:documentation>Transformer Ratio</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="ThreePhaseSynchro_Output" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Sinusoid name="TPS_Field1" amplitude="trans_ratio" frequency="angle_rate" phase="{angle.magnitude-(2*pi/3)}"/>
+				<Sinusoid name="TPS_Rotor" amplitude="ampl" frequency="freq" phase="zero_index"/>
+				<Sinusoid name="TPS_Field2" amplitude="trans_ratio" frequency="angle_rate" phase="angle"/>
+				<Sinusoid name="TPS_Field3" amplitude="1" frequency="angle_rate" phase="{angle.magnitude+(2*pi/3)}"/>
+				<Product name="TPS_S1" In="TPS_Field1 TPS_Rotor"/>
+				<Product name="TPS_S2" In="TPS_Field2 TPS_Rotor"/>
+				<Product name="TPS_S3" In="TPS_Field3 TPS_Rotor"/>
+				<ThreePhaseSynchro name="ThreePhaseSynchro_Output" channelWidth="3" In="TPS_S1 TPS_S2 TPS_S3"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>This model does not consider the effects of angular velocity of the rotor and the quadrature voltages generated in the stator windings.</notes>
+			<rules>
+				<p class="paragraph">
+					<span class="msoIns">
+
+The outputs of the synchro stator windings are given by the following equations:</span>
+				</p>
+				<p class="paragraph" style="page-break-after:avoid">
+					<span class="msoIns">
+
+S1</span>
+				</p>
+				<p class="computercode">
+					<span lang="EN-GB">
+						<span class="msoIns">
+
+&amp;nbsp;</span>
+					</span>
+				</p>
+				<p class="computercode">
+					<i>
+						<span lang="EN-GB">
+							<span class="msoIns">
+
+E<sub>s1</sub>
+							</span>
+						</span>
+					</i>
+					<span lang="EN-GB">
+						<span class="msoIns"> 
+= <i>KE<sub>r</sub>
+							</i>sin(<i>&#952;</i>-2<i>&#928;</i>/3)sin(2<i>&#960;f<sub>r</sub>t</i>+<i>&#966;</i>)</span>
+					</span>
+				</p>
+				<p class="paragraph" style="page-break-after:avoid">
+					<span class="msoIns">
+
+S2</span>
+				</p>
+				<p class="computercode">
+					<span lang="EN-GB">
+						<span class="msoIns">
+
+&amp;nbsp;</span>
+					</span>
+				</p>
+				<p class="computercode">
+					<i>
+						<span lang="EN-GB">
+							<span class="msoIns">
+
+E<sub>s2</sub>
+							</span>
+						</span>
+					</i>
+					<span lang="EN-GB">
+						<span class="msoIns"> 
+= <i>KE<sub>r</sub>
+							</i>sin<i>&#952;</i> sin(2<i>&#960;f<sub>r</sub>t</i>+<i>&#966;</i>)</span>
+					</span>
+				</p>
+				<p class="paragraph" style="page-break-after:avoid">
+					<span lang="EN-GB">
+						<span class="msoIns">
+
+S3</span>
+					</span>
+				</p>
+				<p class="computercode">
+					<span lang="EN-GB">
+						<span class="msoIns">
+
+&amp;nbsp;</span>
+					</span>
+				</p>
+				<p class="computercode">
+					<i>
+						<span lang="EN-GB">
+							<span class="msoIns">
+
+E<sub>s2</sub>
+							</span>
+						</span>
+					</i>
+					<span lang="EN-GB">
+						<span class="msoIns"> 
+= <i>KE<sub>r</sub>
+							</i>sin(<i>&#952;</i>+2<i>&#960;</i>/3)sin(2<i>&#960;f<sub>r</sub>t</i>+<i>&#966;</i>)</span>
+					</span>
+				</p>
+				<p class="MsoFooter">
+					<span lang="EN-GB">
+						<span class="msoIns">
+
+where</span>
+					</span>
+				</p>
+				<p class="listitem">
+					<span class="msoIns">
+
+&amp;nbsp;</span>
+				</p>
+				<p class="listitem" style="text-indent:0cm">
+					<i>
+						<span class="msoIns">
+
+K</span>
+					</i>
+					<span lang="EN-GB">
+						<span class="msoIns"> 
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; is the transformer ratio</span>
+					</span>
+					<span class="msoIns"> 
+(trans_ratio), assuming K to be the same for all stator windings</span>
+				</p>
+				<p class="listitem" style="text-indent:0cm">
+					<i>
+						<span lang="EN-GB">
+							<span class="msoIns">
+
+E<sub>r</sub>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; </span>
+						</span>
+					</i>
+					<span lang="EN-GB">
+						<span class="msoIns">
+
+is the reference amplitude in the primary (ampl)</span>
+					</span>
+				</p>
+				<p class="listitem" style="text-indent:0cm">
+					<span style="font-family:&quot;Times New Roman&quot; !msorm">
+						<i>
+							<span lang="EN-GB" style="font-family: Symbol">
+								<span class="msoIns">
+
+q</span>
+							</span>
+						</i>
+					</span>
+					<span lang="EN-GB">
+						<span class="msoIns">&amp;nbsp; 
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; is angular displacement of the rotor (angle)</span>
+					</span>
+				</p>
+				<p class="listitem" style="text-indent:0cm">
+					<i>
+						<span lang="EN-GB">
+							<span class="msoIns">
+
+f<sub>r</sub>&amp;nbsp; </span>
+						</span>
+					</i>
+					<span lang="EN-GB">
+						<span class="msoIns">
+
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; is the reference frequency of the signal in the primary (freq)
+</span>
+					</span>
+				</p>
+				<p class="listitem" style="text-indent:0cm">
+					<span style="font-family:&quot;Times New Roman&quot; !msorm">
+						<i>
+							<span lang="EN-GB" style="font-family: Symbol">
+								<span class="msoIns">
+
+j</span>
+							</span>
+						</i>
+					</span>
+					<i>
+						<span lang="EN-GB">
+							<span class="msoIns">&amp;nbsp;
+</span>
+						</span>
+					</i>
+					<span lang="EN-GB">
+						<span class="msoIns">
+
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; is the zero index position of the rotor (</span>
+					</span>
+					<span class="msoIns">zero_index)</span>
+				</p>
+				<p class="paragraph">
+					<span class="msoIns">
+
+Thus the operation of the synchro may be modeled as the product of two signals 
+for each output.</span>
+				</p>
+				<p class="paragraph" style="page-break-after:avoid">
+					<span class="msoIns">
+
+S1</span>
+				</p>
+				<p class="computercode">
+					<span lang="EN-GB">
+						<span class="msoIns">
+
+&amp;nbsp;</span>
+					</span>
+				</p>
+				<p class="computercode">
+					<i>
+						<span lang="EN-GB">
+							<span class="msoIns">
+
+E<sub>s1</sub>
+							</span>
+						</span>
+					</i>
+					<span lang="EN-GB">
+						<span class="msoIns"> 
+= (<i>E<sub>r</sub>
+							</i>sin(2<i>&#960;f<sub>r</sub>t</i>+<i>&#966;</i>)) x (<i>K</i>sin(<i>&#952;</i>-2<i>&#960;</i>/3)</span>
+					</span>
+				</p>
+				<p class="paragraph" style="page-break-after:avoid">
+					<span class="msoIns">
+
+S2</span>
+				</p>
+				<p class="computercode">
+					<span lang="EN-GB">
+						<span class="msoIns">
+
+&amp;nbsp;</span>
+					</span>
+				</p>
+				<p class="computercode">
+					<i>
+						<span lang="EN-GB">
+							<span class="msoIns">
+
+E<sub>s2</sub>
+							</span>
+						</span>
+					</i>
+					<span lang="EN-GB">
+						<span class="msoIns"> 
+= (<i>E<sub>r</sub>
+							</i>sin(2<i>&#960;f<sub>r</sub>t</i>+<i>&#966;</i>)) x (<i>K</i>sin(<i>&#952;</i>))</span>
+					</span>
+				</p>
+				<p class="paragraph" style="page-break-after:avoid">
+					<span lang="EN-GB">
+						<span class="msoIns">
+
+S3</span>
+					</span>
+				</p>
+				<p class="computercode">
+					<span lang="EN-GB">
+						<span class="msoIns">
+
+&amp;nbsp;</span>
+					</span>
+				</p>
+				<p class="computercode">
+					<i>
+						<span lang="EN-GB">
+							<span class="msoIns">
+
+E<sub>s3</sub>
+							</span>
+						</span>
+					</i>
+					<span lang="EN-GB">
+						<span class="msoIns"> 
+= (<i>E<sub>r</sub>
+							</i>sin(2<i>&#960;f<sub>r</sub>t</i>+<i>&#966;</i>)) x (<i>K</i>sin(<i>&#952;</i>+2<i>&#960;</i>/3))</span>
+					</span>
+				</p>
+			</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="TACAN" uuid="{A9829AB1-9EBA-4440-9AD7-D5C8B8E95C42}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="TACAN">
+					<xs:annotation>
+						<xs:documentation>Tactical air navigation (TACAN ) is a complete UHF polar coordinate navigation system using pulse techniques. The function operates identically as a DME and the bearing function is derived by rotating the ground transponder antenna so as to obtain a rotating multi-lobe pattern for coarse and fine bearing information, as defined in MIL-STD-291B
+
+The model defines a subset of the TACAN X signal concerned with bearing, rather than the complete signal, as test requirements dealing with TACAN distance can be refined using the DME model.
+
+The transponder emits RF pulses that are amplitude modulated to provide bearing information. The amplitude modulation is produced by rotating a parasitic reflector array about the antenna radiating element. The array consists of one 15 Hz and nine 135 Hz reflectors. As the pattern from the 15 Hz reflector passes through the magnetic east azimuth, a main reference burst (MRB) is transmitted. As the pattern from the 135 Hz reflectors passes through east, an auxiliary reference burst (ARB) is transmitted, except when the pattern is coincident with the 15 Hz pattern. This produces a total of one MRB and eight ARB bursts per antenna rotation. The airborne receiving equipment determines the aircraft bearing from the ground station by measuring elapsed time, first, from the MRB to the 0° phase of the 15 Hz component and second, from the ARB to 0 ° of the 135 Hz component.
+
+The TACAN beacon also generates a 2 or 3 letter Morse identification signal every 37.5 s. 
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="freq" default="962 MHz">
+									<xs:annotation>
+										<xs:documentation>Transponder Frequency</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Frequency" std1:minInclusive="962 MHz" std1:maxInclusive="1213 MHz"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="mod_index" default="0.3">
+									<xs:annotation>
+										<xs:documentation>Modulation Index</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Ratio" std1:minInclusive="0" std1:maxInclusive="1"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="bearing" default="0">
+									<xs:annotation>
+										<xs:documentation>Magnetic Bearing</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="PlaneAngle" std1:minInclusive="0 deg" std1:maxInclusive="360 deg"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="car_ampl" type="Voltage">
+									<xs:annotation>
+										<xs:documentation>er Amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Tacan_Response_Train" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<TimedEvent type="Time" name="ARB_Gate" delay="0 s" duration="300 us" period="135 Hz"/>
+				<TimedEvent type="Time" name="MRB_Gate" delay="0 s" duration="600 us" period="15 Hz"/>
+				<OrEvent name="RB_Gate" In="ARB_Gate MRB_Gate"/>
+				<NotEvent name="RB_Mask" In="RB_Gate"/>
+				<Sinusoid name="Tacan_135Hz_Modulation" amplitude="1" frequency="135 Hz" phase="bearing"/>
+				<Sinusoid name="Tacan_15Hz_Modulation" amplitude="1" frequency="15 Hz" phase="bearing"/>
+				<TimedEvent name="Random_Event_A" delay="0 s" duration="20 us" period="37 us"/>
+				<Sinusoid name="Tacan_Carrier" amplitude="car_ampl" frequency="freq" phase="0 rad"/>
+				<ProbabilityEvent name="Random_Event_B" probability="10%" Gate="RB_Mask" In="Random_Event_A"/>
+				<TimedEvent type="Time" name="Reference_Burst" delay="10 us" duration="20 us" period="50 us" Gate="RB_Gate"/>
+				<Sum name="Tacan_Modulation" In="Tacan_135Hz_Modulation Tacan_15Hz_Modulation"/>
+				<OrEvent name="Tacan_Event_Train" In="Random_Event_B Reference_Burst"/>
+				<AM name="Tacan_Modulated_Carrier" modIndex="mod_index" Carrier="Tacan_Carrier" In="Tacan_Modulation"/>
+				<PulseTrain name="Tacan_Response_Train" pulses="(0 s, 3.5 us, 1), (15.5 us, 3.5 us, 1)" Gate="Tacan_Event_Train" In="Tacan_Modulated_Carrier"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>The transponder generates 2700 pulse pairs per second but with a jittered PRF.
+
+The rotating antenna modulates this signal at 15 Hz and 135 Hz using the same principles as the variable phase in a VOR signal. 
+
+The MRB and ARB comprise 12 and 6 equally spaced pulse pairs, respectively. Spacing has been assumed to be 30 s in the model. MRB and ARB pulse trains take priority over interrogator and randomly generated pulse-pairs; therefore the model suppresses these pulse pairs at the appropriate time.
+
+This model is a limited implementation to provide the basic TACAN signal. Many properties have been included as fixed parameters and have not been made externally accessible to the user. Some parameters, such as the beacon identification signal (comprising 2 or 3 Morse letters) and speed (i.e., variable pulse width and spacing) have not been addressed in model.
+</notes>
+			<rules/>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="TRIANGULAR_WAVE_SIGNAL" uuid="{7C5304C2-A118-46D6-83F2-8AD2176B6161}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="TRIANGULAR_WAVE_SIGNAL">
+					<xs:annotation>
+						<xs:documentation>A periodic wave whose instantaneous value varies alternately and linearly between two specified values (i.e., initial and alternate). The interval required to transition from the initial value to the alternate value is equal to the interval to transition from the alternate value to the initial value.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="ampl" type="Physical">
+									<xs:annotation>
+										<xs:documentation>Triangular wave signal amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="period" type="Time">
+									<xs:annotation>
+										<xs:documentation>Trianglar wave signal period</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="dc_offset" type="Physical" default="0">
+									<xs:annotation>
+										<xs:documentation>DC offset</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="Triangular_Wave_Signal" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Constant name="Triangle_DC_Offset" amplitude="dc_offset"/>
+				<Triangle name="Triangular_Wave" amplitude="ampl" period="period"/>
+				<Sum name="Triangular_Wave_Signal" In="Triangle_DC_Offset Triangular_Wave"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes/>
+			<rules>For this signal, the allowable types are Voltage, Current and Power. All types must be consistent, thus for example, if the triangular wave signal amplitude is specified in volts then the dc offset must also be specified in volts.</rules>
+		</tsf:description>
+	</tsf:TSF>
+	<tsf:TSF name="VOR" uuid="{F3F9EB3B-3BF2-4460-8BB9-192D7C71FC65}">
+		<tsf:interface>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+				<xs:element name="VOR">
+					<xs:annotation>
+						<xs:documentation>VHF omnidirectional range (VOR) is a system combining ground based and airborne equipment to provide bearing to or from a ground station, as defined in ARINC Specification 579-2. The VOR radiates an RF carrier in the band 108.0 MHz to 117.975 MHz, with which are associated two separate 30 Hz modulations. The phase of one of these modulations is independent of the point of observation (i.e., reference phase). The phase of the other modulation (variable phase) is such that, at a point of observation, it differs from the reference phase by an angle equal to the bearing of the point of observation with respect to the VOR. The two separate modulations consist of the following:
+
+A sub-carrier of 9960 Hz, frequency modulated at 30 Hz, modulating the carrier to a nominal depth of 30%. This 30 Hz component is fixed independent of the azimuth and is termed the <i>reference phase</i>.
+
+A 30 Hz component, modulating the carrier to a nominal depth of 30%. This 30 Hz component is caused by a rotating antenna producing a change in phase with azimuth and is termed the <i>variable phase</i>.
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SignalFunctionType">
+								<xs:attribute name="car_ampl" type="Voltage" default="2 mV">
+									<xs:annotation>
+										<xs:documentation>Carrier amplitude</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="car_freq" default="107.975 MHz">
+									<xs:annotation>
+										<xs:documentation>Carrier frequency</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="Frequency" std1:minInclusive="107.975 MHz  " std1:maxInclusive=" 117.975 MHz"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="phase" type="PlaneAngle" default="90 deg">
+									<xs:annotation>
+										<xs:documentation>Radial bearing</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</tsf:interface>
+		<tsf:model>
+			<Signal Out="VOR_Signal" xmlns="urn:IEEE-1641:2010:STDBSC">
+				<Sinusoid name="Ref_Tone" amplitude="1 V" frequency="30 Hz" phase="0 rad"/>
+				<Sinusoid name="VOR_Carrier" amplitude="{car_ampl.magnitude/2}" frequency="car_freq" phase="0 deg"/>
+				<Sinusoid name="Var_Tone" amplitude="1 V" frequency="30 Hz" phase="phase"/>
+				<FM name="Modulated_Sub_Carrier" carrierFrequency="9960 Hz" frequencyDeviation="480 Hz" In="Ref_Tone"/>
+				<AM name="Variable_Phase" Carrier="VOR_Carrier" In="Var_Tone"/>
+				<AM name="Reference_Phase" Carrier="VOR_Carrier" In="Modulated_Sub_Carrier"/>
+				<Sum name="VOR_Signal" In="Variable_Phase Reference_Phase"/>
+			</Signal>
+		</tsf:model>
+		<tsf:description>
+			<notes>This model has limited functionality. It does not provide for the variation of some of the parameters (such as the tone frequencies). The model may be modified by the user to include such parameters in the interface properties.</notes>
+			<rules/>
+		</tsf:description>
+	</tsf:TSF>
+	
+</tsf:TSFLibrary>

@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<about>
+  <product>
+    <title>ATML Workbench</title>
+    <description></description>
+    <License></License>
+  </product>
+  <environment>
+    <platform>
+      <name>Windows</name>
+      <minimum-required-version>Windows 7 sp1</minimum-required-version>
+    </platform>
+    <platform>
+      <name>.Net</name>
+      <minimum-required-version>4.0</minimum-required-version>
+    </platform>
+  </environment>
+  <development>
+    <language name="C#" ></language>
+    <language name="C++" ></language>
+  </development>
+  <actors>
+    <actor name="Jonathan Ott" title="Software Engineer" >
+      <responsibility>ATLAS Parsing</responsibility>
+      <responsibility>ATLAS Interpretation Engine</responsibility>
+    </actor>
+    <actor name="Brian Gabotta" title="Electrical Engineer" >
+      <responsibility>Signal Model Library</responsibility>
+      <responsibility>Technical Support</responsibility>
+    </actor>
+    <actor name="Paul Garrison" title="Software Engineer/Architect" >
+      <responsibility>System Design</responsibility>
+      <responsibility>Integrated Development Environment(IDE) Framework</responsibility>
+      <responsibility>IDE Data Collection Screens and Controls</responsibility>
+      <responsibility>Database Development</responsibility>
+      <responsibility>XSLT Development</responsibility>
+      <responsibility>Library Development</responsibility>
+    </actor>
+    <actor name="Christopher Ott" title="Student Intern" >
+      <responsibility>IDE Data Collection Screens and Controls</responsibility>
+      <responsibility>Signal Mapping</responsibility>
+    </actor>
+    <actor name="Paul Mann" title="Consultant" >
+      <responsibility>ATLAS Parsing Engine</responsibility>
+    </actor>
+    <actor name="Kenneth Write" title="Project Manager" >
+      <responsibility>Project Management and Coordination</responsibility>
+    </actor>
+  </actors>
+  <platform>
+    
+     
+  </platform>
+  <libraries>
+    <library name="Scintilla" >
+      <license></license>
+    </library>
+    <library name="DocPanel" >
+      <license></license>
+    </library>
+    <library name="Iconic.Zip" >
+      <license></license>
+    </library>
+  </libraries>
+    
+</about>

@@ -1,0 +1,255 @@
+<messages>
+     <message key="ACPowerRequirement.Description">The PowerSpecifications/AC/Description child element shall describe the ac power. This description may include such items as three-phase configurations (delta or wye), electromagnetic interference and electromagnetic compatibility (EMI/EMC) characteristics, etc.</message>
+     <message key="ACPowerRequirement.Phase">The dimensionless number of phases to the ac power form. The default shall be 1. Example: 3 (indicating a three-phase ac requirement that is either a delta or a wye configuration).</message>
+     <message key="ACPowerRequirement.Pins">The PowerSpecifications/AC/ConnectorPins child element shall identify the ac power connector pins.</message>
+     <message key="ATMLTranslatorToolWindow.Segmented">Segmented Source File are .....</message>
+     <message key="Bus.DefaultAddress">A string that permits the instrument’s default address to be indicated. Example: “255” (for VXI dynamic addressing)</message>
+     <message key="CacheManager.noCacheError">A Cache with the name \"{0}\" does not exist</message>
+     <message key="Capability.Description"> The Item/Description child element shall be a description of the hardware item.</message>
+     <message key="Capability.Name">A descriptive or common name for the hardware item.</message>
+     <message key="Capability.port.delete">Delete port \"{0}"?</message>
+     <message key="Collection.Confidence">The DatumQuality/Confidence child element shall contain the required confidence.</message>
+     <message key="Collection.DefNonStndardUnit"> Any nonstandard unit not already defined in IEEE Std 260.1</message>
+     <message key="Collection.DefStndardUnit">When used, this attribute shall contain only a unit of measure defined in IEEE Std 260.1</message>
+     <message key="Collection.DefUnitQualifier">A textual qualifier that is to be applied to the attribute of either the standardUnit or nonStandardUnit. Examples: RMS or Peak-to-Peak for a standardUnit of volts.</message>
+     <message key="Collection.Resolution">The DatumQuality/Resolution child element shall contain the required resolution.</message>
+     <message key="Component.id">A user-defined string uniquely identifying the subassembly. Example: Pre-Amp A1.</message>
+     <message key="Connector.id">A user-defined string uniquely identifying the connector. Example: J1.</message>
+     <message key="Connector.location">A descriptive or common name of where the connector is located. Example: Front Panel.</message>
+     <message key="Connector.matingConnectorType">A descriptive or common name for the mating connector. Example: The mating connector for a 15-pin d-shell connector (male) is a 15-pin d-shell connector (female).</message>
+     <message key="Connector.matingType">A descriptive or common name for the mating connector. Example: The mating connector for a 15-pin d-shell connector (male) is a 15-pin d-shell connector (female).</message>
+     <message key="Connector.pinConfiguration">A selectable list of different pin configurations for the selected connector type.</message>
+     <message key="Connector.pinCount">The number of pins the connector has. This number will be used to create empty Connector Pins.</message>
+     <message key="Connector.pinType">The number of pins contained within the connector.</message>
+     <message key="Connector.type">A descriptive or common name for the type of connector. Example: MIL-C-38999.</message>
+     <message key="ConnectorLocationPin.ConnectorId">A user-defined string uniquely identifying the connector.</message>
+     <message key="ConnectorLocationPin.PinId">A user-defined string uniquely identifying the pin within the connector.</message>
+     <message key="ConnectorPin.BaseIndex">Starting index for the items.</message>
+     <message key="ConnectorPin.Count">Number of identical items.</message>
+     <message key="ConnectorPin.ID">A user-defined string uniquely identifying the connector pin.</message>
+     <message key="ConnectorPin.IncrementBy">Specifies the value by which the items are to be incremented.
+</message>
+     <message key="ConnectorPin.Name">A descriptive or common name for the connector pin.</message>
+     <message key="ConnectorPin.ReplacementChar">Specifies the character replacement in association with the calculated index.</message>
+     <message key="ControlLanguage.Generic">The Generic complex type shall be the base type for XML schema elements intended to identify the document that contains the instrument’s generic control language specification.</message>
+     <message key="ControlLanguage.Register">The Register complex type shall be the base type for XML schema child elements intended to identify the document that contains the instrument’s register commands.</message>
+     <message key="ControlLanguage.SCPI">The SCPI complex type shall be the base type for XML schema elements intended to identify the document that contains the instrument’s SCPI commands.</message>
+     <message key="ControlLanguage.Type">Select the base type for the Control Language.</message>
+     <message key="CrossPointSwitchControl.LineCount">The number of matrix lines available to connect the rows and columns.</message>
+     <message key="CrossPointSwitchControl.Ports">Cross Point Switch Ports for the Rows and Columns.</message>
+     <message key="DatumType.Confidence">The DatumQuality/Confidence child element shall contain the required confidence.</message>
+     <message key="DatumType.DatumType">The DatumType complex type shall be the base type for XML schema elements that contain a numeric, boolean, string, or a date-time data value, each with an optional unit.</message>
+     <message key="DatumType.Resolution">The DatumQuality/Resolution child element shall contain the required resolution.</message>
+     <message key="DCPower.Description">The PowerSpecifications/DC/Description child element shall describe the dc power.</message>
+     <message key="DCPower.Polarity">An indication of the polarity of the dc voltage with respect to ground. Examples: positive and negative.</message>
+     <message key="DCPower.Ripple">The ac component of the dc voltage.</message>
+     <message key="Document.controlNumber">A unique identifier for the document.</message>
+     <message key="Document.description">A textual description of the document.</message>
+     <message key="Document.name">A descriptive or common name for the document</message>
+     <message key="Document.text">Either the document text or the URL where the document may be accessed.</message>
+     <message key="Document.uuid">The universal unique identifier for the document.</message>
+     <message key="Document.version">The version identification of the document.</message>
+     <message key="DocumentReference.id">A user-defined string uniquely identifying the
+document.</message>
+     <message key="DocumentReference.uuid">The universal unique identifier for the document.</message>
+     <message key="Driver.Platform.HardDisk">The minimum storage capacity needed to store the software driver and permit its execution. Example: 6 GB.</message>
+     <message key="Driver.Platform.Memory">The minimum physical memory capacity needed for the software driver to execute. Example: 512 MB.</message>
+     <message key="Driver.Platform.OperatingSystem">The OperatingSystem child element shall identify computer operating system requirements needed in order for the driver to execute.</message>
+     <message key="Driver.Platform.Processor">The minimum clock speed of the processor required for the software driver to execute. Example: 10 GHz or greater Acme-3 processor.</message>
+     <message key="DriverPlatformOperatingSystem.ServicePack">The operating system’s service pack identification. Example: Service Pack 1.1. </message>
+     <message key="EnvironmentElements.Altitude">The EnvironmentalElements/Altitude child element shall contain an altitude value.</message>
+     <message key="EnvironmentElements.Humidity">The EnvironmentalElements/Humidity child element shall contain the relative humidity value.</message>
+     <message key="EnvironmentElements.shock">The EnvironmentalElements/Shock child element shall contain the physical shock value.</message>
+     <message key="EnvironmentElements.temperature">The EnvironmentalElements/Temperature child element shall contain the temperature value.</message>
+     <message key="EnvironmentElementsVibrations.displacement">The EnvironmentalElements/Vibration/Displacement child element shall contain the displacement (the amplitude of a point on the item) value.</message>
+     <message key="EnvironmentElementsVibrations.frequency">The EnvironmentalElements/Vibration/Frequency child element shall contain the natural resonance frequency value.</message>
+     <message key="EnvironmentElementsVibrations.velocity">The EnvironmentalElements/Vibration/Velocity child element shall contain the acceleration (rate of change of velocity of a point in an item) value.</message>
+     <message key="ErrorControl.Description">The HardwareItemDescription/Errors/Error/Description child element shall provide a description of the error associated with the hardware item.</message>
+     <message key="ErrorControl.ID">A user-defined string uniquely identifying the error. Example: built-in test (BIT) #5 failure.</message>
+     <message key="ErrorControl.Source">A descriptive or common name for the source of the error. Example: Power-up BIT.</message>
+     <message key="ErrorControl.Type">The severity of the error. Example: Fatal.</message>
+     <message key="Ethernet.SupportsDHCP">Check to indication as to whether the instrument’s Ethernet interface supports the Dynamic Host Configuration Protocol (DHCPv4 Specification RFC 4361 [B3])</message>
+     <message key="FileManager.ReadFileError">Error: Could not read file from disk. Original error: {0}</message>
+     <message key="Generic.delete.prompt">Are you sure you want to delete {0} "{1}?"</message>
+     <message key="Generic.title.verification">V E R I F I C A T I O N</message>
+     <message key="HardwareItemDescCalibrationReq.Frequency">An indication of how often calibration shall be performed. Y: Year, M:Month, D:Day, H:Hour, m:Minute, s:Second</message>
+     <message key="HarwareDescOperationReq.WarmupTime">The warm-up time of the hardware item. </message>
+     <message key="Identification.designator">An alphanumeric string that identifies an item
+within a larger assembly. For example, a
+reference designator such as A25 to indicate a
+circuit card number.</message>
+     <message key="Identification.ModelName">The model name of the item.</message>
+     <message key="Identification.version">A string designating the version of the described
+item.</message>
+     <message key="InformationNumber.manufacturerName">A descriptive or common name for the manufacturer. (Required only for a Manufacturer Identification type)</message>
+     <message key="InformationNumber.number">Identification Number</message>
+     <message key="InformationNumber.qualifier">An adjective providing additional descriptive data that further specify or identify the ‘number’ attribute. Example: the identification number specified by the User. (Required only for a User Identification type)</message>
+     <message key="InformationNumber.type">An indication of whether the
+c:IdentificationNumber is a part number, model
+number, or other.</message>
+     <message key="instrument.capability.port.map.path">/inst:InstrumentDescription/inst:Capabilities/hc:Capability[@name="{0}"]/hc:Interface/c:Ports/c:Port[@name="{1}"]</message>
+     <message key="instrument.resource.port.map.path">/inst:InstrumentDescription/inst:Resources/hc:Resource[@name="{0}"]/hc:Interface/c:Ports/c:Port[@name="{1}"]</message>
+     <message key="InstrumentDescription.name">A descriptive or common nomen for the described item.</message>
+     <message key="InstrumentDescription.type">Used to describe the type of instrument. It may be one of the following values:
+
+   Module
+   Instrument
+   Option</message>
+     <message key="InstrumentDescription.uuid">Universally Unique Identifier for the Instrument Description.</message>
+     <message key="InstrumentDescription.version">A string designating the version of the described item.</message>
+     <message key="Item.description">A detailed description of the item.</message>
+     <message key="Item.name">A descriptive or common name for the item.</message>
+     <message key="ItemDescription.description">The ItemDescription/Description child element shall contain a free-form textual description of the item described.</message>
+     <message key="ItemDescription.name">A descriptive or common name for the described item.</message>
+     <message key="ItemDescription.version">A string designating the version of the described item.</message>
+     <message key="LegalDocument.Type">A descriptive or common name for the document</message>
+     <message key="Limit.comparitor">The comparison with the two boundary limits may be for a value between the limits or outside the limits. The LogicalOperator AND explicitly indicates a between comparison; OR explicitly indicates an outside comparison. Example: GT 3 AND LT 7 (between) vs. GT 10 OR LT 3 (outside). While the logical operator may be inferred from the combination of limit values and comparison types, the LogicalOperator attribute permits better definition and less possibility for misinterpretation.</message>
+     <message key="Limit.standardUnit">When used, this attribute shall contain only a unit of measure defined in IEEE Std 260.1</message>
+     <message key="limit.value">The actual value of the data.</message>
+     <message key="LimitControl.Description">The Limit/Description child element shall contain a textual description of the limit being described.</message>
+     <message key="LimitControl.LimitType">Selection for the Type of Limit: Expected, Single Limit, Limit Pair or Mask.</message>
+     <message key="LimitControl.Name">A descriptive or common name for the limit expressed in the element.</message>
+     <message key="LimitControl.Operator">The comparison with the two boundary limits may be for a value between the limits or outside the limits. The LogicalOperator AND explicitly indicates a between comparison; OR explicitly indicates an outside comparison. Example: GT 3 AND LT 7 (between) vs. GT 10 OR LT 3 or GT 5 OR GT 10 (outside). While the logical operator may be inferred from the combination of limit values and comparison types, the c:LogicalOperator attribute permits better definition and less possibility for misinterpretation.</message>
+     <message key="LimitControl.QuickEntry">A means to add a limit quickly byt typing in a shorthand notation. (ex. 3V to 5V)</message>
+     <message key="LimitPairControl.Name">A descriptive or common name for the limit pair expressed in the element</message>
+     <message key="LimitPairControl.Nominal">The LimitPair/Nominal child element shall contain the expected or preferred value to be captured.</message>
+     <message key="LimitPairControl.Operator">The comparison with the two boundary limits may be for a value between the limits or outside the limits. The LogicalOperator AND explicitly indicates a between comparison; OR explicitly indicates an outside comparison. Example: GT 3 AND LT 7 (between) vs. GT 10 OR LT 3 (outside). While the logical operator may be inferred from the combination of limit values and comparison types, the LogicalOperator attribute permits better definition and less possibility for misinterpretation.</message>
+     <message key="Linit.datatype">The data type of the value.</message>
+     <message key="LXI.Class">The LXI class. The allowable classes are: A, B, or C.</message>
+     <message key="LXI.Version">A string that permits the LXI version to be indicated. Example: “1.2.01”</message>
+     <message key="ManufacturerData">The ManufacturerData complex type shall be the base type for any XML schema element that is intended to contain information identifying the manufacturer of an item.</message>
+     <message key="ManufacturerData.address">The textual description of the physical street address. The second line is for textual description of additional street address information (e.g., suite number, mail stop) that shall be associated with Address1.</message>
+     <message key="ManufacturerData.cageCode">The commercial and government entity (CAGE) code for the company indicated by the name attribute.</message>
+     <message key="ManufacturerData.city">The textual description of the city.</message>
+     <message key="ManufacturerData.contacts">All the contacts assiciated with the manufacturer.</message>
+     <message key="ManufacturerData.country">The manufacturer's country.</message>
+     <message key="ManufacturerData.faxNumber">The textual representation of the facsimile telephone number of the manufacturer.</message>
+     <message key="ManufacturerData.HasAddress">Check if the Manufacturer has an address</message>
+     <message key="ManufacturerData.mailingAddress">The  textual representation of the postal mailing address of the manufacturer</message>
+     <message key="ManufacturerData.name">A descriptive or common name for the manufacturer.</message>
+     <message key="ManufacturerData.postalCode">The postal/zip code code for the manufacturer.</message>
+     <message key="ManufacturerData.state">
+     </message>
+     <message key="ManufacturerData.URL">The URL of the Web site for the manufacturer.</message>
+     <message key="ManufacturerDataContact.email">The email address for the contact.</message>
+     <message key="ManufacturerDataContact.name">The contact’s given name. (Required)</message>
+     <message key="ManufacturerDataContact.phoneNumber">The contact’s telephone number.</message>
+     <message key="MatrixSwitchControl.Pins">Pin Descriptions for the Matrix Switch Rows and Columns.</message>
+     <message key="NamedValue.Name">A descriptive or common name for the subject data value.</message>
+     <message key="NetworkControl.BaseIndex">Starting index for the items.</message>
+     <message key="NetworkControl.Count">Number of identical items.</message>
+     <message key="NetworkControl.Description">The Network/Description child element shall provide a description of the network connection.</message>
+     <message key="NetworkControl.IncrementBy">Specifies the value to increment by when calculating the value with which the replacement character is replaced.  Allows for defining items where paired items have different characteristics.  Defaults to 1.</message>
+     <message key="NetworkControl.Nodes">The NetworkNode complex type shall be the base type for XML schema elements intended to document properties of the network node to which the hardware item is connected.</message>
+     <message key="NetworkControl.ReplChar">Character replaced with calculated index when repeated items are expanded.</message>
+     <message key="NetworkNodeControl.Path">The NetworkNode/Path child element describes the XPath expression that shall evaluate to a single node. This single node is part of the path.</message>
+     <message key="NetworkNodeControl.Path.UUID">The UUID for the document referenced by the element.</message>
+     <message key="NetworkNodeControl.PathDescription">The NetworkNode/Description child element shall describe the network node to which the hardware item is connected.</message>
+     <message key="NetworkNodeControl.UUID"> The NetworkNode/Path child element describes the XPath expression that shall evaluate to a single node. This single node is part of the path.</message>
+     <message key="PCI.DeviceId">The identification of the particular instrument. This identifier (ID) is allocated by the vendor.</message>
+     <message key="PCI.VendorId">The identification of the manufacturer of the instrument. Valid vendor IDs are allocated by the PCI Special Interest Group (PCI-SIG) to ensure uniqueness.</message>
+     <message key="PhysicalChacaterisics.Mass">The PhysicalCharacteristics/Mass child element shall identify the mass of the subject hardware item.</message>
+     <message key="PhysicalChacaterisics.Volume">The PhysicalCharacteristics/Volume child element shall identify the physical volume of the subject hardware item.</message>
+     <message key="PhysicalChar.LinearMeasurments.RackSize">The PhysicalCharacteristics/LinearMeasurements/RackUSize child element shall identify the rack unit size of the subject hardware item.</message>
+     <message key="PhysicalCharLinearControl.ChooseEntry">Select the rack size units to enter. If you select anything other than "Rack Units", the Rack Unit value will be calculated for you.</message>
+     <message key="PhysicalCharLinearControl.Depth">The PhysicalCharacteristics/LinearMeasurements/Depth child element shall identify the lineal depth measurement of the subject hardware item.</message>
+     <message key="PhysicalCharLinearControl.Height">The PhysicalCharacteristics/LinearMeasurements/Height child element shall identify the lineal height measurement of the subject hardware item.</message>
+     <message key="PhysicalCharLinearControl.Inches">The RackUSize child element shall identify the rack unit size of the subject hardware item in inches.</message>
+     <message key="PhysicalCharLinearControl.Millimeters">The RackUSize child element shall identify the rack unit size of the subject hardware item in millimeters.</message>
+     <message key="PhysicalCharLinearControl.RackUnits">The RackUSize child element shall identify the rack unit size of the subject hardware item.</message>
+     <message key="PhysicalCharLinearControl.Width">The PhysicalCharacteristics/LinearMeasurements/Width child element shall identify the lineal width measurement of the subject hardware item.</message>
+     <message key="Port.direction">An enumeration providing for the specification of the direction in which data moves on the described port. Enumeration values are Input, Output, and Bi-Directional.</message>
+     <message key="Port.name">A descriptive or common name for the port. (Required)</message>
+     <message key="Port.type">An enumeration providing for the specification of the type of the described port. Enumeration values are Ground, Analog, Digital, Power, Optical, or Software.</message>
+     <message key="PXIBackplaneVoltage.Minus12">The amount of current on the –12 line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</message>
+     <message key="PXIBackplaneVoltage.Plus12">The amount of current on the +12 line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</message>
+     <message key="PXIBackplaneVoltage.Plus3.3">The amount of current on the +3.3 line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</message>
+     <message key="PXIBackplaneVoltage.Plus5">The amount of current on the +5 line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</message>
+     <message key="RepeatedItem.BaseIndex">Starting index for the items.</message>
+     <message key="RepeatedItem.Count">Number of identical items</message>
+     <message key="RepeatedItem.IncrementBy">Specifies the value to increment by when calculating the value with which the replacement character is replaced.  Allows for defining items where paired items have different characteristics.  Defaults to 1.</message>
+     <message key="RepeatedItem.ReplChar">Character replaced with calculated index when repeated items are expanded. </message>
+     <message key="ResourceControl.Index">The index of the element within an hc:RepeatedItem array.</message>
+     <message key="SecurityClassification.Classified">An indication that the element is or is not classified.
+If the item is classified then the level of classification must be selected from the associated drop list.</message>
+     <message key="SignalControl.In">A space delimited list of Ports that are used as inout parameters to this signal.</message>
+     <message key="SignalControl.Name">A nomen for this Signal.</message>
+     <message key="SignalControl.Out">The Signal Function Type selected to posess the signal value.</message>
+     <message key="SignalFunctionType.Inputs">Space delimited list of sibling Signal Funtion Types used as input parameters to this Signal Function Type.</message>
+     <message key="SignalFunctionType.Name">A string nomen for this Signal Function Type</message>
+     <message key="SpecControl.Description">The Specification/Description child element shall provide a short description in English of the specification.</message>
+     <message key="SpecControl.Name">A descriptive or common name for the specification. Example: Acme ABCD DMM Product Specifications.</message>
+     <message key="SupportedClockSources.Backplane">Check to show that the device will accept a backplane clock. </message>
+     <message key="SupportedClockSources.External">Check to show that the device will accept an external clock. </message>
+     <message key="SupportedClockSources.Internal">Check if the device will accept an internal clock. </message>
+     <message key="SwitchPortControl.Pins">The SwitchPort/Pin child element shall identify a physical pin of a switch. Name: A descriptive or common name for the switch pin. Line: The number of lines available to connect the rows or columns.</message>
+     <message key="SwitchRelay,connection"> The Switch/Connections/RelaySetting/RelayConnection child element shall identify a path established by the relay setting.</message>
+     <message key="te">The manufacturer's state.</message>
+     <message key="Trigger.analog.level.type">The amplitude of the trigger signal.</message>
+     <message key="Trigger.analog.level.unit">The units associated with the trigger signal amplitude. Either %FullScale or +/-V shall be specified.</message>
+     <message key="Trigger.analog.number_of_bits">The resolution of the trigger signal amplitude reading. An integer number shall be specified.</message>
+     <message key="Trigger.digital.edge.detection">An identification of the digital edge that shall be present for the trigger to occur. The edge shall be Rising, Falling, or Selectable.</message>
+     <message key="Trigger.digital.level.detection">An identification of the digital level that shall be present for the trigger to occur. The level shall be High, Low, or Selectable.</message>
+     <message key="Trigger.digital.pulse.unit">The dimension associated with the pulse width’s value. Allowable dimensions shall be S, mS, uS, nS, pS, or fS.</message>
+     <message key="Trigger.digital.pulse.value">The numeric value of the pulse width.</message>
+     <message key="Trigger.property.description">Describe the trigger signal.</message>
+     <message key="Trigger.property.name">A descriptive or common name for the signal that will generate the trigger.</message>
+     <message key="Trigger.property.type">Type of Trigger - Analog Trigger Property Group: properties of an analog based trigger; Digital Trigger Property Group: properties of a digial based trigger; LAN Trigger Property Group: properties of a local area network based trigger; Software Trigger Property Group: properties of a trigger initiated by software.</message>
+     <message key="TriggerControl.Description">The Trigger/Description child element shall provide an accurate description of what the trigger signal is (e.g., electrically, in time, what the trigger is based upon).</message>
+     <message key="TriggerControl.Name">A descriptive or common name for the trigger.</message>
+     <message key="UUTDescription.name">A string that permits the name of the instance 
+document to be indicated.</message>
+     <message key="UUTDescription.uuid">uuid is a universal unique
+identifier for the element containing this attribute.</message>
+     <message key="UUTDescription.version">A string that permits the version of the instance </message>
+     <message key="Value.ValueType">The type of the value: Datum, Collection or Indexed Array</message>
+     <message key="VersionIdentifier.Version">An identification of the version number.</message>
+     <message key="VersionIdentifier.VersionName">A descriptive or common name for the version.</message>
+     <message key="VersionIdentifier.VersionQualifier">An indication of whether the version specified is the minimum or maximum.</message>
+     <message key="VXI.AirFlow">Represents Module Cooling as air flow in liters/sec.</message>
+     <message key="VXI.BackPressure">The module cooling as back pressure in mm/H2O</message>
+     <message key="VXIBackplane.Minus12">The amount of current on the –12 V line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</message>
+     <message key="VXIBackplane.Minus2">The amount of current on the –2 V line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</message>
+     <message key="VXIBackplane.Minus24">The amount of current on the –24 V line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</message>
+     <message key="VXIBackplane.Minus52">The amount of current on the –5.2 V line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</message>
+     <message key="VXIBackplane.Plus12">The amount of current on the +12 V line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</message>
+     <message key="VXIBackplane.Plus24">The amount of current on the +24 V line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</message>
+     <message key="VXIBackplane.Plus5">The amount of current on the +5 V line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</message>
+     <message key="VXIBackplane.Plus5Standby">The amount of current on the +5 V standby line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</message>
+     <message key="VXIKeying.BottomLeft">An integer representing the keying class (1 through 6) defined by VXI-1, Figure B.28 [B25]Classes 7, 8, and 9 are defined as follows:Class 7 = No local busClass 8 = Sensor ±16 VClass 9 = Sensor ±42 VBottom key supports D size modules. Bottom key on C size modules shall be specified as 7. </message>
+     <message key="VXIKeying.BottomRight">An integer representing the keying class (1 through 6) defined by the VXI-1, Figure B.28 [B25]Classes 7, 8, and 9 are defined as follows:Class 7 = No local busClass 8 = Sensor ±16 VClass 9 = Sensor ±42 VBottom key supports D size modules. Bottom key on C size modules shall be specified as 7. </message>
+     <message key="VXIKeying.TopLeft">An integer representing the keying class (1 through 6) defined by VXI-1, Figure B.28 [B25]Classes 7, 8, and 9 are defined as follows:Class 7 = No local busClass 8 = Sensor ±16 VClass 9 = Sensor ±42 VTop key supports C size modules only. </message>
+     <message key="VXIKeying.TopRight">An integer representing the keying class (1 through 6) defined by VXI-1, Figure B.28 [B25]Classes 7, 8, and 9 are defined as follows:Class 7 = No local busClass 8 = Sensor ±16 VClass 9 = Sensor ±42 VTop key supports C size modules only. </message>
+     <message key="Driver.Module">The Driver complex type shall be the base type for XML schema elements intended to document instrument drivers.</message>
+     <message key="VPPDriver.Prefix">The prefix to be used for all API functions in the VPP driver.</message>
+     <message key="DriverModule.FileName">A descriptive or common computer-based name for the driver.</message>
+     <message key="DriverModule.InstallationDirectory">A descriptive or common computer-based path to the directory where the driver is installed.</message>
+     <message key="DriverSelectionControl.SelectDriver"> IVI-C: A complex type shall be the base type for XML schema elements intended to document properties of an IVI C language (IVI-C) driver.
+
+ IVI-COM: A complex type shall be the base type for XML schema elements intended to document properties of an IVI component object module (IVI-COM) driver.
+
+IVI.NET: A complex type shall be the base type for XML schema elements intended to document properties of an IVI.NET driver.
+
+VPP: A complex type shall be the base type for XML schema elements intended to document properties of a VMEbus extensions for instrumentation (VXI) plug and play (VPP) driver.</message>
+     <message key="ControlTool.FilePath">The location of the software tool, within the operating system structure, on the hard disk.</message>
+     <message key="ControlTool.Dependencies">The HardwareItemDescription/Control/Tools/Tool/Dependencies child element shall identify a tool’s software and/or driver dependencies.</message>
+     <message key="ControlToolDepenency.DependencyType">identify a tool’s software or driver dependencies.</message>
+     <message key="TestEquipment.ControllerProcessor.Architecture">The Controller/Processor/Architecture child element shall identify the architecture of the processor (e.g., 8086).</message>
+     <message key="TestEquipment.ControllerProcessor.Type">The Controller/Processor/Type child element shall identify the type of processor (e.g., PentiumM, PowerPC).</message>
+     <message key="TestEquipment.ControllerProcessor.Quantity">The Controller/Processor/Quantity child element shall identify the number of processors.</message>
+     <message key="TestEquipment.ControllerProcessor.Speed">The Controller/Processor/Speed child element shall identify the processor’s clock speed.</message>
+     <message key="Controller.PhysicalMemory">The Controller/PhysicalMemory child element shall identify the physical memory of the controller.</message>
+     <message key="ControllerOperatingSystem.OSUpdates">The Controller/OperatingSystems/OperatingSystem/OperatingSystemUpdates child element shall identify all operating system updates installed on the controller.</message>
+     <message key="ControllerDrive.Name">A descriptive or common name for the disk drive. Examples: External Optical and CDROM. </message>
+     <message key="ControllerDrive.BootDrive">A Yes or No indication (1 or 0) of whether this disk drive serves as the controller’s boot drive.</message>
+     <message key="ControllerDrive.Size">The Controller/Storage/Drive/Size child element shall identify the disk drive’s storage capacity.</message>
+     <message key="Hardware.FacilitiesReq.Cooling"> The FacilitiesRequirements/Cooling child element shall identify any cooling requirements of the hardware item.
+          </message>
+     <message key="Hardware.FacilitiesReq.Hydraulic">The FacilitiesRequirements/Hydraulic child element shall identify hydraulic requirements of the hardware item.</message>
+     <message key="Hardware.FacilitiesReq.Pneumatic">The FacilitiesRequirements/Pneumatic child element shall identify pneumatic requirements of the hardware item.</message>
+     <message key="TestStation.Name">A descriptive or common name for the described Test Station.</message>
+     <message key="TestStation.Version">A string designating the version of the described Test Station.</message>
+     <message key="DCPower.ConnectorPins">The PowerSpecifications/DC/ConnectorPins/ConnectorPin child element shall identify the dc power connector pins.</message>
+     <message key="MatrixSwitch.name">A descriptive or common name for the hardware item.</message>
+     <message key="MatrixSwitch..description">The Item/Description child element shall be a description of the hardware item.</message>
+</messages>

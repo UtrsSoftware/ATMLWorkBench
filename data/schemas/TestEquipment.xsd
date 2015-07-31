@@ -1,0 +1,821 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2014 (x64) (http://www.altova.com) by XMLSpy User1 (Universal Technical Resource Services) -->
+<xs:schema xmlns:te="urn:IEEE-1671:2010:TestEquipment" xmlns:c="urn:IEEE-1671:2010:Common" xmlns:hc="urn:IEEE-1671:2010:HardwareCommon" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:IEEE-1671:2010:TestEquipment" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.12">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+
+This schema is specified in IEEE Std 1671-2010, "IEEE Standard
+for Automatic Test Markup Language (ATML) for Exchanging Automatic Test 
+Equipment and Test Information via XML."
+ 
+This schema is a World Wide Web Consortium (W3C) Extensible 
+Markup Language (XML) binding of the ATML Test Equipment component defined in IEEE
+Std 1671-2010,"IEEE Standard for Automatic Test Markup 
+Language (ATML) for Exchanging Automatic Test Equipment and Test
+Information via XML."
+
+The purpose of this schema is to provide unique test equipment types and attributes
+for ATML schemas.This schema uses the W3C XML Schema definition
+language as the encoding. This allows for interoperability and 
+the exchange of ATML component instances between various systems.
+This schema shall not be modified but may be included in 
+derivative works. 
+
+Copyright (c) 2010 Institute of Electrical and Electronics 
+Engineers, Inc.
+
+USE AT YOUR OWN RISK
+
+</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="urn:IEEE-1671:2010:Common" schemaLocation="Common.xsd"/>
+	<xs:import namespace="urn:IEEE-1671:2010:HardwareCommon" schemaLocation="HardwareCommon.xsd"/>
+	<xs:complexType name="TestEquipmentInstance">
+		<xs:annotation>
+			<xs:documentation>Base type: Extension of c:HardwareInstance
+Properties: base c:HardwareInstance
+The TestEquipment complex type shall be the base type for XML schema elements intended to document a specific test station or test adapter.
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="c:HardwareInstance">
+				<xs:sequence>
+					<xs:element name="Controllers" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Properties: isRef 0, content complex 
+The TestEquipmentInstance/Controllers element shall identify an ordered list of test station or test adapter controllers.
+</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Controller" type="te:Controller" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation>Base type: te:Controller 
+Properties: isRef 0, content complex 
+The TestEquipmentInstance/Controllers/Controller element shall identify an individual test station or test adapter controller.
+</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Software" type="te:Software" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Base type: te:Software
+Properties: isRef 0, content complex 
+The TestEquipmentInstance/Software child element shall identify the software within the test equipment.
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Paths" type="te:Paths" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Base type: te:Paths 
+Properties: isRef 0, content complex 
+The TestEquipmentInstance/Paths child element shall identify the signal paths through the specific piece of test equipment.
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Capabilities" type="hc:Capabilities" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Base type: hc:Capabilities
+Properties: isRef 0, content complex 
+The TestEquipmentInstance/Capabilities child element shall identify the capabilities of the specific piece of test equipment.
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SelfTestRuns" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Properties: isRef 0, content complex 
+The TestEquipmentInstance/SelfTestRuns child element shall identify self-test end-to-end runs on the specific piece of test equipment.
+</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="SelfTestRun" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation>Properties: isRef 0, content complex 
+The TestEquipmentInstance/SelfTestRuns/SelfTestRun child element shall identify the last self-test end-to-end run.
+</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="Description" type="c:NonBlankString" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>Base type: c:NonBlankString
+Properties: isRef 0, content simple 
+Facets: minLength 1, whiteSpace replace
+The TestEquipmentInstance/SelfTestRuns/SelfTestRun/Description child element shall identify the self-test that was run.
+</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="InstanceDocumentReference" type="c:DocumentReference" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>Base type: c:DocumentReference
+Properties: isRef 0, content complex 
+The TestEquipmentInstance/SelfTestRuns/SelfTestRun/InstanceDocumentReference child element shall identify the instance document associated with this self-test run.
+</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="Extension" type="c:Extension" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>Base type: c:Extension
+Properties: isRef 0, content complex
+The TestEquipmentInstance/SelfTestRuns/SelfTestRun/Extension child element shall provide a specific extension point for use cases that require elements not provided in the basic structure. 
+</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+										<xs:attribute name="name" type="c:NonBlankString" use="required">
+											<xs:annotation>
+												<xs:documentation>A descriptive or common name for the self-test last executed end to end.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="version" type="c:NonBlankString" use="optional">
+											<xs:annotation>
+												<xs:documentation>A string designating the version of the self-test last executed end to end.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="date" type="xs:dateTime" use="required">
+											<xs:annotation>
+												<xs:documentation>The date and time the self-test was run.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="SubSystemCalibration" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Properties: isRef 0, content complex 
+The TestEquipmentInstance/SubSystemCalibration child element shall identify the subsystem(s) calibrated independently of system calibration.
+</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="SubSystem" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation>Properties: isRef 0, content complex 
+The TestEquipmentInstance/SubSystemCalibration/SubSystem child element shall identify the subsystem calibrated.
+</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="CalibrationDate" type="xs:dateTime">
+												<xs:annotation>
+													<xs:documentation>Base type: xs:dateTime
+Properties: isRef 0, content simple 
+The TestEquipmentInstance/SubSystemCalibration/SubSystem/CalibrationDate child element shall identify the date and time the subsystem was last calibrated.
+</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="CalibrationFrequency" type="xs:duration" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>Base type: xs:duration
+Properties: isRef 0, content simple 
+The TestEquipmentInstance/SubSystemCalibration/SubSystem/CalibrationFrequency child element shall identify the how frequently the subsystem calibration is to be run.
+</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+										<xs:attribute name="name" type="c:NonBlankString" use="required">
+											<xs:annotation>
+												<xs:documentation>A descriptive or common name for the subsystem calibrated.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Configuration" type="c:NonBlankString" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Base type: c:NonBlankString
+Properties: isRef 0, content simple 
+Facets: minLength 1, whiteSpace replace
+The TestEquipmentInstance/Configuration child element shall identify the configuration of the specific piece of test equipment.
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Extension" type="c:Extension" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Base type: c:Extension
+Properties: isRef 0, content complex
+The TestEquipmentInstance/Extension child element shall provide a specific extension point for use cases that require elements not provided in the basic structure.
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TestEquipment">
+		<xs:annotation>
+			<xs:documentation>Base type: Extension of hc:HardwareItemDescription
+Properties: base hc:HardwareItemDescription
+The TestEquipment complex type shall be the base type for XML schema elements intended to document a family of test stations or test adapters.
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="hc:HardwareItemDescription">
+				<xs:sequence>
+					<xs:element name="FacilitiesRequirements" type="hc:FacilitiesRequirements" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Base type: hc:FacilitiesRequirements 
+Properties: isRef 0, content complex 
+The TestEquipment/FacilitiesRequirements child element shall identify the facility requirements.
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Controllers" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Properties: isRef 0, content complex 
+The TestEquipment/Controllers element shall identify an ordered list of test station or test adapter controllers.
+</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Controller" type="te:Controller" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation>Base type: te:Controller 
+Properties: isRef 0, content complex 
+The TestEquipment/Controllers/Controller element shall identify an individual test station or test adapter controller.
+</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Software" type="te:Software" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Base type: te:Software
+Properties: isRef 0, content complex 
+The TestEquipment/Software child element shall identify the software within the test equipment.
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Paths" type="te:Paths" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Base type: te:Paths 
+Properties: isRef 0, content complex 
+The TestEquipment/Paths child element shall identify the characteristics of the signal paths through the test equipment and interface hardware.
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Specifications" type="hc:Specifications" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Base type: hc:Specifications
+Properties: isRef 0, content complex 
+The TestEquipment/Specifications child element shall identify the specifications of the test equipment.
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Resources" type="hc:Resources" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Base type: hc:Resources
+Properties: isRef 0, content complex 
+The TestEquipment/Resources child element shall identify the resources within the test equipment.
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Switching" type="hc:Switching" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Base type: hc:Switching
+Properties: isRef 0, content complex 
+The TestEquipment/Switching child element shall identify the switching within the test equipment.
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Capabilities" type="hc:Capabilities" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Base type: hc:Capabilities
+Properties: isRef 0, content complex 
+The TestEquipment/Capabilities child element shall identify the capabilities of the test equipment.
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TerminalBlocks" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Properties: isRef 0, content complex 
+The TestEquipment/TerminalBlocks child element shall identify the terminal blocks within the test equipment.
+</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence maxOccurs="unbounded">
+								<xs:element name="TerminalBlock">
+									<xs:annotation>
+										<xs:documentation>Base type: Extension of hc:RepeatedItem
+Properties: isRef 0, content complex 
+The TestEquipment/TerminalBlocks/TerminalBlock child element shall identify a terminal block.
+</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="hc:RepeatedItem">
+												<xs:sequence>
+													<xs:element name="Interface" type="c:Interface">
+														<xs:annotation>
+															<xs:documentation>Base type: c:Interface
+Properties: isRef 0, content complex 
+The TestEquipment/Switching/Interface child element shall identify the terminal block interface.
+</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Software">
+		<xs:annotation>
+			<xs:documentation>Properties: isRef 0, content complex 
+The Software complex type shall be the base type for XML schema elements intended to document software not installed on the controller (e.g., self-test, calibration).
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SoftwareItem" type="c:ItemDescription" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Base type: c:ItemDescription 
+Properties: isRef 0, content complex 
+The Software/SoftwareItem child element shall identify the software program.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Paths">
+		<xs:annotation>
+			<xs:documentation>The Paths complex type shall be the base type for XML schema elements intended to document the paths within the test equipment.
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Path" type="te:Path" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Base type: te:Path
+Properties: isRef 0, content complex 
+The Paths/Path child element shall define a signal path within the test equipment.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Controller">
+		<xs:annotation>
+			<xs:documentation>Base type: Extension of c:ItemDescription 
+Properties: base c:ItemDescription
+The Controller complex type shall be the base type for XML schema elements intended to document the properties of a controller item.
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="c:ItemDescription">
+				<xs:sequence>
+					<xs:element name="OperatingSystems">
+						<xs:annotation>
+							<xs:documentation>Properties: isRef 0, content complex 
+The Controller/OperatingSystems child element shall identify all operating systems installed on the controller.
+</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="OperatingSystem" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation>Base type: Extension of c:ItemDescription 
+Properties: isRef 0, content complex 
+The Controller/OperatingSystems/OperatingSystem element shall identify a specific installed operating system.
+</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="c:ItemDescription">
+												<xs:sequence>
+													<xs:element name="OperatingSystemUpdates" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Properties: isRef 0, content complex 
+The Controller/OperatingSystems/OperatingSystem/OperatingSystemUpdates child element shall identify all operating system updates installed on the controller.
+</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="OperatingSystemUpdate" type="c:NonBlankString" maxOccurs="unbounded">
+																	<xs:annotation>
+																		<xs:documentation>Base type: c:NonBlankString
+Properties: isRef 0, content simple 
+Facets: minLength 1, whiteSpace replace
+The Controller/OperatingSystems/OperatingSystem/OperatingSystemUpdates/OperatingSystemUpdate child element shall identify an operating system patch, service pack, etc.
+</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="VideoCapabilities" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Properties: isRef 0, content complex 
+The Controller/VideoCapabilities child element shall identify the video capabilities of the controller.
+</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Video" type="c:NonBlankString" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation>Base type: c:NonBlankString
+Properties: isRef 0, content simple 
+Facets: minLength 1, whiteSpace replace
+The Controller/VideoCapabilities/Video child element shall identify the type of video (e.g., RGB, Raster).
+</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="AudioCapabilities" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Properties: isRef 0, content complex 
+The Controller/AudioCapabilities child element shall identify audio capabilities of the controller.
+</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Audio" type="c:NonBlankString" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation>Base type: c:NonBlankString
+Properties: isRef 0, content simple 
+Facets: minLength 1, whiteSpace replace
+The Controller/AudioCapabilities/Audio child element shall identify an audio capability.
+</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Processor">
+						<xs:annotation>
+							<xs:documentation>Properties: isRef 0, content complex 
+The Controller/Processor child element shall identify all of the controller’s processor(s).
+</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Architecture" type="c:NonBlankString" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Base type: c:NonBlankString
+Properties: isRef 0, content simple 
+Facets: minLength 1, whiteSpace replace
+The Controller/Processor/Architecture child element shall identify the architecture of the processor (e.g., 8086).
+</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="Type" type="c:NonBlankString" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Base type: c:NonBlankString
+Properties: isRef 0, content simple 
+Facets: minLength 1, whiteSpace replace
+The Controller/Processor/Type child element shall identify the type of processor (e.g., PentiumM, PowerPC).
+</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="Speed" type="c:double">
+									<xs:annotation>
+										<xs:documentation>Base type: c:double
+Properties: isRef 0, content complex 
+The Controller/Processor/Speed child element shall identify the processor’s clock speed.
+</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="Quantity" type="xs:int">
+									<xs:annotation>
+										<xs:documentation>Base type: xs:int
+Properties: isRef 0, content simple 
+The Controller/Processor/Quantity child element shall identify the number of processors.
+</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Peripherals" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Properties: isRef 0, content complex 
+The Controller/Peripherals child element shall identify all peripherals installed on the controller.
+</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Peripheral" type="c:ItemDescription" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation>Base type: c:ItemDescription
+Properties: isRef 0, content complex 
+The Controller/Peripherals/Peripheral child element shall identify a peripheral.
+</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="InstalledSoftware" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Properties: isRef 0, content complex 
+The Controller/InstalledSoftware child element shall identify all software installed on the controller.
+</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Software" type="c:ItemDescription" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation>Base type: c:ItemDescription 
+Properties: isRef 0, content complex 
+The Controller/InstalledSoftware/Software element shall identify a specific installed software item.
+</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="PhysicalMemory" type="c:double">
+						<xs:annotation>
+							<xs:documentation>Base type: c:double
+Properties: isRef 0, content complex 
+The Controller/PhysicalMemory child element shall identify the physical memory of the controller.
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Storage">
+						<xs:annotation>
+							<xs:documentation>Properties: isRef 0, content complex 
+The Controller/Storage child element shall identify the controller’s disk drives.
+</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Drive" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation>Properties: isRef 0, content complex 
+The Controller/Storage/Drive element shall identify a specific disk drive.
+</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="Size" type="c:double">
+												<xs:annotation>
+													<xs:documentation>Base type: c:double
+Properties: isRef 0, content complex 
+The Controller/Storage/Drive/Size child element shall identify the disk drive’s storage capacity.
+</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+										<xs:attribute name="name" type="c:NonBlankString" use="optional">
+											<xs:annotation>
+												<xs:documentation>A descriptive or common name for the disk drive. Examples: External Optical and CDROM. </xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="bootDrive" type="xs:boolean" use="optional">
+											<xs:annotation>
+												<xs:documentation>A Yes or No indication (1 or 0) of whether this disk drive serves as the controller’s boot drive.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PathNode">
+		<xs:annotation>
+			<xs:documentation>Base type: Extension of hc:NetworkNode
+Properties: isRef 0, content complex 
+The PathNode complex type shall be the base type for XML schema elements intended to document a node within a path.
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="hc:NetworkNode">
+				<xs:attribute name="name" type="c:NonBlankString" use="required">
+					<xs:annotation>
+						<xs:documentation>A descriptive or common name for the node. Used to reference the node when specifying path loss data.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Path">
+		<xs:annotation>
+			<xs:documentation>Properties: isRef 0, content complex 
+The Path complex type shall define a signal path within the test equipment.
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PathNodes">
+				<xs:annotation>
+					<xs:documentation>Properties: isRef 0, content complex 
+The Path/PathNodes child element shall define the beginning and end nodes associated with a single- or multiwire path. Switches may be present within a wire path.  
+</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Node" type="te:PathNode" minOccurs="2" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Base type: Extension of hc:NetworkNode
+Properties: isRef 0, content complex 
+The Path/PathNodes/Node child element shall identify a specific node.
+</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:sequence>
+				<xs:element name="SignalDelays" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Properties: isRef 0, content complex 
+The Path/SignalDelays child element shall identify the delay times of the signal through the paths. 
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SignalDelay" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Base type: Extension of c:Limit
+Properties: isRef 0, content complex 
+The Path/SignalDelays/SignalDelay child element shall identify the delay time of the signal through a particular path. 
+</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="c:Limit">
+											<xs:sequence>
+												<xs:element name="Frequency" type="c:Limit" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Base type: c:Limit
+Properties: isRef 0, content complex 
+The Path/SignalDelays/SignalDelay/Frequency child element shall identify the frequency range of the delay. 
+</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+											<xs:attribute name="inputPort" type="c:NonBlankString" use="required">
+												<xs:annotation>
+													<xs:documentation>A descriptive or common name for the input port.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="outputPort" type="c:NonBlankString" use="required">
+												<xs:annotation>
+													<xs:documentation>A descriptive or common name for the output port.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="VSWRValues" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Properties: isRef 0, content complex 
+The Path/VSWRValues child element shall identify the voltage standing wave ratio(s) (VSWRs) associated with a single- or multiwire path. Switches may be present within a wire path.
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="VSWRValue" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Base type: Extension of c:Limit
+Properties: isRef 0, content complex 
+The Path/VSWRValues/VSWRValue child element shall identify the actual VSWR value.
+</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="c:Limit">
+											<xs:sequence>
+												<xs:element name="Frequency" type="c:Limit" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Base type: c:Limit
+Properties: isRef 0, content complex 
+The Path/VSWRValues/VSWRValue/Frequency child element shall identify the frequency range at which the VSWR of the path is valid.
+</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+											<xs:attribute name="inputPort" type="c:NonBlankString" use="required">
+												<xs:annotation>
+													<xs:documentation>A descriptive or common name for the input port.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SParameters" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Properties: isRef 0, content complex 
+The Path/SParameters child element shall identify the S-parameters associated with a path.
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SParameter" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Properties: isRef 0, content complex 
+The Path/SParameters/SParameter child element shall identify a specific S-parameter associated with the path.
+</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="SParameterData" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Properties: isRef 0, content complex 
+The Path/SParameters/SParameter/SParameterData child element shall identify a specific S-parameter.
+</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Magnitude" type="c:double">
+														<xs:annotation>
+															<xs:documentation>Base type: c:double
+Properties: isRef 0, content complex 
+The Path/SParameters/SParameter/SParameterData/Magnitude child element shall identify the magnitude of the S-parameter.
+</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="PhaseAngle" type="c:double" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Base type: c:double
+Properties: isRef 0, content complex 
+The Path/SParameters/SParameter/SParameterData/PhaseAngle child element shall identify the phase angle of the S-parameter.
+</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Frequency" type="c:double" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Base type: c:double
+Properties: isRef 0, content complex 
+The Path/SParameters/SParameter/SParameterData/Frequency child element shall identify the frequency of the S-parameter.
+</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="inputPort" type="c:NonBlankString" use="required">
+										<xs:annotation>
+											<xs:documentation>A descriptive or common name for the input port.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="outputPort" type="c:NonBlankString" use="required">
+										<xs:annotation>
+											<xs:documentation>A descriptive or common name for the output port.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Resistance" type="c:double" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Base type: c:double
+Properties: isRef 0, content complex 
+The Path/Resistance child element shall identify the resistance of the path.
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Extension" type="c:Extension" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Base type: c:Extension
+Properties: isRef 0, content complex
+The Path/Extension child element shall provide a specific extension point for use cases that require elements not provided in the basic structure.
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:sequence>
+		<xs:attribute name="name" type="c:NonBlankString" use="optional">
+			<xs:annotation>
+				<xs:documentation>A descriptive or common name for the path. Example: DMM HI to RFI Block 1 pin 3. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <!-- root element -->
+    <xsd:element name="atlas_asp" type="AtlasSourceParsed" />
+
+    <!-- definition of attributes -->
+    <xsd:attribute name="tpsname" type="xsd:string" />
+    <xsd:attribute name="tpsfile" type="xsd:string" />
+    <xsd:attribute name="programname" type="xsd:string" />
+    <xsd:attribute name="modulename" type="xsd:string" />
+    <xsd:attribute name="blocktype" type="xsd:string" />
+    <xsd:attribute name="lineno" type="xsd:int" />
+    <xsd:attribute name="testno" type="xsd:string" />
+    <xsd:attribute name="stepno" type="xsd:string" />
+    <xsd:attribute name="fieldno" type="xsd:int" />
+
+    <!-- definition of simple elements -->
+    <xsd:element name="flag" type="xsd:string" />
+    <xsd:element name="verb" type="xsd:string" />
+    <xsd:element name="source" type="xsd:string" />
+
+    <!-- definition of complex element types -->
+    <xsd:complexType name="ASPStatno">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute ref="testno" />
+                <xsd:attribute ref="stepno" />
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="ASPField">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute ref="fieldno" />
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    
+    <xsd:complexType name="ASPRemainder">
+        <xsd:sequence>
+            <xsd:element name="field" type="ASPField" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ASPStatement">
+        <xsd:sequence>
+            <xsd:element ref="flag" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="statno" type="ASPStatno" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="verb" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="remainder" type="ASPRemainder" minOccurs="1" maxOccurs="1" />
+            <xsd:element ref="source" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+        <xsd:attribute ref="lineno" />
+    </xsd:complexType>
+    
+    <xsd:complexType name="ASPBlock">
+        <xsd:choice minOccurs="1" maxOccurs="unbounded">
+            <xsd:element name="statement" type="ASPStatement" />
+            <xsd:element name="block" type="ASPBlock" />
+        </xsd:choice>
+        <xsd:attribute ref="blocktype" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ASPModule">
+        <xsd:choice minOccurs="1" maxOccurs="unbounded">
+            <xsd:element name="statement" type="ASPStatement" />
+            <xsd:element name="block" type="ASPBlock" />
+        </xsd:choice>
+        <xsd:attribute ref="modulename" />
+    </xsd:complexType>
+    
+    <xsd:complexType name="ASPProgram">
+        <xsd:choice minOccurs="1" maxOccurs="unbounded">
+            <xsd:element name="module" type="ASPModule" />
+            <xsd:element name="statement" type="ASPStatement" />
+            <xsd:element name="block" type="ASPBlock" />
+        </xsd:choice>
+        <xsd:attribute ref="programname" />
+    </xsd:complexType>
+    
+    <!-- definition of root element type -->
+<!--
+    <xsd:complexType name="AtlasSourceParsed">
+        <xsd:element name="statement" type="ASPStatement" />
+        <xsd:choice minOccurs="1" maxOccurs="1">
+            <xsd:element name="program" type="ASPProgram" />
+            <xsd:element name="module" type="ASPModule" />
+        </xsd:choice>
+        <xsd:attribute ref="tpsname" />
+    </xsd:complexType>
+-->
+    <xsd:complexType name="AtlasSourceParsed">
+        <xsd:choice minOccurs="1" maxOccurs="unbounded">
+            <xsd:element name="program" type="ASPProgram" />
+            <xsd:element name="module" type="ASPModule" />
+            <xsd:element name="statement" type="ASPStatement" />
+        </xsd:choice>
+        <xsd:attribute ref="tpsname" />
+        <xsd:attribute ref="tpsfile" />
+    </xsd:complexType>
+</xsd:schema>

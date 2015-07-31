@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<options>
+  <option name="Logging" imageId="8">
+    <controls>
+      <control name="logging.log.file" label="Log To File" class="Boolean" default="false"
+               description="Log files will be created daily (AWyyyy-mm-dd.log) and stored in the Windows Temp directory." ></control>
+      <control name="logging.debug.messages" label="Log Debug Messages" class="Boolean" default="false"
+               description="Setting this to true wll output all debug messages to the log file provided the Log To File property is set to true." ></control>
+    </controls>
+    </option>
+  <option name="Environment" imageId="0">
+    <option name="Visual" imageId="4">
+      <controls>
+        <control name="environment.visual.panel-color" label="Panel Color" class="Color" default="AliceBlue"></control>
+        <control name="environment.visual.sub-panel-color" label="Sub Panel Color" class="Color"
+                 default="LightSteelBlue">
+        </control>
+        <control name="environment.visual.form-color" label="Form Color" class="Color" default="SteelBlue"></control>
+        <control name="environment.visual.list-even-color" label="List Even Color Color" class="Color"
+                 default="#eeffee">
+        </control>
+        <control name="environment.visual.list-odd-color" label="List Odd Color" class="Color" default="White"></control>
+      </controls>
+      <option name="Tool Panes" imageId="4">
+        <option name="Active Pane" imageId="4">
+          <controls>
+            <control name="environment.visual.tool.active.gr1-color" label="Active Tool Panel Gradient 1 Color"
+                     class="Color" default="119,142,187">
+            </control>
+            <control name="environment.visual.tool.active.gr2-color" label="Active Tool Panel Gradient 2 Color"
+                     class="Color" default="69,92,137">
+            </control>
+            <control name="environment.visual.tool.active.text-color" label="Active Tool Panel Text Color"
+                     class="Color" default="White">
+            </control>
+          </controls>
+        </option>
+      </option>
+    </option>
+    <option name="Database" imageId="5">
+      <controls>
+        <control name="environment.database.provider" label="Provider" default="Microsoft.ACE.OLEDB.12.0"
+                 class="String">
+        </control>
+        <control name="environment.database.name" label="Name" default="sbir-n21-027.accdb" class="String"></control>
+      </controls>
+    </option>
+    <option name="Network" imageId="7">
+      <option name="HTTP Server" imageId="6">
+        <controls>
+          <control name="http.port" label="HTTP Port" default="8081" class="Int32"></control>
+        </controls>
+      </option>
+    </option>
+    <controls>
+      <control name="environment.company-name" label="Company" class="String"></control>
+      <control name="environment.document-location" label="Document Location" default="http://localhost:8081/document"
+               class="String">
+      </control>
+      <control name="environment.atml.xml-path" label="ATML Document Location" default="${PROJECTPATH}\atml"
+               class="String">
+      </control>
+      <control name="environment.source.filetypes" label="Source File Types"
+               default=".js, .cpp, .cs, .css, .java, .vb, .xml, .php, .asm, .xsl, .xslt, .txt, .tpsi, .as, .dat "
+               class="String">
+      </control>
+      <control name="environment.browser.filetypes" label="Browser File Types"
+               default=".bmp, .tif, .jpg, .png, .gif, .htm, .html, .xml, .xsl, .xslt, .txt, .pdf" class="String">
+      </control>
+      <control name="environment.supported.filetypes" label="Supported File Types"
+               default=".bmp, .tif, .jpg, .png, .gif, .htm, .html, .xml, .xsl, .xslt, .txt, .pdf, .doc, .docx, .dot, .dotx, csv, .xls, .xlsx, .vsd, .ppt, .pptx, .zip, .js, .cpp, .cs, .css, .java, .vb, .php, .asm, .tpsi, .as, .atl, .con, .dat"
+               class="String">
+      </control>
+    </controls>
+  </option>
+
+  <option name="Reader" imageId="1">
+
+  </option>
+
+  <option name="Allocator" imageId="2">
+
+  </option>
+
+  <option name="Translator" imageId="3">
+    <option name="Atlas" imageId="3">
+      <controls>
+        <control name="translator.atlas.source.ext" label="Source File Extensions" default=".as, .atl" class="String"></control>
+        <control name="translator.atlas.parser.application-file" label="Translator Application File" default="catlas2aixml.exe" class="String"></control>
+        <control name="translator.atlas.parser.xml-path" label="XML Path"
+                 default="${PROJECTPATH}\translator\aixml\${FILENAME}.xml" class="String"
+                 category="Paths" description="File location where the ATLAS Intermediate XML file will be written.">
+        </control>
+      </controls>
+    </option>
+  </option>
+
+
+</options>

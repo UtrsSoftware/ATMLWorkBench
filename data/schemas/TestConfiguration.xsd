@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="urn:IEEE-1671.4:2009.03:TestConfiguration" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.09" xmlns:tc="urn:IEEE-1671.4:2009.03:TestConfiguration" xmlns:c="urn:IEEE-1671:2010:Common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:annotation>
+
+    <xs:documentation xml:lang="en">
+
+
+
+      This schema is specified in IEEE Std 1671.4-2007, "IEEE Trial-Use Standard
+
+      for Automatic Test Markup Language (ATML) for Exchanging Automatic Test
+
+      Equipment and Test Information via XML:Exchanging Test Configuration Descriptions."
+
+
+
+      This schema is a World Wide Web Consortium (W3C) Extensible
+
+      Markup Language (XML) binding of the ATMLTest Configuration component defined in IEEE
+
+      Std 1671.4-2007,"IEEE Trial-Use Standard for Automatic Test Markup
+
+      Language (ATML) for Exchanging Automatic Test Equipment and Test
+
+      Information via XML:Exchanging Test Configuration Descriptions."
+
+
+
+      The purpose of this schema is to allow the creation of IEEE Std 1671.4-2007
+
+      Test Configuration instance documents.
+
+      This schema uses the W3C XML Schema definition
+
+      language as the encoding. This allows for interoperability and
+
+      the exchange of ATML component instances between various systems.
+
+      This schema shall not be modified but may be included in
+
+      derivative works.
+
+
+
+      Copyright (c) 2009 Institute of Electrical and Electronics
+
+      Engineers, Inc.
+
+
+
+      USE AT YOUR OWN RISK
+
+
+
+    </xs:documentation>
+
+  </xs:annotation>
+
+  <xs:import namespace="urn:IEEE-1671:2010:Common" schemaLocation="Common.xsd"/>
+
+  <xs:element name="TestConfiguration">
+
+    <xs:annotation>
+
+      <xs:documentation>TestConfiguration schema will encompass all information necessary to identify all of the hardware, software and documentation that may be necessary in order to test and diagnose a Unit Under Test (UUT) on a test station.  There may exist multiple TestConfiguration documents for a given UUT.</xs:documentation>
+
+    </xs:annotation>
+
+    <xs:complexType>
+
+      <xs:complexContent>
+
+        <xs:extension base="tc:TestConfiguration">
+
+          <xs:attributeGroup ref="c:DocumentRootAttributes"/>
+
+        </xs:extension>
+
+      </xs:complexContent>
+
+    </xs:complexType>
+
+  </xs:element>
+
+  <xs:complexType name="TestConfiguration">
+
+    <xs:sequence>
+
+      <xs:element name="ConfigurationManager" type="c:ManufacturerData" minOccurs="0">
+
+        <xs:annotation>
+
+          <xs:documentation>Identifies the activity responsible for maintaining configuration management of the UUT and TPS.</xs:documentation>
+
+        </xs:annotation>
+
+      </xs:element>
+
+      <xs:element name="TestedUUTs">
+
+        <xs:annotation>
+
+          <xs:documentation>Identifies the UUTs to which the configuration data applies.  Multiple UUTs can be listed in the case where the configurations are identical.</xs:documentation>
+
+        </xs:annotation>
+
+        <xs:complexType>
+
+          <xs:sequence>
+
+            <xs:element name="TestedUUT" type="c:ItemDescriptionReference" maxOccurs="unbounded"/>
+
+          </xs:sequence>
+
+        </xs:complexType>
+
+      </xs:element>
+
+      <xs:element name="TestEquipment">
+
+        <xs:annotation>
+
+          <xs:documentation>Collector element forTest Equipment Items</xs:documentation>
+
+        </xs:annotation>
+
+        <xs:complexType>
+
+          <xs:sequence>
+
+            <xs:element name="TestEquipmentItem" maxOccurs="unbounded">
+
+              <xs:annotation>
+
+                <xs:documentation>Identifies the family of test stations that are able to test the UUT.  Multiple stations can be listed that support the same UUT using the identical resources.</xs:documentation>
+
+              </xs:annotation>
+
+              <xs:complexType>
+
+                <xs:complexContent>
+
+                  <xs:extension base="c:ItemDescriptionReference">
+
+                    <xs:sequence>
+
+                      <xs:element name="Software" type="c:SoftwareInstance" minOccurs="0" maxOccurs="unbounded">
+
+                        <xs:annotation>
+
+                          <xs:documentation>The specific versions of test station software that this UUT is known to work with.</xs:documentation>
+
+                        </xs:annotation>
+
+                      </xs:element>
+
+                      <xs:element name="Instrumentation" type="c:ItemDescriptionReference" minOccurs="0" maxOccurs="unbounded">
+
+                        <xs:annotation>
+
+                          <xs:documentation>The test station assets required to test the UUT.</xs:documentation>
+
+                        </xs:annotation>
+
+                      </xs:element>
+
+                      <xs:element name="Resource" type="c:ItemDescriptionReference" minOccurs="0" maxOccurs="unbounded">
+
+                        <xs:annotation>
+
+                          <xs:documentation>Other non-instrumentation items required by the test station to test the UUT, such as extra cables, adapters, etc.</xs:documentation>
+
+                        </xs:annotation>
+
+                      </xs:element>
+
+                    </xs:sequence>
+
+                  </xs:extension>
+
+                </xs:complexContent>
+
+              </xs:complexType>
+
+            </xs:element>
+
+          </xs:sequence>
+
+        </xs:complexType>
+
+      </xs:element>
+
+      <xs:element name="TestProgramElements">
+
+        <xs:annotation>
+
+          <xs:documentation>Identifies all of the test program related hardware, software, and documentation.</xs:documentation>
+
+        </xs:annotation>
+
+        <xs:complexType>
+
+          <xs:choice maxOccurs="unbounded">
+
+            <xs:element name="TpsHardware" type="tc:ConfigurationResourceReference">
+
+              <xs:annotation>
+
+                <xs:documentation>References to TPS hardware required to test the UUT, such as the Interface Test Adapter, cables, holding fixtures, etc.</xs:documentation>
+
+              </xs:annotation>
+
+            </xs:element>
+
+            <xs:element name="TpsSoftware" type="tc:ConfigurationSoftwareReference">
+
+              <xs:annotation>
+
+                <xs:documentation>The specific versions of test program software used to test the UUT.</xs:documentation>
+
+              </xs:annotation>
+
+            </xs:element>
+
+            <xs:element name="Documentation">
+
+              <xs:annotation>
+
+                <xs:documentation>References to test program related documentation, such as Theories of Operation or Test Program Instructions.</xs:documentation>
+
+              </xs:annotation>
+
+              <xs:complexType>
+
+                <xs:complexContent>
+
+                  <xs:extension base="c:Document">
+
+                    <xs:attribute name="location" type="c:NonBlankString" use="optional"/>
+
+                    <xs:attribute name="documentNumber" type="c:NonBlankString" use="optional"/>
+
+                  </xs:extension>
+
+                </xs:complexContent>
+
+              </xs:complexType>
+
+            </xs:element>
+
+          </xs:choice>
+
+        </xs:complexType>
+
+      </xs:element>
+
+      <xs:element name="AdditionalSoftware" minOccurs="0">
+
+        <xs:annotation>
+
+          <xs:documentation>Other software, not typically classified as test program software, to be used to test the UUT, such as Operational Flight Programs.</xs:documentation>
+
+        </xs:annotation>
+
+        <xs:complexType>
+
+          <xs:sequence>
+
+            <xs:element name="AdditionalSoftwareItem" type="tc:ConfigurationSoftwareReference" maxOccurs="unbounded"/>
+
+          </xs:sequence>
+
+        </xs:complexType>
+
+      </xs:element>
+
+      <xs:element name="AdditionalResources" minOccurs="0">
+
+        <xs:annotation>
+
+          <xs:documentation>Additional hardware, not part of the test station, required for testing the UUT, such as unique personnel, roll-up test equipment, etc.</xs:documentation>
+
+        </xs:annotation>
+
+        <xs:complexType>
+
+          <xs:sequence>
+
+            <xs:element name="AdditionalResource" type="tc:ConfigurationResourceReference" maxOccurs="unbounded"/>
+
+          </xs:sequence>
+
+        </xs:complexType>
+
+      </xs:element>
+
+      <xs:element name="Extension" type="c:Extension" minOccurs="0">
+
+        <xs:annotation>
+
+          <xs:documentation>Managed point of extension.</xs:documentation>
+
+        </xs:annotation>
+
+      </xs:element>
+
+    </xs:sequence>
+
+  </xs:complexType>
+
+  <xs:complexType name="ConfigurationResourceReference">
+
+    <xs:annotation>
+
+      <xs:documentation>Base type for some TestConfiguration hardware references.</xs:documentation>
+
+    </xs:annotation>
+
+    <xs:complexContent>
+
+      <xs:extension base="c:ItemDescriptionReference">
+
+        <xs:attribute name="quantity" type="xs:int" use="required"/>
+
+        <xs:attribute name="location" type="c:NonBlankString" use="optional"/>
+
+        <xs:attribute name="type" type="c:NonBlankString" use="optional"/>
+
+      </xs:extension>
+
+    </xs:complexContent>
+
+  </xs:complexType>
+
+  <xs:complexType name="ConfigurationSoftwareReference">
+
+    <xs:annotation>
+
+      <xs:documentation>base type for TestConfiguration software elements.</xs:documentation>
+
+    </xs:annotation>
+
+    <xs:complexContent>
+
+      <xs:extension base="c:ItemDescriptionReference">
+
+        <xs:sequence>
+
+          <xs:element name="Documentation" type="c:Document" minOccurs="0"/>
+
+          <xs:element name="Checksum" minOccurs="0">
+
+            <xs:complexType>
+
+              <xs:attribute name="type" type="c:NonBlankString">
+
+                <xs:annotation>
+
+                  <xs:documentation>Optionally allows the method used to compute the checksum (i.e. MD5).</xs:documentation>
+
+                </xs:annotation>
+
+              </xs:attribute>
+
+              <xs:attribute name="value" type="c:NonBlankString" use="required">
+
+                <xs:annotation>
+
+                  <xs:documentation>specifies the specific value of the checksum</xs:documentation>
+
+                </xs:annotation>
+
+              </xs:attribute>
+
+            </xs:complexType>
+
+          </xs:element>
+
+        </xs:sequence>
+
+        <xs:attribute name="type" type="c:NonBlankString"/>
+
+        <xs:attribute name="ItemRef" type="xs:anyURI"/>
+
+      </xs:extension>
+
+    </xs:complexContent>
+
+  </xs:complexType>
+
+</xs:schema>
+

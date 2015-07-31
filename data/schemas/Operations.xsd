@@ -1,0 +1,1067 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:td="urn:IEEE-1671.1:2009:TestDescription" xmlns:c="urn:IEEE-1671:2010:Common" xmlns:hc="urn:IEEE-1671:2010:HardwareCommon" xmlns:te="urn:IEEE-1671:2010:TestEquipment" xmlns:uut="urn:IEEE-1671.3:2009.03:UUTDescription" xmlns:ta="urn:P-IEEE-1671.5:2008.03:TestAdapterDescription" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:IEEE-1671.1:2009:TestDescription" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.05">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+
+This schema is specified in IEEE Std 1671.1-20XX, "IEEE Standard for ATML: Test Description"
+ 
+This schema is a World Wide Web Consortium (W3C) Extensible Markup Language (XML) binding 
+of the ATML Test Description component defined in IEEE Std 1671.1-20XX,
+"IEEE Standard for ATML: Test Description."
+
+The purpose of this schema is to allow the creation of IEEE Std 1671.1-20XX
+Test Description instance documents.This schema uses the W3C XML Schema definition
+language as the encoding. This allows for interoperability and 
+the exchange of ATML component instances between various systems.
+This schema shall not be modified but may be included in 
+derivative works. 
+
+Copyright (c) 2011 Institute of Electrical and Electronics 
+Engineers, Inc.
+
+USE AT YOUR OWN RISK
+
+		</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="urn:IEEE-1671:2010:Common" schemaLocation="Common.xsd"/>
+	<xs:import namespace="urn:IEEE-1671:2010:HardwareCommon" schemaLocation="HardwareCommon.xsd"/>
+	<xs:include schemaLocation="IeeeStd1641.xsd"/>
+	<xs:simpleType name="ComparisonResult">
+		<xs:annotation>
+			<xs:documentation>Enumeration of possible values for comparison results.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Equal"/>
+			<xs:enumeration value="NotEqual"/>
+			<xs:enumeration value="InTolerance"/>
+			<xs:enumeration value="FailHigh"/>
+			<xs:enumeration value="FailLow"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Connection">
+		<xs:annotation>
+			<xs:documentation>Shall define a signal connection.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Ports">
+				<xs:annotation>
+					<xs:documentation>Shall define the ports that are connected. These are signal / logical ports, e.g., "HI", "LO", "A", "B", "C", "N", "TX", "RX", "GND", etc.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Port" type="c:Port" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Shall define one port.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+				<xs:unique name="connectionPortNamesUnique">
+					<xs:selector xpath="./td:Port"/>
+					<xs:field xpath="@name"/>
+				</xs:unique>
+			</xs:element>
+			<xs:element name="Networks">
+				<xs:annotation>
+					<xs:documentation>Shall describe the connection of ports defined under the parent element to ports that belong to interface connectors, test points, and components of the UUT.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Network" type="hc:Network" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Shall describes one connection. One Node child shall references a Port defined under the Connection ancestor. Other Node children can reference Ports of interface connectors, test points, or components.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Operations">
+		<xs:annotation>
+			<xs:documentation>Shall describe a sequence of operations. The operations shall be executed in the order in which they appear in the sequence. Refer to B.4 for an example containing operations. Refer to B.4.2 for usage instruction regarding operations.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Operation" type="td:OperationType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Shall describe one operation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OperationType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Abstract base type for all operations. Note that this is an abstract type, used as base type for other type definitions. Where this type is assigned in the schema, elements with derived types shall be provided. The 'xsi:type' attribute shall be used to indicate the type of these elements.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Description" type="c:NonBlankString" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Free-form description of the operation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ID" type="c:NonBlankString" use="required">
+			<xs:annotation>
+				<xs:documentation>Unique identifier, enables referencing the operation.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="c:NonBlankString">
+			<xs:annotation>
+				<xs:documentation>Operation name.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="OperationSetup">
+		<xs:annotation>
+			<xs:documentation>Shall describe the creation and setup of a signal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="Source">
+							<xs:annotation>
+								<xs:documentation>The presence of this element shall indicate a source signal. Source signals are used to describe stimulus operations. This element shall contain information specific to the source signal.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="SignalReference" type="td:SignalReference"/>
+									<xs:any namespace="STDBSC urn:IEEE-1641:2010:STDBSC">
+										<xs:annotation>
+											<xs:documentation>Shall contain a Signal definition conforming to the STDBSC.xsd schema of IEEE Std. 1641. Note that this signal definition can in turn reference TSF signal definitions defined in any TSF Library conformant with IEEE Std. 1641.  This shall be a valid stimulus definition, including Source, Conditioning, Event and Connection BSCs, as applicable. See B.4 for an example. </xs:documentation>
+										</xs:annotation>
+									</xs:any>
+									<xs:element name="InValues" type="td:IeeeStd1641InValues" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Describes the mapping of action parameters to IEEE Std. 1641 signal attributes. The signal attributes shall receive at run time, prior to operation execution, the values of the mapped parameters. </xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+							<xs:unique name="signalNameKey2">
+								<xs:selector xpath=".//*"/>
+								<xs:field xpath="@name"/>
+							</xs:unique>
+							<xs:keyref name="signalNameRef2" refer="td:signalNameKey2">
+								<xs:selector xpath=".//*"/>
+								<xs:field xpath="@signalName"/>
+							</xs:keyref>
+						</xs:element>
+						<xs:element name="Sensor">
+							<xs:annotation>
+								<xs:documentation>The presence of this element shall indicate a sensor signal. Sensor signals are used to describe measurement operations. This element shall contain information specific to the sensor signal.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="SignalReference" type="td:SignalReference"/>
+									<xs:any namespace="STDBSC urn:IEEE-1641:2010:STDBSC">
+										<xs:annotation>
+											<xs:documentation>Shall contain a signal definition conforming to the STDBSC.xsd schema of IEEE Std. 1641. Note that this signal definition can in turn reference TSF signal definitions defined in any TSF Library conformant with IEEE Std. 1641.  This shall be a valid measurement definition (intrinsic or generic), including Connection, Conditioning and Sensor BSCs, as applicable. The measurement definition shall contain exactly one measured signal attribute. See B.4 for an example. </xs:documentation>
+										</xs:annotation>
+									</xs:any>
+									<xs:element name="InValues" type="td:IeeeStd1641InValues" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Shall describe the mapping of action parameters to IEEE Std. 1641 signal attributes. The signal attributes shall receive at run time, prior to operation execution, the values of the mapped parameters. </xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+							<xs:unique name="signalNameKey3">
+								<xs:selector xpath=".//*"/>
+								<xs:field xpath="@name"/>
+							</xs:unique>
+							<xs:keyref name="signalNameRef3" refer="td:signalNameKey3">
+								<xs:selector xpath=".//*"/>
+								<xs:field xpath="@signalName"/>
+							</xs:keyref>
+						</xs:element>
+						<xs:element name="Monitor">
+							<xs:annotation>
+								<xs:documentation>The presence of this element shall indicate a monitor signal. Monitor signals are used to generate events when a specific condition occurs. Events are typically used to synchronize the operation of other signals. This element shall contain information specific to the monitor signal.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="SignalReference" type="td:SignalReference"/>
+									<xs:choice>
+										<xs:element name="SignalBased">
+											<xs:annotation>
+												<xs:documentation>The presence of this element shall indicate a signal-based monitor signal. Signal-based monitor signals generate events when a specific change occurs in an attribute of a monitored signal.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:any namespace="STDBSC urn:IEEE-1641:2010:STDBSC">
+														<xs:annotation>
+															<xs:documentation>Shall contain a signal definition conforming to the STDBSC.xsd schema of IEEE Std. 1641. Note that this signal definition can in turn reference TSF signal definitions defined in any TSF Library conformant with IEEE Std. 1641. This shall be a valid signal-based event definition.</xs:documentation>
+														</xs:annotation>
+													</xs:any>
+													<xs:element name="InValues" type="td:IeeeStd1641InValues" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Shall describes the mapping of action parameters to IEEE Std. 1641 signal attributes. The signal attributes shall receive at run time, prior to operation execution, the values of the mapped parameters. </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+											<xs:unique name="signalNameKey4">
+												<xs:selector xpath=".//*"/>
+												<xs:field xpath="@name"/>
+											</xs:unique>
+											<xs:keyref name="signalNameRef4" refer="td:signalNameKey4">
+												<xs:selector xpath=".//*"/>
+												<xs:field xpath="@signalName"/>
+											</xs:keyref>
+										</xs:element>
+										<xs:element name="TimeBased">
+											<xs:annotation>
+												<xs:documentation>The presence of this element shall indicate a time-based monitor signal. Time-based monitor signals generate events at specific time intervals.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Period" type="c:DatumType">
+														<xs:annotation>
+															<xs:documentation>Shall specify the period of event repetition. If a DatumType-derived type from Common is assigned to this element, it shall define a scalar numeric value with a unit of time. The type ValueFromActionParameter shall be assigned to this element to indicate a value that originates from a parameter of the containing action. The type ValueFromOperationMeasurement shall be assigned to describe a value obtained from a measurement defined through an operation of type OperationRead defined under the same action. The type ValueFromOperationMessageIn shall be assigned to describe a value obtained from the operator, through an operation of type OperationMessageIn defined under the same action. If the current operation is located in the Body of an OperationRepeat, the type ValueFromIterator shall be assigned to indicate that the current value of the iterator is used. </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="InitialDelay" type="c:DatumType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Shall specify the time of the initial event, measured from the moment the monitor signal is enabled. If the element is absent, the time of the initial event shall be zero (i.e., the event shall occur when the signal is enabled). If a DatumType-derived type from Common is assigned to this element, it shall define a scalar numeric value with a unit of time. The type ValueFromActionParameter shall be assigned to Datum descendants of this element to indicate a value that originates from a parameter of the containing action. The type ValueFromOperationMeasurement shall be assigned to describe a value obtained from a measurement defined through an operation of type OperationRead defined under the same action. The type ValueFromOperationMessageIn shall be assigned to describe a value obtained from the operator, through an operation of type OperationMessageIn defined under the same action. If the current operation is located in the Body of an OperationRepeat, the type ValueFromIterator shall be assigned to indicate that the current value of the iterator is used. </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:choice>
+														<xs:element name="Duration" type="c:DatumType" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation>Shall specify the duration of the event generation interval, measured from the time of the first event. If a DatumType-derived type from Common is assigned to this element, it shall define a scalar numeric value with a unit of time. The type ValueFromActionParameter shall be assigned to this element to indicate a value that originates from a parameter of the containing action. The type ValueFromOperationMeasurement shall be assigned to describe a value obtained from a measurement defined through an operation of type OperationRead defined under the same action. The type ValueFromOperationMessageIn shall be assigned to describe a value obtained from the operator, through an operation of type OperationMessageIn defined under the same action. If the current operation is located in the Body of an OperationRepeat, the type ValueFromIterator shall be assigned to indicate that the current value of the iterator is used. </xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="Repetition" type="c:DatumType" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation>Shall specify the number of events to be generated. If a DatumType-derived type from Common is assigned to this element, it shall define an integer numeric value greater than zero, with no unit. The type ValueFromActionParameter shall be assigned to this element to indicate a value that originates from a parameter of the containing action. The type ValueFromOperationMeasurement shall be assigned to describe a value obtained from a measurement defined through an operation of type OperationRead defined under the same action. The type ValueFromOperationMessageIn shall be assigned to describe a value obtained from the operator, through an operation of type OperationMessageIn defined under the same action. If the current operation is located in the Body of an OperationRepeat, the type ValueFromIterator shall be assigned to indicate that the current value of the iterator is used. </xs:documentation>
+															</xs:annotation>
+														</xs:element>
+													</xs:choice>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="EventBased">
+											<xs:annotation>
+												<xs:documentation>The presence of this element shall indicate an event-based monitor signal. Event-based monitor signals generate events based on the occurrence of other events. Specifically, the generated event shall be active from the moment a "from" event occurs to the moment a "to" event occurs.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="From">
+														<xs:annotation>
+															<xs:documentation>Shall identify the "from" event.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="localMonitorSignalID" type="c:NonBlankString" use="required">
+																<xs:annotation>
+																	<xs:documentation>ID of the "from" event. Shall reference a local monitor signal. The monitor signal shall be set up by an operation of type OperationSetup defined in the current action and enabled by an operation of type OperationEnable defined in the current action. The operations that set up and enable the monitor signal shall be executed before the current operation. Note that the above constraints are not enforced by the XML schema. Consumers should verify the constraints programmatically.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="To">
+														<xs:annotation>
+															<xs:documentation>Shall identify the "to" event.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="localMonitorSignalID" type="c:NonBlankString" use="required">
+																<xs:annotation>
+																	<xs:documentation>ID of the "to" event. Shall reference a local monitor signal. The monitor signal shall be set up by an operation of type OperationSetup defined in the current action and enabled by an operation of type OperationEnable defined in the current action. The operations that set up and enable the monitor signal shall be executed before the current operation. Note that the above constraints are not enforced by the XML schema. Consumers should verify the constraints programmatically.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Other">
+											<xs:annotation>
+												<xs:documentation>The presence of this element shall indicate a monitor signal that generates events based on a user-specified condition.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Condition" type="c:NonBlankString">
+														<xs:annotation>
+															<xs:documentation>Free-form description of the event condition.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:choice>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+					<xs:element name="Synchronization" type="td:SignalSynchronization" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall specify synchronization conditions for the setup operation. The element shall not appear in instance documents unless it has at least one child element. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Timeout" type="xs:duration" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall define a timeout for the signal operation. If the operation cannot be completed before the timeout expires then the containing action shall finish and return an "Aborted" outcome.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationChange">
+		<xs:annotation>
+			<xs:documentation>Shall describe the changing of an existing signal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:sequence>
+					<xs:element name="SignalReference" type="td:SignalReference"/>
+					<xs:element name="AttributeChanges" type="td:IeeeStd1641AttributeChanges">
+						<xs:annotation>
+							<xs:documentation>Shall describe the change of one or more signal attributes through the OperationChange operation.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Synchronization" type="td:SignalSynchronization" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall specify synchronization conditions for the signal operation. The element shall not appear in instance documents unless it has at least one child element. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Timeout" type="xs:duration" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall define a timeout for the signal operation. If the operation cannot be completed before the timeout expires then the containing action shall finish and return an "Aborted" outcome.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationReset">
+		<xs:annotation>
+			<xs:documentation>Shall describe the reset of an existing signal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:sequence>
+					<xs:element name="SignalReference" type="td:SignalReference"/>
+					<xs:element name="Timeout" type="xs:duration" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall define a timeout for the signal operation. If the operation cannot be completed before the timeout expires then the containing action shall finish and return an "Aborted" outcome.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationResetAll">
+		<xs:annotation>
+			<xs:documentation>Shall describe the reset of all active signals.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:sequence>
+					<xs:element name="Timeout" type="xs:duration" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall define a timeout for the signal operation. If the operation cannot be completed before the timeout expires then the containing action shall finish and return an "Aborted" outcome.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationRead">
+		<xs:annotation>
+			<xs:documentation>Shall describe the measurement of an attribute of an existing sensor signal and the creation of a measurement entity that holds the value read from the measurement. Note that the referenced sensor signal will contain exactly one measured attribute.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:sequence>
+					<xs:element name="Measurement">
+						<xs:annotation>
+							<xs:documentation>Shall describe the measurement entity created by the operation. Attributes 'standardUnit' and 'nonStandardUnit' shall be alternative. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:attribute name="ID" type="c:NonBlankString" use="required">
+								<xs:annotation>
+									<xs:documentation>Unique identifier, enables referencing the measurement operation.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="name" type="c:NonBlankString">
+								<xs:annotation>
+									<xs:documentation>Name of the measurement created by the operation. May be used for documentation purposes.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attributeGroup ref="c:UnitAttributes">
+								<xs:annotation>
+									<xs:documentation>Specifies a unit for the measured value.</xs:documentation>
+								</xs:annotation>
+							</xs:attributeGroup>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="SignalReference" type="td:SignalReference"/>
+					<xs:element name="OutValues" type="td:IeeeStd1641OutValues" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall describe the mapping of IEEE Std. 1641 signal attributes read through this operation to test results or session data. The test results or session data shall receive at run time, after operation execution, the values of the mapped signal attributes. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Samples" type="xs:positiveInteger" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall specify the number of samples to be read. The absence of the element shall indicate that one sample will be read.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Synchronization" type="td:SignalSynchronization" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall specify synchronization conditions for the signal operation. The element shall not appear in instance documents unless it has at least one child element. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Timeout" type="xs:duration" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall define a timeout for the signal operation. If the operation cannot be completed before the timeout expires then the containing action shall finish and return an "Aborted" outcome.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationCompare">
+		<xs:annotation>
+			<xs:documentation>Shall describe the comparison of a measurement result with limits and shall specify the test outcomes to be returned for each comparison result. Operations of this type shall only appear under actions of type test, as their functionality is specific to tests. Note that this constraint is not enforced by the schema. Consumers should verify the constraint programmatically. </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:sequence>
+					<xs:element name="MeasurementReference">
+						<xs:annotation>
+							<xs:documentation>Shall identify the measurement whose result is compared.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:attribute name="measurementID" type="c:NonBlankString" use="required">
+								<xs:annotation>
+									<xs:documentation>ID of the measurement. Shall reference a measurement described in an operation of type OperationRead defined in the current test. The operation of type OperationRead shall be executed before the current operation. Note that the above constraints are not enforced by the XML schema. Consumers should verify the constraints programmatically.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="CompareLimits">
+						<xs:annotation>
+							<xs:documentation>Shall specify the limits the measurement result is compared against.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Limit" type="c:Limit" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation>Shall specify a limit, limit pair, or an expected value plus a comparison operator. The type ValueFromActionParameter shall be assigned to Datum descendants of this element to indicate a value that originates from a parameter of the containing action. The type ValueFromOperationMeasurement shall be assigned to Datum descendants of this element to describe a value obtained from a measurement defined through an operation of type OperationRead defined under the same action. The type ValueFromOperationMessageIn shall be assigned to Datum descendants of this element to describe a value obtained from the operator, through an operation of type OperationMessageIn defined under the same action. If the current operation is located in the Body of an OperationRepeat, the type ValueFromIterator shall be assigned to Datum descendants to indicate that the current value of the iterator is used. </xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Results">
+						<xs:annotation>
+							<xs:documentation>Shall identify the action outcomes to be returned for specific results of the comparison.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Result" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation>Shall identify the action outcome to be returned for one result of the comparison. One element shall be specified for each possible result of the comparison, as described in the following: "Equal" and "NotEqual" elements shall be specified when comparing with an expected value; "FailHigh" and "FailLow" elements shall be used when comparing with a single limit; "InTolerance", "FailHigh" and "FailLow" shall be specified when comparing with a limit pair. Note that the previous constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:attribute name="comparisonResult" type="td:ComparisonResult" use="required">
+											<xs:annotation>
+												<xs:documentation>Describes the comparison result.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="actionOutcomeID" type="c:NonBlankString" use="required">
+											<xs:annotation>
+												<xs:documentation>Identifies action outcome to be returned for the specified comparison result.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationConnect">
+		<xs:annotation>
+			<xs:documentation>Shall describe the connection of an existing signal or a set of UUT pins and the creation of a connection entity.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="Signal">
+							<xs:annotation>
+								<xs:documentation>The presence of this element shall indicate that the operation connects a signal to UUT pins.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="SignalReference" type="td:SignalReference"/>
+									<xs:any namespace="STDBSC urn:IEEE-1641:2010:STDBSC">
+										<xs:annotation>
+											<xs:documentation>Shall contain a signal definition conforming to the STDBSC.xsd schema of IEEE Std. 1641. Note that this signal definition can in turn reference TSF signal definitions defined in any TSF Library conformant with IEEE Std. 1641.  This shall be a valid connection definition, including Connection BSCs. See B.4 for an example. </xs:documentation>
+										</xs:annotation>
+									</xs:any>
+									<xs:element name="PortValues" type="td:IeeeStd1641PortValues" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Shall describe the mapping of IEEE Std. 1641 signal attributes representing Connection ports to UUT Ports. Whenever possible, the mapping of IEEE Std. 1641 ports to ports of UUT connectors should be described through the values of IEEE Std. 1641 signal attributes, using he "pseudo pin name" format connectorID-pinID. For example, the ports of a TwoWire Connction signal to be connected to pins 1 and 2 of connector J1 should be named "J1-1" and "J1-2". When the above solution is used, this element is not needed. In some situations the above solution cannot be applied: when IEEE Std. 1641 ports are mapped to test points or component pins, when preexisting IEEE Std. 1641 contents using a different port name format is integrated into an ATML Test Description instance document, etc. In these cases the mapping of IEEE Std. 1641 ports to UUT ports shall be described using this element.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Interface">
+							<xs:annotation>
+								<xs:documentation>The presence of this element shall indicate that the operation interconnects pins from the UUT interface.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Network" type="hc:Network" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>Shall identify the UUT interface pins to be connected by the operation. Shall references two or more ports of the UUT interface.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+					<xs:element name="Synchronization" type="td:SignalSynchronization" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall specify synchronization conditions for the signal operation. The element shall not appear in instance documents unless it has at least one child element. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Timeout" type="xs:duration" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall define a timeout for the signal operation. If the operation cannot be completed before the timeout expires then the containing action shall finish and return an "Aborted" outcome.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationDisconnect">
+		<xs:annotation>
+			<xs:documentation>Shall describe the disconnect of an existing connection.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="Signal">
+							<xs:annotation>
+								<xs:documentation>The presence of this element shalll indicates that the operation disconnects a signal from the UUT pins where it was previously connected.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="SignalReference" type="td:SignalReference"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Interface">
+							<xs:annotation>
+								<xs:documentation>The presence of this element shall indicate that the operation disconnects pins from the UUT interface.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Network" type="hc:Network" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>Shall identify the UUT interface pins to be disconnected by the operation. Shall reference two or more ports of the UUT interface.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+					<xs:element name="Timeout" type="xs:duration" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall define a timeout for the signal operation. If the operation cannot be completed before the timeout expires then the containing action shall finish and return an "Aborted" outcome.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationEnable">
+		<xs:annotation>
+			<xs:documentation>Shall describe the enabling of event generation for an existing monitor signal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:sequence>
+					<xs:element name="SignalReference" type="td:SignalReference"/>
+					<xs:element name="Synchronization" type="td:SignalSynchronization" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall specify synchronization conditions for the signal operation. The element shall not appear in instance documents unless it has at least one child element. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Timeout" type="xs:duration" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall define a timeout for the signal operation. If the operation cannot be completed before the timeout expires then the containing action shall finish and return an "Aborted" outcome.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Connection" type="td:Connection" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall specify the connection of the monitored signal to the pins of the UUT. Shall be used only for signal-based event monitors. Note that a connection can also be specified in the OperationSetup operation that creates the monitor signal. The 'name' attribute of each Port descendant shall contain the name of a signal attribute for the signal to connect. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationDisable">
+		<xs:annotation>
+			<xs:documentation>Shall describe the disabling of event generation for an existing monitor signal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:sequence>
+					<xs:element name="SignalReference" type="td:SignalReference"/>
+					<xs:element name="Timeout" type="xs:duration" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall define a timeout for the signal operation. If the operation cannot be completed before the timeout expires then the containing action shall finish and return an "Aborted" outcome.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationWaitFor">
+		<xs:annotation>
+			<xs:documentation>Shall describe a pause in the execution of an action.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:sequence>
+					<xs:element name="TimeValue" type="c:double">
+						<xs:annotation>
+							<xs:documentation>Shall specify the duration of the wait. The 'standardUnit' attribute shall specify a unit of time (e.g., sec). Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationReadStateVariable">
+		<xs:annotation>
+			<xs:documentation>Shall describe the reading of a state variable's value and the assignment of this value to a test result of the containing test, or to a session datum of the containing session action.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="ValueToTestResult">
+							<xs:annotation>
+								<xs:documentation>The presence of this element shall indicates that the state variable value shall be assigned to a test result of the containing test. This element shall be used only if the containing action is of type "Test". It shall not be used if the containing action is of type "SessionAction". The data type, unit and qualifier of the state variable values shall be identical to the data type, unit and qualifier of the referenced test result. Note that the above constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="testResultID" type="c:NonBlankString" use="required">
+									<xs:annotation>
+										<xs:documentation>ID of the test result.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="ValueToSessionDatum">
+							<xs:annotation>
+								<xs:documentation>The presence of this element shall indicate that the state variable value shall be assigned to a session datum of the containing session action. This element shall be used only if the containing action of this operation is of type "SessionAction". It shall not be used if the containing action is of type "Test". The data type, unit and qualifier of the state variable values shall be identical to the data type, unit and qualifier of the referenced session datum. Note that the above constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="sessionDatumID" type="c:NonBlankString" use="required">
+									<xs:annotation>
+										<xs:documentation>ID of the session datum.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute name="stateVariableID" type="c:NonBlankString" use="required">
+					<xs:annotation>
+						<xs:documentation>ID of the state variable.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationSetStateVariable">
+		<xs:annotation>
+			<xs:documentation>Shall describe the assignment of a value to a state variable.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:attribute name="stateVariableID" type="c:NonBlankString" use="required">
+					<xs:annotation>
+						<xs:documentation>ID of the state variable.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="stateVariableValueID" type="c:NonBlankString" use="required">
+					<xs:annotation>
+						<xs:documentation>ID of the state variable value. The referenced value shall be a child element of the state variable referenced by attribute 'stateVariableID'. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationMessageOut">
+		<xs:annotation>
+			<xs:documentation>Shall describe the display of a message to the operator.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:choice>
+					<xs:element name="MessageOut" type="c:Value">
+						<xs:annotation>
+							<xs:documentation>Shall specify the message to be displayed. This may be a string, a numeric value, boolean value, etc. The type ValueFromActionParameter shall be assigned to Datum descendants of this element to indicate a value that originates from a parameter of the containing action. The type ValueFromOperationMeasurement shall be assigned to Datum descendants of this element to describe a value obtained from a measurement defined through an operation of type OperationRead defined under the same action. The type ValueFromOperationMessageIn shall be assigned to Datum descendants of this element to describe a value obtained from the operator, through an operation of type OperationMessageIn defined under the same action. If the current operation is located in the Body of an OperationRepeat, the type ValueFromIterator shall be assigned to Datum descendants to indicate that the current value of the iterator is used. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Document" type="c:Document">
+						<xs:annotation>
+							<xs:documentation>Shall indicate that the message to be displayed is specified in an external document (e.g., a text document, a bitmap image, a web page, etc.). The element shall contain a reference to that document.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationMessageIn">
+		<xs:annotation>
+			<xs:documentation>Shall describe the retrieval of a value from the operator.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:sequence>
+					<xs:element name="MessageIn">
+						<xs:annotation>
+							<xs:documentation>Shall describe the input message (i.e., the value provided by the operator).</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="ValueDescription" type="td:ValueDescription">
+									<xs:annotation>
+										<xs:documentation>Shall describes the value expected from the operator (e.g., a string, a numeric value, a boolean value, etc.). Types derived from DatumDescriptionType shall be assigned to DatumDescription descendants.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+							<xs:attribute name="ID" type="c:NonBlankString" use="required">
+								<xs:annotation>
+									<xs:documentation>Unique identifier, enables referencing the input message.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:complexType>
+					</xs:element>
+					<xs:choice minOccurs="0">
+						<xs:element name="ValueToTestResult">
+							<xs:annotation>
+								<xs:documentation>The presence of this element shall indicate that the value provided by the operator is assigned to a test result of the containing test. This element shall be used only if the containing action of this operation is of type "Test". It shall not be used if the containing action is of type "SessionAction". The data type, unit and qualifier of the input message (described through the MessageIn/ValueDescription element) shall be identical to the data type, unit and qualifier of the referenced test result. Note that the above constraint is not enforced by the XML schema. Consumers should verify the constraints programmatically.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="testResultID" type="c:NonBlankString" use="required">
+									<xs:annotation>
+										<xs:documentation>ID of the test result.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="ValueToSessionDatum">
+							<xs:annotation>
+								<xs:documentation>The presence of this element shall indicates that the value provided by the operator is assigned to a session datum of the containing session action. This element shall be used only if the containing action of this operation is of type "SessionAction". It shall not be used if the containig action is of type "Test". The data type, unit and qualifier of the input message (described through the MessageIn/ValueDescription element) shall be identical to the data type, unit and qualifier of the referenced session datum. Note that the above constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="sessionDatumID" type="c:NonBlankString" use="required">
+									<xs:annotation>
+										<xs:documentation>ID of the session datum.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationRepeat">
+		<xs:annotation>
+			<xs:documentation>Shall describe repeated execution for a set of operations. Refer to B.6 for an example on using this type.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:sequence>
+					<xs:element name="Setup" type="td:Operations" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Shall describe the operations used for setup purposes. These  operations are executed once, before the other operations.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Body" type="td:Operations">
+						<xs:annotation>
+							<xs:documentation>Shall describe the operations to be repeated.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Decision">
+						<xs:annotation>
+							<xs:documentation>Shall describe the decision, i.e., a condition that is evaluated before or after each execution of Body operations, to decide if a new repetition is necessary. The operations shall be repeated if the result of the evaluation is "true".</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:choice>
+								<xs:element name="Iterator">
+									<xs:annotation>
+										<xs:documentation>The presence of this element shall indicate that the decision is based on the value of an iterator. Note that the current iterator value may be referenced in the Body operations by using the type IeeeStd1641InValue.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:choice>
+											<xs:element name="DiscreteValues">
+												<xs:annotation>
+													<xs:documentation>The presence of this element shall indicate iteration through a discrete set of values. All the values defined under this element shall have identical data type, unit and qualifier. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically. </xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="Value" type="c:Value" maxOccurs="unbounded">
+															<xs:annotation>
+																<xs:documentation>Shall define one of the values assumed by the iterator. The type ValueFromActionParameter shall be assigned to Datum descendants of this element to indicate a value that originates from a parameter of the containing action. The type ValueFromOperationMeasurement shall be assigned to Datum descendants of this element to describe a series of values obtained from a measurement defined through an operation of type OperationRead defined under the same action. The type ValueFromOperationMessageIn shall be assigned to Datum descendants of this element to describe a series of values obtained from the operator, through an operation of type OperationMessageIn defined under the same action. </xs:documentation>
+															</xs:annotation>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="IncrementValues">
+												<xs:annotation>
+													<xs:documentation>The presence of this element shall indicate that iteration is controlled by an iterator whose value is incremented after each execution.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="Value" type="c:DatumType">
+															<xs:annotation>
+																<xs:documentation>Shall define the series of values assumed by the iterator. The DatumType-derived types defined in the Common schema shall not be assigned to this element. The type IncrementedValue shall be assigned to describe a series of values generated through iteration. The type ValueFromOperationMeasurement shall be assigned to describe a series of values obtained from a measurement defined through an operation of type OperationRead defined under the Body ancestor. The type ValueFromOperationMessageIn shall be assigned to describe a series of values obtained from the operator, through an operation of type OperationMessageIn defined under the Body ancestor. </xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="Limits">
+															<xs:annotation>
+																<xs:documentation>Shall define the limits the iterator is compared against.</xs:documentation>
+															</xs:annotation>
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="Limit" type="c:Limit" maxOccurs="unbounded">
+																		<xs:annotation>
+																			<xs:documentation>Shall define a limit, limit pair, or an expected value plus a comparison operator. The type ValueFromActionParameter shall be assigned to Datum descendants of this element to indicate a value that originates from a parameter of the containing action. The type ValueFromOperationMeasurement shall be assigned to Datum descendants of this element to describe a value obtained from a measurement defined through an operation of type OperationRead defined under the same action. The type ValueFromOperationMessageIn shall be assigned to Datum descendants of this element to describe a value obtained from the operator, through an operation of type OperationMessageIn defined under the same action. </xs:documentation>
+																		</xs:annotation>
+																	</xs:element>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:choice>
+										<xs:attribute name="ID" type="c:NonBlankString" use="required">
+											<xs:annotation>
+												<xs:documentation>Unique identifier, enables referencing of the iterator.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="name" type="c:NonBlankString">
+											<xs:annotation>
+												<xs:documentation>Name of the iterator.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Other" type="c:NonBlankString">
+									<xs:annotation>
+										<xs:documentation>The presence of this element shall indicate that the decision is described through free-form text. The contents of the element shall describe the decision.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:choice>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationConditional">
+		<xs:annotation>
+			<xs:documentation>Shall describe conditional execution for a set of operations. Shall specify a set of operations to be performed when a condition is satisfied, and a different set of operations to be performed when the condition is not satisfied. Note that descendants OnTrue and OnFalse are both optional. At least one these descendants shall appear in instance documents. This constraint is not enforced by the XML Schema. Consumers should verify this constraint programmatically.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:sequence>
+					<xs:element name="Decision">
+						<xs:annotation>
+							<xs:documentation>Shall describe the decision, i.e., a condition that is evaluated at the beginning of the current operation to decide which set of operations will be executed.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:choice>
+								<xs:element name="ValueComparison">
+									<xs:annotation>
+										<xs:documentation>The presence of this element shall indicate that the decision is evaluated by comparing a value against a set of limits. The source of the value and the limits shall be described under this element.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="Value" type="c:DatumType">
+												<xs:annotation>
+													<xs:documentation>Shall describe the source of the value to be compared. The DatumType-derived types defined in the Common schema shall not be assigned to this element. The type ValueFromActionParameter shall be assigned to describe a value obtained from a parameter of the containing Action. The type ValueFromOperationMeasurement shall be assigned to describe a value obtained from a measurement defined through an operation of type OperationRead defined under the same action. The type ValueFromOperationMessageIn shall be assigned to describe a value obtained from the operator, through an operation of type OperationMessageIn defined under the same action. If the current operation is located in the Body of an OperationRepeat, the type ValueFromIterator shall be assigned to indicate that the current value of the iterator is used. </xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="Limits">
+												<xs:annotation>
+													<xs:documentation>Shall define the limits the value is compared against.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="Limit" type="c:Limit" maxOccurs="unbounded">
+															<xs:annotation>
+																<xs:documentation>Shall define a limit, limit pair, or an expected value plus a comparison operator. The type ValueFromActionParameter may be assigned to Datum descendants of this element to indicate a value that originates from a parameter of the containing test. The type ValueFromOperationMeasurement shall be assigned to Datum descendants of this element to describe a value obtained from a measurement defined through an operation of type OperationRead defined under the same action. The type ValueFromOperationMessageIn shall be assigned to Datum descendants of this element to describe a value obtained from the operator, through an operation of type OperationMessageIn defined under the same action. If the current operation is located in the Body of an OperationRepeat, the type ValueFromIterator shall be assigned to Datum descendants to indicate that the current value of the iterator is used. </xs:documentation>
+															</xs:annotation>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Other" type="c:NonBlankString">
+									<xs:annotation>
+										<xs:documentation>The presence of this element shall indicate that the decision is described through free-form text. The contents of the element shall describe the decision.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:choice>
+						</xs:complexType>
+					</xs:element>
+					<xs:sequence>
+						<xs:element name="OnTrue" type="td:Operations" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Shall describe the operations to be performed when the result of the evaluation is 'true'.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="OnFalse" type="td:Operations" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Shall describe the operations to be performed when the result of the evaluation is 'false'.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OperationOther">
+		<xs:annotation>
+			<xs:documentation>Shall describe an operation with custom behavior.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:OperationType">
+				<xs:choice>
+					<xs:element name="DetailedInformation" type="c:NonBlankString">
+						<xs:annotation>
+							<xs:documentation>The presence of this element shall indicate that behavior is described through free-form text, embedded in the instance document. The contents of the elelemnt shall describe the behavior.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Document" type="c:Document">
+						<xs:annotation>
+							<xs:documentation>The presence of this element shall indicate that behavior is described in an external document. The element shall reference the external document.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SignalSynchronization">
+		<xs:annotation>
+			<xs:documentation>Shall describe the synchronization condition for a signal operation defined by an OperationType-derived element. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SyncTo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Shall indicate that the signal operation is synchronized to an event (i.e., the operation is performed when the event occurs). Shall identify the monitor signal that generates event. The monitor signal shall be set up by an operation of type OperationSetup defined in the current test and enabled by an operation of type OperationEnable defined in the current test. The operations that set up and enable the monitor signal shall be executed before the current operation. Note that the above constraints are not enforced by the XML schema. Consumers should verify the constraints programmatically.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="localMonitorSignalID" type="c:NonBlankString" use="required">
+						<xs:annotation>
+							<xs:documentation>ID of the monitor signal that generates the event. Shall reference a local monitor signal. </xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Gated" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Shall indicate that the signal operation is gated by events. Shall identify the monitor signal or signals that generate event.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="With">
+							<xs:annotation>
+								<xs:documentation>The presence of this element shall indicate that the signal operation is gated by one event, i.e., the operation is performed for the duration of the event. Shall identify the monitor signal that generates event. The monitor signal shall be set up by an operation of type OperationSetup defined in the current test and enabled by an operation of type OperationEnable defined in the current test. The operations that set up and enable the monitor signal shall be executed before the current operation. Note that the above constraints are not enforced by the XML schema. Consumers should verify the constraints programmatically.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="localMonitorSignalID" type="c:NonBlankString" use="required">
+									<xs:annotation>
+										<xs:documentation>ID of the monitor signal that generates the event. Shall reference a local monitor signal.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="FromTo">
+							<xs:annotation>
+								<xs:documentation>The presence of this element shall indicate that the signal operation is gated by two events, i.e., the operation is performed from the moment the "from" event occurs until the moment the "to" event occurs.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="From">
+										<xs:annotation>
+											<xs:documentation>Shall identify the monitor signal that generates the "from" event. The monitor signal shall be set up by an operation of type OperationSetup defined in the current test and enabled by an operation of type OperationEnable defined in the current test. The operations that set up and enable the monitor signal shall be executed before the current operation. Note that the above constraints are not enforced by the XML schema. Consumers should verify the constraints programmatically.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="localMonitorSignalID" type="c:NonBlankString" use="required">
+												<xs:annotation>
+													<xs:documentation>ID of the monitor signal that generates the "from" event. Shall reference a local monitor signal. </xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="To">
+										<xs:annotation>
+											<xs:documentation>Shall identify the monitor signal that generates the "to" event. The monitor signal shall be set up by an operation of type OperationSetup defined in the current test and enabled by an operation of type OperationEnable defined in the current test. The operations that set up and enable the monitor signal shall be executed before the current operation. Note that the above constraints are not enforced by the XML schema. Consumers should verify the constraints programmatically.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="localMonitorSignalID" type="c:NonBlankString" use="required">
+												<xs:annotation>
+													<xs:documentation>ID of the monitor signal that generates the "to" event. Shall reference a local monitor signal. </xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SignalReference">
+		<xs:choice>
+			<xs:element name="LocalSourceSignalReference">
+				<xs:annotation>
+					<xs:documentation>Shall identify the local source signal to setup.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="localSourceSignalID" type="c:NonBlankString" use="required">
+						<xs:annotation>
+							<xs:documentation>ID of the local source signal.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="GlobalSignalReference">
+				<xs:annotation>
+					<xs:documentation>Shall identify the global source signal to setup.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="globalSignalID" type="c:NonBlankString" use="required">
+						<xs:annotation>
+							<xs:documentation>ID of the global source signal.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>

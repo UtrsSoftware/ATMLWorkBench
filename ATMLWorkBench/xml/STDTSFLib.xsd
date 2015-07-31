@@ -1,0 +1,1165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="urn:IEEE-1641:2010:STDTSFLib" elementFormDefault="qualified" version="2.01" xmlns="urn:IEEE-1641:2010:STDBSC" xmlns:std="urn:IEEE-1641:2010:STDBSC" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="urn:IEEE-1641:2010:STDTSFLib">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+This schema is specified in IEEE Std 1641-20XX, "IEEE Standard for Signal and Test Definition." This schema is a World Wide Web Consortium (W3C) Extensible Markup Language (XML) binding of Annex E Test signal framework (TSF) for ATLAS Clause E.2 TSF library definition in XML" The purpose of this schema is to provide unique types and attributes for IEEE 1641 schemas.This schema uses the W3C XML Schema definition language as the encoding. This allows for interoperability and the exchange of TSF component instances between various systems.This schema shall not be modified but may be included in derivative works. 
+Copyright (c) 2009 Institute of Electrical and Electronics Engineers, Inc. USE AT YOUR OWN RISK
+</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="urn:IEEE-1641:2010:STDBSC" schemaLocation="STDBSC.xsd"/>
+	<xs:complexType name="AC_SIGNAL" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="ac_ampl" type="Physical" use="optional">
+					<xs:annotation>
+						<xs:documentation>AC Signal amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="dc_offset" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>DC Offset</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="freq" type="Frequency">
+					<xs:annotation>
+						<xs:documentation>AC Signal frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="phase" default="0 rad">
+					<xs:annotation>
+						<xs:documentation>AC Signal phase angle</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="PlaneAngle"/>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AM_SIGNAL" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="car_ampl" type="Voltage" use="optional">
+					<xs:annotation>
+						<xs:documentation>Carrier amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="car_freq" type="Frequency">
+					<xs:annotation>
+						<xs:documentation>Carrier frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="mod_freq" type="Frequency">
+					<xs:annotation>
+						<xs:documentation>Modulation frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="mod_depth">
+					<xs:annotation>
+						<xs:documentation>Depth of modulation</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Ratio"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="mod_ampl" type="Voltage" default="1 V">
+					<xs:annotation>
+						<xs:documentation>Modulation amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DC_SIGNAL" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="dc_ampl" type="Physical" use="optional">
+					<xs:annotation>
+						<xs:documentation>DC Level</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="ac_ampl" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>AC Component amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="freq" type="Frequency" default="0 Hz">
+					<xs:annotation>
+						<xs:documentation>AC Component frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="phase" default="0 rad">
+					<xs:annotation>
+						<xs:documentation>AC Component phase angle</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="PlaneAngle"/>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DIGITAL_PARALLEL" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="data_value" type="digitalString" use="optional">
+					<xs:annotation>
+						<xs:documentation>Data Value</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="clock_period" type="Time">
+					<xs:annotation>
+						<xs:documentation>Clock period</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="logic_one_value" type="Voltage">
+					<xs:annotation>
+						<xs:documentation>Logic One level</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="logic_zero_value" type="Voltage">
+					<xs:annotation>
+						<xs:documentation>Logic Zero level</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DIGITAL_SERIAL" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="data_value" type="digitalString" use="optional">
+					<xs:annotation>
+						<xs:documentation>Data Value</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="clock_period" type="Time">
+					<xs:annotation>
+						<xs:documentation>Clock period. Zero denotes infinite time for static digital data.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="logic_one_value" type="Voltage">
+					<xs:annotation>
+						<xs:documentation>Logic One level</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="logic_zero_value" type="Voltage">
+					<xs:annotation>
+						<xs:documentation>Logic Zero level</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DME_INTERROGATION" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="car_ampl" type="Voltage" use="optional">
+					<xs:annotation>
+						<xs:documentation>Carrier Amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="int_freq" default="1025 MHz">
+					<xs:annotation>
+						<xs:documentation>Interrogator Frequency</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Frequency"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="int_rate" type="Frequency" default="27 Hz">
+					<xs:annotation>
+						<xs:documentation>Interrogation Rate</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DME_RESPONSE" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="resp_freq" use="optional" default="962 MHz">
+					<xs:annotation>
+						<xs:documentation>Transponder Frequency</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Frequency"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="car_ampl" type="Voltage">
+					<xs:annotation>
+						<xs:documentation>Carrier Amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="range" type="Distance" default="0 m">
+					<xs:annotation>
+						<xs:documentation>Slant Range</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="rate" type="Speed" default="0 m/s">
+					<xs:annotation>
+						<xs:documentation>Range Rate</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="accn" type="Acceleration" default="0 m/s2">
+					<xs:annotation>
+						<xs:documentation>Rate of Change of Range Rate</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FM_SIGNAL" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="car_ampl" type="Physical" use="optional">
+					<xs:annotation>
+						<xs:documentation>Carrier amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="car_freq" type="Frequency">
+					<xs:annotation>
+						<xs:documentation>Carrier frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="freq_dev" type="Frequency">
+					<xs:annotation>
+						<xs:documentation>Frequency Deviation</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="mod_freq" type="Frequency">
+					<xs:annotation>
+						<xs:documentation>Modulation frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="mod_ampl" type="Physical">
+					<xs:annotation>
+						<xs:documentation>Modulation amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ILS_GLIDE_SLOPE" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="car_ampl" type="Physical" use="optional" default="2 mV">
+					<xs:annotation>
+						<xs:documentation>Carrier amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="car_freq" default="328.6 MHz">
+					<xs:annotation>
+						<xs:documentation>Frequency</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Frequency"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="onefifty_level" default="1">
+					<xs:annotation>
+						<xs:documentation>150 Hz attenuation depth</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Ratio"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="ninety_level" default="1">
+					<xs:annotation>
+						<xs:documentation>90 Hz attenuation depth</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Ratio"/>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ILS_LOCALIZER" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="car_ampl" type="Physical" use="optional" default="2 mW">
+					<xs:annotation>
+						<xs:documentation>Carrier Amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="car_freq" default="108.1 MHz">
+					<xs:annotation>
+						<xs:documentation>Carrier frequency</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Frequency"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="onefifty_level" default="1">
+					<xs:annotation>
+						<xs:documentation>150 Hz attenuation depth</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Ratio"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="ninety_level" default="1">
+					<xs:annotation>
+						<xs:documentation>90 Hz attenuation depth</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Ratio"/>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ILS_MARKER" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="marker_freq" type="Frequency" use="optional" default="400 Hz">
+					<xs:annotation>
+						<xs:documentation>Marker Frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="car_ampl" type="Power" default="2 mW">
+					<xs:annotation>
+						<xs:documentation>Carrier Frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PM_SIGNAL" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="car_ampl" type="Voltage" use="optional">
+					<xs:annotation>
+						<xs:documentation>Carrier amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="car_freq" type="Frequency">
+					<xs:annotation>
+						<xs:documentation>Carrier frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="phase_dev" type="PlaneAngle">
+					<xs:annotation>
+						<xs:documentation>Phase Deviation</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="mod_freq" type="Frequency">
+					<xs:annotation>
+						<xs:documentation>Modulation frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="mod_ampl" type="Voltage" default="1 V">
+					<xs:annotation>
+						<xs:documentation>Modulation amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PULSED_AC_SIGNAL" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="ac_ampl" type="Physical" use="optional">
+					<xs:annotation>
+						<xs:documentation>AC Signal amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="freq" type="Frequency">
+					<xs:annotation>
+						<xs:documentation>AC Signal frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="dc_offset" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>DC offset</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="p_delay" type="Time" default="0 s">
+					<xs:annotation>
+						<xs:documentation>Initial delay</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="p_duration" type="Time">
+					<xs:annotation>
+						<xs:documentation>Pulse width</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="prf" type="Frequency">
+					<xs:annotation>
+						<xs:documentation>Pulse repetition frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="p_repetition" type="xs:int" default="0">
+					<xs:annotation>
+						<xs:documentation>Number of pulses</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PULSED_AC_TRAIN" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="ac_ampl" type="Physical" use="optional">
+					<xs:annotation>
+						<xs:documentation>AC amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="freq" type="Frequency">
+					<xs:annotation>
+						<xs:documentation>AC frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="dc_offset" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>DC offset</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="pulse_train" type="PulseDefns">
+					<xs:annotation>
+						<xs:documentation>Pulse train</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PULSED_DC_SIGNAL" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="dc_ampl" type="Physical" use="optional">
+					<xs:annotation>
+						<xs:documentation>DC level</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="ac_ampl" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>AC component amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="freq" type="Frequency" default="0 Hz">
+					<xs:annotation>
+						<xs:documentation>AC component frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="p_delay" type="Time" default="0 s">
+					<xs:annotation>
+						<xs:documentation>Delay before first pulse</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="p_duration" type="Time">
+					<xs:annotation>
+						<xs:documentation>Pulse width</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="prf" type="Frequency">
+					<xs:annotation>
+						<xs:documentation>Pulse repetition frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="p_repetition" type="xs:int" default="0">
+					<xs:annotation>
+						<xs:documentation>Number of pulses</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PULSED_DC_TRAIN" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="dc_ampl" type="Physical" use="optional">
+					<xs:annotation>
+						<xs:documentation>DC level</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="pulse_train" type="PulseDefns">
+					<xs:annotation>
+						<xs:documentation>Pulse train</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="ac_ampl" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>AC Component amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="freq" type="Frequency" default="0 Hz">
+					<xs:annotation>
+						<xs:documentation>AC Component frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RADAR_RX_SIGNAL" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="atten" type="Ratio" use="optional" default="1">
+					<xs:annotation>
+						<xs:documentation>Atten</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="range" type="Distance">
+					<xs:annotation>
+						<xs:documentation>Range of simulated target</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="range_accn" type="Acceleration" default="0">
+					<xs:annotation>
+						<xs:documentation>Rate of change of rate change</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="range_rate" type="Speed" default="0">
+					<xs:annotation>
+						<xs:documentation>Rate of change of target range</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="reply_eff" default="100%">
+					<xs:annotation>
+						<xs:documentation>Proportion of Tx pulses returned</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Ratio"/>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RADAR_TX_SIGNAL" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="ampl" type="Physical" use="optional">
+					<xs:annotation>
+						<xs:documentation>Tx signal amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="freq" type="Frequency">
+					<xs:annotation>
+						<xs:documentation>Tx signal frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="delay" type="Time" default="0 s">
+					<xs:annotation>
+						<xs:documentation>Initial delay</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="duration" type="Time">
+					<xs:annotation>
+						<xs:documentation>Pulse duration</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="prf" type="Frequency">
+					<xs:annotation>
+						<xs:documentation>Pulse repetition frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="repetition" type="xs:int" default="0">
+					<xs:annotation>
+						<xs:documentation>Number of pulses</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RAMP_SIGNAL" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="ampl" type="Physical" use="optional">
+					<xs:annotation>
+						<xs:documentation>Ramp signal amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="dc_offset" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>DC offset</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="period" type="Time">
+					<xs:annotation>
+						<xs:documentation>Ramp signal period</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="rise_time" type="Time">
+					<xs:annotation>
+						<xs:documentation>Ramp signal time to rise</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RANDOM_NOISE" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="ampl" type="Physical" use="optional">
+					<xs:annotation>
+						<xs:documentation>Noise signal amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="freq" type="Frequency" default="0">
+					<xs:annotation>
+						<xs:documentation>Pseudo random noise frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="seed" type="xs:long" default="0">
+					<xs:annotation>
+						<xs:documentation>Pseudo random noise seed</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RESOLVER" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="angle" type="PlaneAngle" use="optional" default="0">
+					<xs:annotation>
+						<xs:documentation>Shaft angle</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="ampl" default="26 V">
+					<xs:annotation>
+						<xs:documentation>Reference amplitude</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Voltage"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="freq" default="400 Hz">
+					<xs:annotation>
+						<xs:documentation>Reference frequency</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Frequency"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="zero_index" default="0 rad">
+					<xs:annotation>
+						<xs:documentation>Zero index</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="PlaneAngle"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="angle_rate" type="Frequency" default="0 Hz">
+					<xs:annotation>
+						<xs:documentation>Shaft angle rate</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="trans_ratio" type="Ratio" default="1">
+					<xs:annotation>
+						<xs:documentation>Transformer Ratio</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RS_232" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="data_word" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>Data Word</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="baud_rate" type="int" default="9600">
+					<xs:annotation>
+						<xs:documentation>Baud Rate</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="data_bits" type="int" default="8">
+					<xs:annotation>
+						<xs:documentation>Data Bits</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="parity" type="xs:string" default="None">
+					<xs:annotation>
+						<xs:documentation>Parity</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="stop_bits" type="xs:string" default="1">
+					<xs:annotation>
+						<xs:documentation>Stop Bits</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="flow_control" type="xs:string" default="None">
+					<xs:annotation>
+						<xs:documentation>Flow Control</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SQUARE_WAVE" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="ampl" type="Physical" use="optional">
+					<xs:annotation>
+						<xs:documentation>Square wave amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="period" type="Time">
+					<xs:annotation>
+						<xs:documentation>Square wave period</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="dc_offset" type="Physical" default="0 V">
+					<xs:annotation>
+						<xs:documentation>DC offset</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SSR_INTERROGATION" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="ampl" type="Physical" use="optional">
+					<xs:annotation>
+						<xs:documentation>P1 Amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="mode" type="xs:string" default="1">
+					<xs:annotation>
+						<xs:documentation>Interrogation mode</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="p3_start" type="Time" default="3 us">
+					<xs:annotation>
+						<xs:documentation>P3 Start Time </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="p3_level" type="Ratio" default="1">
+					<xs:annotation>
+						<xs:documentation>P3 level</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="sls_dev" type="Time" default="0 us">
+					<xs:annotation>
+						<xs:documentation>SLS Deviation</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="sls_level" type="Ratio" default="1">
+					<xs:annotation>
+						<xs:documentation>SLS Level</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SSR_RESPONSE" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="ampl" type="Physical" use="optional" default="1">
+					<xs:annotation>
+						<xs:documentation>Carrier Amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="p3_start" type="Time" default="3 us">
+					<xs:annotation>
+						<xs:documentation>P3 pulse start time</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="pulses" type="PulseDefns" default="[]">
+					<xs:annotation>
+						<xs:documentation>SSR Response Pulse Train</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="STEP_SIGNAL" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="ampl" type="Voltage" use="optional">
+					<xs:annotation>
+						<xs:documentation>Step size</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="dc_offset" type="Voltage" default="0">
+					<xs:annotation>
+						<xs:documentation>DC offset</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="start_time" type="Time">
+					<xs:annotation>
+						<xs:documentation>Step time</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SUP_CAR_SIGNAL" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="car_ampl" type="Voltage" use="optional">
+					<xs:annotation>
+						<xs:documentation>Carrier amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="car_freq" type="Frequency">
+					<xs:annotation>
+						<xs:documentation>Carrier frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="mod_freq" type="Frequency">
+					<xs:annotation>
+						<xs:documentation>Modulation frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="mod_depth" type="Ratio">
+					<xs:annotation>
+						<xs:documentation>Depth of modulation</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SYNCHRO" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="angle" type="PlaneAngle" use="optional" default="0 rad">
+					<xs:annotation>
+						<xs:documentation>Shaft angle</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="ampl" default="26 V">
+					<xs:annotation>
+						<xs:documentation>Reference amplitude</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Voltage"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="freq" default="400 Hz">
+					<xs:annotation>
+						<xs:documentation>Reference frequency</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Frequency"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="zero_index" type="PlaneAngle" default="0 rad">
+					<xs:annotation>
+						<xs:documentation>Zero index</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="angle_rate" type="Frequency" default="0 rad">
+					<xs:annotation>
+						<xs:documentation>Shaft angle rate</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="trans_ratio" type="Ratio" default="1">
+					<xs:annotation>
+						<xs:documentation>Transformer Ratio</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TACAN" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="freq" use="optional" default="962 MHz">
+					<xs:annotation>
+						<xs:documentation>Transponder Frequency</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Frequency"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="mod_index" default="0.3">
+					<xs:annotation>
+						<xs:documentation>Modulation Index</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Ratio"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="bearing" default="0">
+					<xs:annotation>
+						<xs:documentation>Magnetic Bearing</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="PlaneAngle"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="car_ampl" type="Voltage">
+					<xs:annotation>
+						<xs:documentation>er Amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TRIANGULAR_WAVE_SIGNAL" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="ampl" type="Physical" use="optional">
+					<xs:annotation>
+						<xs:documentation>Triangular wave signal amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="period" type="Time">
+					<xs:annotation>
+						<xs:documentation>Trianglar wave signal period</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="dc_offset" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>DC offset</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VOR" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="car_ampl" type="Voltage" use="optional" default="2 mV">
+					<xs:annotation>
+						<xs:documentation>Carrier amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="car_freq" default="107.975 MHz">
+					<xs:annotation>
+						<xs:documentation>Carrier frequency</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="Frequency"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="phase" type="PlaneAngle" default="90 deg">
+					<xs:annotation>
+						<xs:documentation>Radial bearing</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DIGITAL_TEST" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="SignalFunctionType">
+				<xs:attribute name="dt__Period" type="Time">
+					<xs:annotation>
+						<xs:documentation>The duration of the digital step.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="dt__Stim_H_value" type="Physical">
+					<xs:annotation>
+						<xs:documentation>Value of logic High in the output stream (voltage or current).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="dt__Stim_L_value" type="Physical">
+					<xs:annotation>
+						<xs:documentation>Value of logic Low in the output stream (voltage or current).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="dt__Resp_L_value" type="Physical">
+					<xs:annotation>
+						<xs:documentation>Threshold value of logic Low in the measurement (voltage or current).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="dt__Resp_H_value" type="Physical">
+					<xs:annotation>
+						<xs:documentation>Threshold value of logic High in the measurement (voltage or current).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="dt__Data" type="digitalString">
+					<xs:annotation>
+						<xs:documentation>The digital data to be generated or measured.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="AC_SIGNAL" type="ns1:AC_SIGNAL" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A sinusoidal time-varying electrical signal.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AM_SIGNAL" type="ns1:AM_SIGNAL" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A continuous sinusoidal (carrier) wave whose amplitude is varied as a function of the instantaneous value of a second (modulating) wave.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DC_SIGNAL" type="ns1:DC_SIGNAL" nillable="false">
+		<xs:annotation>
+			<xs:documentation>An unvarying electrical signal with an optional ac component.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DIGITAL_PARALLEL" type="ns1:DIGITAL_PARALLEL" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A parallel digital source that creates a digital logic signal in which the physical values for logic 1, logic 0 and high impedance data values are determined by the logic threshold values specified.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DIGITAL_SERIAL" type="ns1:DIGITAL_SERIAL" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A serial digital source that creates a digital logic signal in which the physical values for logic one, logic zero and high impedance data values are determined by the logic threshold values specified.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DME_INTERROGATION" type="ns1:DME_INTERROGATION" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A radio aid to air navigation that provides distance information by measuring the time of transmission from an interrogator to a transponder and return. 
+
+The DME system is composed of a transponder in the ground based unit and an interrogator in the airborne unit. The interrogator on the aircraft emits a pulse signal that, once received by the DME transponder on the ground, starts a response sequence that sends a return pulse signal on a different (paired) channel to the aircraft. The aircraft equipment receives the response from the ground station, computes the elapsed time between interrogation and response, subtracts 50 µs (to cover ground station processing time), and divides the result by 2. This result is then displayed on the DME indicator.
+
+The DME operates on the UHF band in the range 962 MHz to 1213 MHz with a step of 1 MHz. The frequencies used by the interrogator are between 1025 MHz and 1150 MHz, and the transponder on the ground replies using two set frequencies: the first from 962 MHz to 1024 MHz and the second from 1151 MHz to 1213 MHz. The number of available frequencies is 252, making 126 available channels. Each channel has 2 frequencies: one for interrogation and the other for the response from the ground station. On each pair of frequencies, the difference between the interrogator frequency and the response frequency is always 63 MHz. For the channels between 1 and 63, the interrogation frequency is 63 MHz higher than the response frequency and for channels from 63 to 126 the response frequency is 63 MHz higher than the interrogator frequency.
+</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DME_RESPONSE" type="ns1:DME_RESPONSE" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A radio aid to air navigation that provides distance information by measuring the time of transmission from an interrogator to a transponder and return.
+
+The DME system is composed of a transponder in the ground based unit and an interrogator in the airborne unit. The interrogator on the aircraft emits a pulse signal that once received by the DME transponder on the ground, starts a response sequence which sends a return pulse signal on a different (paired) channel to the aircraft. The aircraft equipment receives the response from the ground station, computes the elapsed time between interrogation and response, subtracts 50 µs (to cover ground station processing time), and divides the result by 2. This result is then displayed on the DME indicator.
+
+The DME operates on the UHF band in the range 962 MHz to 1213 MHz with a step of 1 MHz. The frequencies used by the interrogator are between 1025 MHz and 1150 MHz, and the transponder on the ground replies using two set frequencies, the first from 962 MHz to 1024 MHz and the second from 1151 MHz to 1213 MHz. The number of available frequencies is 252, making 126 available channels. Each channel has 2 frequencies: one for interrogation and the other for the response from the ground station. On each pair of frequencies the difference between the interrogator frequency and the response frequency is always 63 MHz. For the channels between 1 and 63, the interrogation frequency is 63 MHz higher than the response frequency; and for channels from 63 to 126 the response frequency is 63 MHz higher than the interrogator frequency.
+</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="FM_SIGNAL" type="ns1:FM_SIGNAL" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A continuous sinusoidal (carrier)wave generated when the frequency of one wave is varied in accordance with the amplitude of another (modulating)wave.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ILS_GLIDE_SLOPE" type="ns1:ILS_GLIDE_SLOPE" nillable="false">
+		<xs:annotation>
+			<xs:documentation>The glide slope is the vertical guidance portion of an ILS.
+
+At present, 40 glide slope channels exist with 150 kHz channel separation in the frequency range from 328.6 MHz to 335.4 MHz. The carrier is amplitude modulated at 90 Hz and 150 Hz in a spatial pattern, with the 90 Hz modulation predominant when the airplane is above the glide path, and the 150 Hz modulation predominant if the airplane is below the glide path. This glide slope signal is achieved by transmitting 2 beams with equal offset about the correct glide slope angle. The upper beam is modulated to a depth of 40% with a 90 Hz tone, and the lower beam is modulated to a depth of 40% with a 150 Hz tone. The carrier of both beams is phase-locked so that any receiver will treat them as a single-carrier signal with two modulating tones. If the aircraft is positioned off the glide slope, the ILS receiver will detect one signal as stronger than the other. As a result, the demodulated amplitude (or apparent depth of modulation) of one tone will be greater than that of the other. If the receiver is exactly on the glide slope, it will receive an RF carrier where the 90 Hz and 150 Hz modulation depths appear exactly the same. The greater the deviation from the glide slope, the greater will be the difference in amplitude of the tones.
+</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ILS_LOCALIZER" type="ns1:ILS_LOCALIZER" nillable="false">
+		<xs:annotation>
+			<xs:documentation>The localizer is the lateral guidance portion of the ILS, giving azimuth guidance with reference to the runway centre line. It operates using the same principles as the Glide Slope but with forty channels in the VHF band 108.0 MHz to 112.0 MHz. Each localizer channel is paired with a glide slope channel. The carrier is modulated with  90 Hz and 150 Hz tones in a spatial pattern that makes the 90 Hz tone predominant when the aircraft is to the left of the course and the 150 Hz tone predominant when the aircraft is to the right of the course. The localizer carrier contains a Morse coded signal identifying the runway and approach direction and also may carry a ground-to-air communication channel.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ILS_MARKER" type="ns1:ILS_MARKER" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Two or three marker beacons operate at 75 MHz to give range with reference to the touch-down point. The outer marker is modulated with a 400 Hz tone to a depth of 95%. It is located 3.5 nmi  to 6 nmi  (6 km to 11 km)from the end of the runway where the glide slope intersects the procedure turn altitude ± 50 ft (15 m)vertically. It radiates a fan shaped pattern vertically and normal to the localizer and activates a marker receiver when the aircraft passes through.
+
+The middle marker is a second fan shaped marker similar to the outer marker. It is located approximately 0.5 nmi to 0.8 nmi  (1 km to 1.5 km)from the ILS approach end of the runway and modulated at 1300 Hz. The inner marker, when used for category II approaches, intercepts the glide path at about the 100 ft (30 m)height to mark the over-shoot decision point (if the runway is still not visible). The marker is recognized by its 3000 Hz modulation. Category II approaches allow operation down to 100 ft (30 m)and 1300 ft (400 m) visibility.
+</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PM_SIGNAL" type="ns1:PM_SIGNAL" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A continuous sinusoidal wave (carrier) whose phase is varied in accordance with the amplitude of another wave.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PULSED_AC_SIGNAL" type="ns1:PULSED_AC_SIGNAL" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A signal characterized by short duration periods of (sinusoidal) ac electrical potential.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PULSED_AC_TRAIN" type="ns1:PULSED_AC_TRAIN" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A signal, characterized by a train of pulses of sinusoidal electrical ac activity with different durations and amplitudes.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PULSED_DC_SIGNAL" type="ns1:PULSED_DC_SIGNAL" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A signal characterized by a train of pulses of electrical dc activity with different durations and amplitudes with an optional ac component.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PULSED_DC_TRAIN" type="ns1:PULSED_DC_TRAIN" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A signal, characterized by a train of different, short duration periods of dc electrical activity.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="RADAR_RX_SIGNAL" type="ns1:RADAR_RX_SIGNAL" nillable="false">
+		<xs:annotation>
+			<xs:documentation>An appropriately delayed signal response to an input radar signal.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="RADAR_TX_SIGNAL" type="ns1:RADAR_TX_SIGNAL" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A pulsed ac signal used as a reference for received radar signals (i.e., Radar_RX_Signal).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="RAMP_SIGNAL" type="ns1:RAMP_SIGNAL" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A periodic wave whose instantaneous value varies alternately and linearly between two specified values (i.e., initial and alternate).  </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="RANDOM_NOISE" type="ns1:RANDOM_NOISE" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Transient disturbances occurring unpredictably, except in a statistical sense.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="RESOLVER" type="ns1:RESOLVER" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Two ac sine wave voltages whose relationships of amplitude represent the rotation of a shaft position of an electro-mechanical transducer,</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="RS_232" type="ns1:RS_232" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A serial databus signal that transmits and receives strings of characters and operates according to the specification TIA-232. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SQUARE_WAVE" type="ns1:SQUARE_WAVE" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A periodic wave that alternately assumes one of two fixed values of amplitude for equal lengths of time. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SSR_INTERROGATION" type="ns1:SSR_INTERROGATION" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Secondary Surveillance Radar (SSR) provides information to supplement the information obtained from a primary radar. Governing documents for civilian air traffic control (ATC) are ARINC Specification 572 and ARINC Specification 711 and for the military's identification, friend or foe system (IFF),  STANAG 4193. An aircraft on-board transponder will sense an interrogation from a ground (or airborne) station on a specific frequency (i.e., 1030 MHz) and responds with coded signals on another frequency (i.e., 1090 MHz). </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SSR_RESPONSE" type="ns1:SSR_RESPONSE" nillable="false">
+		<xs:annotation>
+			<xs:documentation>The transponder response to a valid SSR interrogation. It consists of an encoded pulse train. Each pulse train consists of a number of data pulses. The number and position of these data pulses (after the start pulse) are determined by the mode selected. There are 16 pulse positions in the pulse train; however, the code or (height) information carried by the response will determine which pulses are present.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="STEP_SIGNAL" type="ns1:STEP_SIGNAL" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A change of dc electrical potential from one level to another, either positive or negative.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SUP_CAR_SIGNAL" type="ns1:SUP_CAR_SIGNAL" nillable="false">
+		<xs:annotation>
+			<xs:documentation>An amplitude modulated signal in which the carrier is suppressed.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SYNCHRO" type="ns1:SYNCHRO" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Three ac sinusoid voltages whose relationship of amplitudes represent the rotational shaft position of an electro-mechanical transducer.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TACAN" type="ns1:TACAN" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Tactical air navigation (TACAN ) is a complete UHF polar coordinate navigation system using pulse techniques. The function operates identically as a DME and the bearing function is derived by rotating the ground transponder antenna so as to obtain a rotating multi-lobe pattern for coarse and fine bearing information, as defined in MIL-STD-291B
+
+The model defines a subset of the TACAN X signal concerned with bearing, rather than the complete signal, as test requirements dealing with TACAN distance can be refined using the DME model.
+
+The transponder emits RF pulses that are amplitude modulated to provide bearing information. The amplitude modulation is produced by rotating a parasitic reflector array about the antenna radiating element. The array consists of one 15 Hz and nine 135 Hz reflectors. As the pattern from the 15 Hz reflector passes through the magnetic east azimuth, a main reference burst (MRB) is transmitted. As the pattern from the 135 Hz reflectors passes through east, an auxiliary reference burst (ARB) is transmitted, except when the pattern is coincident with the 15 Hz pattern. This produces a total of one MRB and eight ARB bursts per antenna rotation. The airborne receiving equipment determines the aircraft bearing from the ground station by measuring elapsed time, first, from the MRB to the 0° phase of the 15 Hz component and second, from the ARB to 0 ° of the 135 Hz component.
+
+The TACAN beacon also generates a 2 or 3 letter Morse identification signal every 37.5 s. 
+</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TRIANGULAR_WAVE_SIGNAL" type="ns1:TRIANGULAR_WAVE_SIGNAL" nillable="false">
+		<xs:annotation>
+			<xs:documentation>A periodic wave whose instantaneous value varies alternately and linearly between two specified values (i.e., initial and alternate). The interval required to transition from the initial value to the alternate value is equal to the interval to transition from the alternate value to the initial value.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="VOR" type="ns1:VOR" nillable="false">
+		<xs:annotation>
+			<xs:documentation>VHF omnidirectional range (VOR) is a system combining ground based and airborne equipment to provide bearing to or from a ground station, as defined in ARINC Specification 579-2. The VOR radiates an RF carrier in the band 108.0 MHz to 117.975 MHz, with which are associated two separate 30 Hz modulations. The phase of one of these modulations is independent of the point of observation (i.e., reference phase). The phase of the other modulation (variable phase) is such that, at a point of observation, it differs from the reference phase by an angle equal to the bearing of the point of observation with respect to the VOR. The two separate modulations consist of the following:
+
+A sub-carrier of 9960 Hz, frequency modulated at 30 Hz, modulating the carrier to a nominal depth of 30%. This 30 Hz component is fixed independent of the azimuth and is termed the <i>reference phase</i>.
+
+A 30 Hz component, modulating the carrier to a nominal depth of 30%. This 30 Hz component is caused by a rotating antenna producing a change in phase with azimuth and is termed the <i>variable phase</i>.
+</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DIGITAL_TEST" type="ns1:DIGITAL_TEST" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Generate and measure digital data on the same pins.  By default, this TSF defines a pin monitor capability on pins that are being STIMmed, in order that faulty pin drivers may be detected.
+
+If this feature is not required, then the script in the data value of the ParallelDigital BSC dt_Sense should be modified so that 'H' and 'L' are both substituted with 'X' instead of being passed unchanged.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

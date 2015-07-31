@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="urn:IEEE-1671.2:2012:InstrumentDescription" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.00" xmlns:inst="urn:IEEE-1671.2:2012:InstrumentDescription" xmlns:te="urn:IEEE-1671:2010:TestEquipment" xmlns:hc="urn:IEEE-1671:2010:HardwareCommon" xmlns:c="urn:IEEE-1671:2010:Common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation xml:lang="en">
+
+      This schema is specified in IEEE Std 1671.2-2012, "IEEE Standard
+      for Automatic Test Markup Language (ATML) Instrument Descriptions."
+
+      This schema is a World Wide Web Consortium (W3C) Extensible
+      Markup Language (XML) binding of the ATML Instrument Description component defined in IEEE
+      Std 1671.2-2012,"IEEE Standard for Automatic Test Markup
+      Language (ATML) Instrument Descriptions."
+
+      The purpose of this schema is to allow the creation of IEEE Std 1671.2-2012
+      Instrument Description instance documents.
+      This schema uses the W3C XML Schema definition
+      language as the encoding. This allows for interoperability and
+      the exchange of ATML component instances between various systems.
+      This schema shall not be modified but may be included in
+      derivative works.
+
+      Copyright (c) 2012 Institute of Electrical and Electronics
+      Engineers, Inc.
+
+      USE AT YOUR OWN RISK
+
+    </xs:documentation>
+  </xs:annotation>
+  <xs:import namespace="urn:IEEE-1671:2010:TestEquipment" schemaLocation="TestEquipment.xsd"/>
+  <xs:import namespace="urn:IEEE-1671:2010:HardwareCommon" schemaLocation="HardwareCommon.xsd"/>
+  <xs:import namespace="urn:IEEE-1671:2010:Common" schemaLocation="Common.xsd"/>
+  <xs:element name="InstrumentDescription" type="inst:InstrumentDescription">
+    <xs:annotation>
+      <xs:documentation>
+        The InstrumentDescription element shall define a class or type of Instrument.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="InstrumentDescription">
+    <xs:annotation>
+      <xs:documentation>
+        Instruments may be represented as individual entities or as logical groups that represent an over-all source, sensor, or load capability.
+        Figure 1 illustrates the XML types inherited and the XML types (both simple and complex) that shall be defined in this standard, which together comprise the InstrumentDescription.
+        Within Figure 1, solid lined boxes indicate that the XML element shall be required, whereas dotted lined boxes indicate that the XML element may be used. The referenced subclause identifies where the definition of the element is located within this standard or IEEE Std 1671.
+
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:HardwareItemDescription">
+        <xs:sequence>
+          <xs:element name="Buses" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the InstrumentDescription/Buses child element shall document the instrument’s communication bus (or buses).
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Bus" type="inst:Bus" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      When used, the InstrumentDescription/Buses/Bus child element shall document a specific bus that may control the instrument. InstrumentDescription supports common instrument control buses available in the marketplace, as of the publication date of this standard.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="PowerOnDefaults" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the InstrumentDescription/PowerOnDefaults child element shall document the instrument’s power-on default state.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Default" type="c:NamedValue" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      When present, the InstrumentDescription/PowerOnDefaults/Default child element shall document each of the parameters of the power-on default state. Each default state shall include a keyword and a value (to be interpreted as a pair).
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Paths" type="te:Paths" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The InstrumentDescription/Paths child element shall identify the characteristics of the signal paths through the Instrument and interface hardware
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Specifications" type="hc:Specifications" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the InstrumentDescription/Specifications child element shall document the specifications of an instrument.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Resources" type="hc:Resources" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the InstrumentDescription/Resources child element shall document the physical entities within the instrument that provide source, sensor, or load capabilities.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Switching" type="hc:Switching" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the InstrumentDescription/Switching child element shall document a signal switching instrument or a source, sensor, or load instrument that contains switching. These include: general purpose, matrix, multiplexing, coaxial, microwave, optical, and cross point switching.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Capabilities" type="hc:Capabilities" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the InstrumentDescription/Capabilities child element shall document the types of signals that an instrument can produce (or measure) and the uncertainties involved in either generating or producing the signals.
+                This may be the ability to measure voltage, current, or resistance [such as a digital multi-meter (DMM)] may provide) or the ability to create and provide a clock frequency [such as a synthetic local oscillator (LO) may provide] within an SI subsystem.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="type" use="required">
+          <xs:annotation>
+            <xs:documentation>An enumeration used to identify whether the InstrumentDescription is describing an “Instrument,” “Module,” or instrument “Option.”</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Instrument"/>
+              <xs:enumeration value="Module"/>
+              <xs:enumeration value="Option"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+        <xs:attributeGroup ref="c:DocumentRootAttributes"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Bus" abstract="true">
+    <xs:annotation>
+      <xs:documentation>
+        When present, the Bus complex type shall identify the bus used to communicate with the instrument.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="defaultAddress" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>A string that permits the instrument’s default address to be indicated. Example: “255” (for VXI dynamic addressing)</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="VXI">
+    <xs:annotation>
+      <xs:documentation>
+        When present, the VXI complex type shall identify that there is an IEEE 1155™ conformant interface to the instrument. See IEEE Std 1155-1992 [B10].
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="inst:Bus">
+        <xs:sequence>
+          <xs:element name="DynamicCurrent" type="inst:VXIBackplaneVoltages">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the VXI/DynamicCurrent child element shall identify the dynamic electrical current requirements of the VXI instrument for each of the discrete eight VXI backplane voltages. The current shall be expressed in amperes.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PeakCurrent" type="inst:VXIBackplaneVoltages">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the VXI/PeakCurrent child element shall identify the peak electrical current requirements of the VXI instrument for each of the eight discrete VXI backplane voltages. The electrical current shall be expressed in amperes.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ECLTrigger" type="inst:VXITriggerLines">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the VXI/ECLTrigger child element shall identify the number of concurrent ECL trigger lines (ECLTRIG0-1) either being outputted by, or sensed by, the VXI instrument. The number of concurrent trigger lines shall be expressed as an integer number.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TTLTrigger" type="inst:VXITriggerLines">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the VXI/TTLTrigger child element shall identify the number of concurrent TTL trigger lines (TTLTRIG0-7) either being outputted by, or sensed by, the VXI instrument. The number of concurrent trigger lines shall be expressed as an integer number.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Keying">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the VXI/Keying child element shall identify the VXI local bus lockout key details utilized by the instrument. Keying Class 1 through 6 shall be as defined by VXI-1, B.7.2.6 [B25]. Keying Class 7 shall be defined as “no local bus,” keying class 8 shall be defined as “sensor ±16V,” and keying class 9 shall be defined as “sensor ±42V.”
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:attribute name="bottomRight" use="required">
+                <xs:annotation>
+                  <xs:documentation>An integer representing the keying class (1 through 6) defined by the VXI-1, Figure B.28 [B25]Classes 7, 8, and 9 are defined as follows:Class 7 = No local busClass 8 = Sensor ±16 VClass 9 = Sensor ±42 VBottom key supports D size modules. Bottom key on C size modules shall be specified as 7. </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:int">
+                    <xs:minInclusive value="1"/>
+                    <xs:maxInclusive value="9"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:attribute>
+              <xs:attribute name="bottomLeft" use="required">
+                <xs:annotation>
+                  <xs:documentation>An integer representing the keying class (1 through 6) defined by VXI-1, Figure B.28 [B25]Classes 7, 8, and 9 are defined as follows:Class 7 = No local busClass 8 = Sensor ±16 VClass 9 = Sensor ±42 VBottom key supports D size modules. Bottom key on C size modules shall be specified as 7. </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:int">
+                    <xs:minInclusive value="1"/>
+                    <xs:maxInclusive value="9"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:attribute>
+              <xs:attribute name="topRight" use="required">
+                <xs:annotation>
+                  <xs:documentation>An integer representing the keying class (1 through 6) defined by VXI-1, Figure B.28 [B25]Classes 7, 8, and 9 are defined as follows:Class 7 = No local busClass 8 = Sensor ±16 VClass 9 = Sensor ±42 VTop key supports C size modules only. </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:int">
+                    <xs:minInclusive value="1"/>
+                    <xs:maxInclusive value="9"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:attribute>
+              <xs:attribute name="topLeft" use="required">
+                <xs:annotation>
+                  <xs:documentation>An integer representing the keying class (1 through 6) defined by VXI-1, Figure B.28 [B25]Classes 7, 8, and 9 are defined as follows:Class 7 = No local busClass 8 = Sensor ±16 VClass 9 = Sensor ±42 VTop key supports C size modules only. </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:int">
+                    <xs:minInclusive value="1"/>
+                    <xs:maxInclusive value="9"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:attribute>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="ModuleCooling">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the VXI/ModuleCooling child element shall identify the VXI instruments air-flow and back-pressure cooling characteristics.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:attribute name="backPressure" type="xs:double" use="required">
+                <xs:annotation>
+                  <xs:documentation>The module cooling as back pressure in mm/H2O</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+              <xs:attribute name="airFlow" type="xs:double" use="required">
+                <xs:annotation>
+                  <xs:documentation>Represents Module Cooling as air flow in liters/sec.</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="SupportedClockSources" type="inst:SupportedClockSources">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the VXI/SupportedClockSources child element shall document the clock sources the instrument supports.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="addressSpace" use="required">
+          <xs:annotation>
+            <xs:documentation>Identifies the type of VXI address space needed by the instrument or module in addition to A16.</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="A16"/>
+              <xs:enumeration value="A24"/>
+              <xs:enumeration value="A32"/>
+              <xs:enumeration value="A64"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="deviceClass" use="required">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Message"/>
+              <xs:enumeration value="Register"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="deviceCategory" type="inst:DeviceCategory" use="required"/>
+        <xs:attribute name="dynamicallyConfigured" type="xs:boolean" use="required"/>
+        <xs:attribute name="interruptLines" type="xs:int" use="required">
+          <xs:annotation>
+            <xs:documentation>The number of interrupt lines utilized by a device.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="manufacturerID" type="c:HexValue" use="required"/>
+        <xs:attribute name="modelCode" type="c:HexValue" use="required"/>
+        <xs:attribute name="requiredMemory" type="c:HexValue" use="required"/>
+        <xs:attribute name="slotSize" use="required">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="A"/>
+              <xs:enumeration value="B"/>
+              <xs:enumeration value="C"/>
+              <xs:enumeration value="D"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="slotWeight" type="xs:double" use="required">
+          <xs:annotation>
+            <xs:documentation>The weight of the module in kilograms per slot occupied.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="slots" type="xs:int" use="required">
+          <xs:annotation>
+            <xs:documentation>The number of slots consumed.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="VXIBackplaneVoltages">
+    <xs:annotation>
+      <xs:documentation>
+        Used by child elements: VXI/DynamicCurrent, VXI/PeakCurrent
+        When present, the VXIBackplaneVoltages complex type shall store the amount of electrical current sunk by the VXI instrument on each of the eight discrete VXI backplane voltages. The electrical current shall be expressed in amperes.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="plus_12" type="xs:double" use="required">
+      <xs:annotation>
+        <xs:documentation>The amount of current on the +12 V line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="plus_24" type="xs:double" use="required">
+      <xs:annotation>
+        <xs:documentation>The amount of current on the +24 V line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="plus_5_standby" type="xs:double" use="required">
+      <xs:annotation>
+        <xs:documentation>The amount of current on the +5 V standby line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="plus_5" type="xs:double" use="required">
+      <xs:annotation>
+        <xs:documentation>The amount of current on the +5 V line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="minus_12" type="xs:double" use="required">
+      <xs:annotation>
+        <xs:documentation>The amount of current on the –12 V line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="minus_24" type="xs:double" use="required">
+      <xs:annotation>
+        <xs:documentation>The amount of current on the –24 V line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="minus_2" type="xs:double" use="required">
+      <xs:annotation>
+        <xs:documentation>The amount of current on the –2 V line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="minus_5.2" type="xs:double" use="required">
+      <xs:annotation>
+        <xs:documentation>The amount of current on the –5.2 V line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="VXITriggerLines">
+    <xs:annotation>
+      <xs:documentation>
+        Used by child elements: VXI/ECLTrigger, VXI/TTLTrigger
+        When present, the VXITriggerLines complex type shall identify the number of concurrent trigger lines either being outputted by, or sensed by, the VXI instrument. The number of concurrent trigger lines shall be expressed as an integer number.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="source" type="xs:int" use="optional">
+      <xs:annotation>
+        <xs:documentation>The number of VXI triggers that may concurrently generate outputs. Allowable values are 0 or greater.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="sense" type="xs:int" use="optional">
+      <xs:annotation>
+        <xs:documentation>The number of VXI triggers that may concurrently receive inputs. Allowable values are 0 or greater.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="IEEE-488">
+    <xs:annotation>
+      <xs:documentation>
+        When present, the IEEE-488 complex type shall identify that there is an IEEE 488™ interface to the instrument. See ISO 60488-2:2004 [B15] (replaces IEEE Std 488.2™).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="inst:Bus"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="VME">
+    <xs:annotation>
+      <xs:documentation>
+        When present, the VME complex type shall identify that there is an IEEE 1014™ (VME) conformant interface (either 32-bit or 64-bit VME) to the instrument. See IEEE Std 1014-1987 [B8].
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="inst:Bus"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Ethernet">
+    <xs:annotation>
+      <xs:documentation>
+        Used by complex type: LXI
+        When present, the Ethernet complex type shall identify that there is an Ethernet interface to the instrument. See IEEE Std 802.3™-2005 [B7].
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="inst:Bus">
+        <xs:attribute name="supportsDHCP" type="xs:boolean" use="required">
+          <xs:annotation>
+            <xs:documentation>A Boolean “yes” or “no” indication as to whether the instrument’s Ethernet interface supports the Dynamic Host Configuration Protocol (DHCPv4 Specification RFC 4361 [B3])</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="EIA-232">
+    <xs:annotation>
+      <xs:documentation>
+        When present, the EIA-232 complex type shall identify that there is an EIA-232 (formerly known as RS-232) interface to the instrument. See ANSI TIA/EIA-232-F:1997 [B1].
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="inst:Bus"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="USB">
+    <xs:annotation>
+      <xs:documentation>
+        When present, the USB complex type shall identify that there is a USB conformant interface to the instrument. See Universal Serial Bus [B24].
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="inst:Bus">
+        <xs:sequence>
+          <xs:element name="Version" type="hc:VersionIdentifier">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the USB/Version child element shall identify the version of USB supported.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="IEEE-1394">
+    <xs:annotation>
+      <xs:documentation>
+        When present, the IEEE-1394 complex type shall identify that there is an IEEE 1394™ interface to the instrument. See IEEE Std 1394.1-2004 [B11].
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="inst:Bus"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LXI">
+    <xs:annotation>
+      <xs:documentation>
+        When present, the LXI complex type shall identify that there is an LXI conformant Ethernet interface to the instrument. See LXI Standard [B16].
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="inst:Ethernet">
+        <xs:attribute name="LXIVersion" type="c:NonBlankString" use="required">
+          <xs:annotation>
+            <xs:documentation>A string that permits the LXI version to be indicated. Example: “1.2.01”</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="class" use="required">
+          <xs:annotation>
+            <xs:documentation>The LXI class. The allowable classes are: A, B, or C.</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="c:NonBlankString">
+              <xs:enumeration value="A"/>
+              <xs:enumeration value="B"/>
+              <xs:enumeration value="C"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PCI">
+    <xs:annotation>
+      <xs:documentation>
+        When present, the PCI complex type shall identify that there is a PCI conformant interface to the instrument. See Conventional PCI 3.0 [B2]. Should there be more than one manufacturer, there shall be more than on instance document (one per manufacturer).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="inst:Bus">
+        <xs:attribute name="vendorID" type="c:HexValue" use="required">
+          <xs:annotation>
+            <xs:documentation>The identification of the manufacturer of the instrument. Valid vendor IDs are allocated by the PCI Special Interest Group (PCI-SIG) to ensure uniqueness.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="deviceID" type="c:HexValue" use="required">
+          <xs:annotation>
+            <xs:documentation>The identification of the particular instrument. This identifier (ID) is allocated by the vendor.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PCIe">
+    <xs:annotation>
+      <xs:documentation>
+        When present, the PCIe complex type shall identify that there is a PCIe conformant interface to the instrument. See PCIe Base Specification 1.1 [B19].
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="inst:PCI">
+        <xs:attribute name="numberOfLanes" type="xs:int" use="required">
+          <xs:annotation>
+            <xs:documentation>The integer number of lanes the instrument supports. Lanes are point-to-point full duplex serial links. Each PCIe slot carries either 1, 2, 4, 8, 16, or 32 lanes of data between the motherboard and the card. Lane counts are written with an x prefix (e.g., x1 for a single-lane card and x16 for a 16-lane card).</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PXI">
+    <xs:annotation>
+      <xs:documentation>
+        Used by complex type: PXIe
+        When present, the PXI complex type shall identify that there is a PXI conformant interface to the instrument. See PXI-1 [B20] and PXI-2 [B21].
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="inst:PCI">
+        <xs:sequence>
+          <xs:element name="DynamicCurrent" type="inst:PXIBackplaneVoltages">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the PXI/DynamicCurrent child element shall document the dynamic current (expressed in amperes) consumed or generated on each of the discrete PXI backplane voltages.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PeakCurrent" type="inst:PXIBackplaneVoltages">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the PXI/PeakCurrent child element shall document the peak current (expressed in amperes) consumed or generated on each of the discrete PXI backplane voltages.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SupportedClockSources" type="inst:SupportedClockSources">
+            <xs:annotation>
+              <xs:documentation>
+                When present, the PXI/SupportedClockSources child element shall document the clock sources the instrument supports.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="deviceCategory" type="inst:DeviceCategory" use="required"/>
+        <xs:attribute name="slots" type="xs:int" use="required">
+          <xs:annotation>
+            <xs:documentation>The number of PXI slots provided or consumed by this device.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="slotSize" use="required">
+          <xs:annotation>
+            <xs:documentation>A string specifying which of the defined sizes this PXI component supports. The string shall be one of the following: 3U, 6U.</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="3U"/>
+              <xs:enumeration value="6U"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="slotWeigth" type="xs:double" use="required">
+          <xs:annotation>
+            <xs:documentation>
+              For a PXI module, this is a negative floating point number representing the weight of the module in kilogram per slot occupied.
+              For a PXI mainframe, this is a positive floating point number representing the weight of the mainframe in kilogram per slot provided.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="memorySize" type="xs:int" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PXIBackplaneVoltages">
+    <xs:annotation>
+      <xs:documentation>
+        Used by child elements: PXI/DynamicCurrent, PXI/PeakCurrent
+        When present, the PXIBackplaneVoltages complex type shall store the amount of current (expressed in amperes) consumed by or provided by the device.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="plus_5" type="xs:double" use="required">
+      <xs:annotation>
+        <xs:documentation>The amount of current on the +5 line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="plus_3.3" type="xs:double" use="required">
+      <xs:annotation>
+        <xs:documentation>The amount of current on the +3.3 line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="plus_12" type="xs:double" use="required">
+      <xs:annotation>
+        <xs:documentation>The amount of current on the +12 line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="minus_12" type="xs:double" use="required">
+      <xs:annotation>
+        <xs:documentation>The amount of current on the –12 line. A positive value means the device provides current. A negative value means the device consumes current. Example: “–0.5”</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="PXIe">
+    <xs:annotation>
+      <xs:documentation>
+        When present, the PXIe complex type shall identify that there is a PXI Express conformant interface to the instrument. See PXI-5 [B22] and PXI-6 [B23].
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="inst:PXI">
+        <xs:attribute name="numberOfLanes" type="xs:int" use="required">
+          <xs:annotation>
+            <xs:documentation>The integer number of lanes the instrument supports. Lanes are point-to-point full duplex serial links. Each PCIe slot carries either 1, 2, 4, 8, 16, or 32 lanes of data between the motherboard and the card. Lane counts are written with an x prefix (e.g., x1 for a single-lane card and x16 for a 16-lane card).</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="DeviceCategory">
+    <xs:annotation>
+      <xs:documentation>
+        Type: restriction of xs:string
+        Used by child elements: VXI/@deviceCategory, PXI/@deviceCategory
+        Permits the instrument category to be identified, as one of the following: “InstrumentModule,” “Slot0Device,” or “Mainframe.”
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="InstrumentModule"/>
+      <xs:enumeration value="Slot0Device"/>
+      <xs:enumeration value="Mainframe"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="SupportedClockSources">
+    <xs:annotation>
+      <xs:documentation>
+        When present, the SupportedClockSources complex type shall identify which clock sources the device will accept. Each type (backplane, external and internal) shall be indicated as either a “yes” or “no,” allowing every combination from “none” to “all” to be represented. Example: An instrument that may only be clocked from an external source would have the backplane and internal attributes set to “0” (no) and the external attribute set to “1” (yes).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="internal" type="xs:boolean" use="required">
+      <xs:annotation>
+        <xs:documentation>Whether or not the device will accept an internal clock. Example: “1” = “yes” </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="external" type="xs:boolean" use="required">
+      <xs:annotation>
+        <xs:documentation>Whether or not the device will accept an external clock. Example: “0” = “no” </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="backplane" type="xs:boolean" use="required">
+      <xs:annotation>
+        <xs:documentation>Whether or not the device will accept a backplane clock. Example: “1” = “yes” </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+</xs:schema>

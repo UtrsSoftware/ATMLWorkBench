@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:IEEE-1671:2010:Capabilities" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.10" xmlns:ca="urn:IEEE-1671:2010:Capabilities" xmlns:c="urn:IEEE-1671:2010:Common" xmlns:hc="urn:IEEE-1671:2010:HardwareCommon" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation xml:lang="en">
+
+      This schema is specified in IEEE Std 1671-2010, "IEEE Standard
+      for Automatic Test Markup Language (ATML) for Exchanging Automatic Test
+      Equipment and Test Information via XML."
+
+      This schema is a World Wide Web Consortium (W3C) Extensible
+      Markup Language (XML) binding of the ATML Capabilities component defined in IEEE
+      Std 1671-2010,"IEEE Standard for Automatic Test Markup
+      Language (ATML) for Exchanging Automatic Test Equipment and Test
+      Information via XML."
+
+      The purpose of this schema is to allow the creation of IEEE Std 1671-2010
+      Capabilities instance documents.
+      This schema uses the W3C XML Schema definition
+      language as the encoding. This allows for interoperability and
+      the exchange of ATML component instances between various systems.
+      This schema shall not be modified but may be included in
+      derivative works.
+
+      Copyright (c) 2010 Institute of Electrical and Electronics
+      Engineers, Inc.
+
+      USE AT YOUR OWN RISK
+
+    </xs:documentation>
+  </xs:annotation>
+  <xs:import namespace="urn:IEEE-1671:2010:Common" schemaLocation="Common.xsd"/>
+  <xs:import namespace="urn:IEEE-1671:2010:HardwareCommon" schemaLocation="HardwareCommon.xsd"/>
+  <xs:element name="Capabilities">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of ca:Capabilities
+        Properties: content complex
+        The Capabilities element defines a static list of Capabilities of the item, independent of any particular ATML family of standards XML schema (e.g., documenting the capabilities of an instrument, not within an ATML InstrumentDescription document).
+        Figure C.1 illustrates the XML types inherited and the XML types (both simple and complex) that shall be defined in this standard that together constitute Capabilities.
+        Within Figure C.1, “solid lined boxes” indicate that the XML element shall be required.
+
+
+        Figure C.1—Capabilities element
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="ca:Capabilities">
+          <xs:attribute name="version" type="c:NonBlankString" use="optional">
+            <xs:annotation>
+              <xs:documentation>The version of the instance document. Example: 2.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="name" type="c:NonBlankString" use="optional">
+            <xs:annotation>
+              <xs:documentation>The name of the instance document. Example: Acme Widget.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attributeGroup ref="c:DocumentRootAttributes"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Capabilities">
+    <xs:annotation>
+      <xs:documentation>
+        The Capabilities complex type groups a list (one or more) of capabilities.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Capability" type="hc:Capability" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: hc:Capability
+            Properties: isRef 0, content complex
+            The Capabilities/Capability element identifies a capability.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

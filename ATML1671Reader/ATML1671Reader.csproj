@@ -1,0 +1,397 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C60E5DAE-E39D-47F6-BA9A-02C3C75C8198}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ATML1671Reader</RootNamespace>
+    <AssemblyName>ATML1671Reader</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\common\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\common\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>utrs_ATML1671Reader.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug%28x64%29|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\common\Debug%28x64%29\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release%28x64%29|AnyCPU'">
+    <OutputPath>..\common\Release%28x64%29\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\common\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ScintillaNET, Version=2.6.0.0, Culture=neutral, PublicKeyToken=948d6c9751444115, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\common\ScintillaNet\ScintillaNET.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.9.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\common\3rdparty\DockPanel\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="controls\CheckSumControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\CheckSumControl.Designer.cs">
+      <DependentUpon>CheckSumControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\ItemInstanceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\ItemInstanceControl.Designer.cs">
+      <DependentUpon>ItemInstanceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\ReaderFrame.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\ReaderFrame.Designer.cs">
+      <DependentUpon>ReaderFrame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\SoftwareInstanceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\SoftwareInstanceControl.Designer.cs">
+      <DependentUpon>SoftwareInstanceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\TestEquipmentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\TestEquipmentControl.Designer.cs">
+      <DependentUpon>TestEquipmentControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\TestProgramDocumentationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\TestProgramDocumentationControl.Designer.cs">
+      <DependentUpon>TestProgramDocumentationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\TestProgramDocumentationListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\TestProgramDocumentationListControl.Designer.cs">
+      <DependentUpon>TestProgramDocumentationListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\TestStationReferenceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\TestStationReferenceControl.Designer.cs">
+      <DependentUpon>TestStationReferenceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\TPSResourceReferenceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\TPSResourceReferenceControl.Designer.cs">
+      <DependentUpon>TPSResourceReferenceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\TPSResourceReferenceListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\TPSResourceReferenceListControl.Designer.cs">
+      <DependentUpon>TPSResourceReferenceListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\TPSSoftwareReferenceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\TPSSoftwareReferenceControl.Designer.cs">
+      <DependentUpon>TPSSoftwareReferenceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\TPSSoftwareReferenceListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\TPSSoftwareReferenceListControl.Designer.cs">
+      <DependentUpon>TPSSoftwareReferenceListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLReaderOutputWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLReaderOutputWindow.Designer.cs">
+      <DependentUpon>ATMLReaderOutputWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLReaderToolWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLReaderToolWindow.Designer.cs">
+      <DependentUpon>ATMLReaderToolWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\SoftwareInstanceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\SoftwareInstanceForm.Designer.cs">
+      <DependentUpon>SoftwareInstanceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\TestConfigurationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\TestConfigurationForm.Designer.cs">
+      <DependentUpon>TestConfigurationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\TestEquipmentReferenceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\TestEquipmentReferenceForm.Designer.cs">
+      <DependentUpon>TestEquipmentReferenceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\TestProgramDocumentationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\TestProgramDocumentationForm.Designer.cs">
+      <DependentUpon>TestProgramDocumentationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\TPSResourceReferenceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\TPSResourceReferenceForm.Designer.cs">
+      <DependentUpon>TPSResourceReferenceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\TPSSoftwareReferenceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\TPSSoftwareReferenceForm.Designer.cs">
+      <DependentUpon>TPSSoftwareReferenceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InputDiscriminator.cs" />
+    <Compile Include="controls\TestConfigurationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\TestConfigurationControl.Designer.cs">
+      <DependentUpon>TestConfigurationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ITestConfigurationChangeListener.cs" />
+    <Compile Include="model\IInputFile.cs" />
+    <Compile Include="model\mtpsi\CASSMTPSI.cs" />
+    <Compile Include="model\mtpsi\CASSMTPSIManager.cs" />
+    <Compile Include="model\mtpsi\Cass_Mtpsi_rv2.Designer.cs" />
+    <Compile Include="model\mtpsi\Cass_Mtpsi_rv3.Designer.cs" />
+    <Compile Include="model\mtpsi\cass_mtpsi_rv4.designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="reader\ATMLReader.cs" />
+    <Compile Include="reader\IATMLReaderConsumer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="model\mtpsi\Cass_Mtpsi_rv2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="model\mtpsi\Cass_Mtpsi_rv3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="model\mtpsi\cass_mtpsi_rv4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="utrs_ATML1671Reader.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="controls\CheckSumControl.resx">
+      <DependentUpon>CheckSumControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\ItemInstanceControl.resx">
+      <DependentUpon>ItemInstanceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\ReaderFrame.resx">
+      <DependentUpon>ReaderFrame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\SoftwareInstanceControl.resx">
+      <DependentUpon>SoftwareInstanceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\TestConfigurationControl.resx">
+      <DependentUpon>TestConfigurationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\TestEquipmentControl.resx">
+      <DependentUpon>TestEquipmentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\TestProgramDocumentationControl.resx">
+      <DependentUpon>TestProgramDocumentationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\TestStationReferenceControl.resx">
+      <DependentUpon>TestStationReferenceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\TPSResourceReferenceControl.resx">
+      <DependentUpon>TPSResourceReferenceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\TPSSoftwareReferenceControl.resx">
+      <DependentUpon>TPSSoftwareReferenceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLReaderOutputWindow.resx">
+      <DependentUpon>ATMLReaderOutputWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLReaderToolWindow.resx">
+      <DependentUpon>ATMLReaderToolWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\SoftwareInstanceForm.resx">
+      <DependentUpon>SoftwareInstanceForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\TestConfigurationForm.resx">
+      <DependentUpon>TestConfigurationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\TestEquipmentReferenceForm.resx">
+      <DependentUpon>TestEquipmentReferenceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\TestProgramDocumentationForm.resx">
+      <DependentUpon>TestProgramDocumentationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\TPSResourceReferenceForm.resx">
+      <DependentUpon>TPSResourceReferenceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\TPSSoftwareReferenceForm.resx">
+      <DependentUpon>TPSSoftwareReferenceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\reader.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\test-config.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ATMLLibraries\ATMLCommonLibrary\ATMLCommonLibrary.csproj">
+      <Project>{71632688-04AE-491A-9D2F-EE05FC0400D4}</Project>
+      <Name>ATMLCommonLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLLibraries\ATMLDataAccessLibrary\ATMLDataAccessLibrary.csproj">
+      <Project>{F48E6BE2-2E30-4048-8E38-F4F3DEF51D03}</Project>
+      <Name>ATMLDataAccessLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLLibraries\ATMLManagerLibrary\ATMLManagerLibrary.csproj">
+      <Project>{A82AAA85-A772-40A2-84C2-15C6997D029F}</Project>
+      <Name>ATMLManagerLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLLibraries\ATMLModelLibrary\ATMLModelLibrary.csproj">
+      <Project>{99B831F6-9B1A-49DF-B836-B86CDDB6C682}</Project>
+      <Name>ATMLModelLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLLibraries\ATMLProjectLibrary\ATMLProjectLibrary.csproj">
+      <Project>{2D038881-418B-4B2E-9AA8-89525DBA8BA6}</Project>
+      <Name>ATMLProjectLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLLibraries\ATMLSchemaLibrary\ATMLSchemaLibrary.csproj">
+      <Project>{6BFD6798-ACEA-41B2-8EA3-8D5C8A8BD5FB}</Project>
+      <Name>ATMLSchemaLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLLibraries\ATMLSignalModelLibrary\ATMLSignalModelLibrary.csproj">
+      <Project>{5386282E-A995-4E29-9FE6-C39D03B7C52B}</Project>
+      <Name>ATMLSignalModelLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLLibraries\ATMLUtilities\ATMLUtilitiesLibrary.csproj">
+      <Project>{42F58F52-995B-4244-A4FB-17EF4C09A874}</Project>
+      <Name>ATMLUtilitiesLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

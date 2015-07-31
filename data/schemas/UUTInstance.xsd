@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="urn:IEEE-1671.3:2009.03:UUTInstance" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.08" xmlns:uuti="urn:IEEE-1671.3:2009.03:UUTInstance" xmlns:c="urn:IEEE-1671:2010:Common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+
+This schema is specified in IEEE Std 1671.3-2007, "IEEE Trial-Use Standard
+for Automatic Test Markup Language (ATML) for Exchanging Automatic Test 
+Equipment and Test Information via XML:Exchanging UUT Descriptions."
+ 
+This schema is a World Wide Web Consortium (W3C) Extensible 
+Markup Language (XML) binding of the ATML UUT Instance component defined in IEEE
+Std 1671.3-2007,"IEEE Trial-Use Standard for Automatic Test Markup 
+Language (ATML) for Exchanging Automatic Test Equipment and Test
+Information via XML:Exchanging UUT Descriptions."
+
+The purpose of this schema is to allow the creation of IEEE Std 1671.3-2007
+UUT Instance instance documents.
+This schema uses the W3C XML Schema definition
+language as the encoding. This allows for interoperability and 
+the exchange of ATML component instances between various systems.
+This schema shall not be modified but may be included in 
+derivative works. 
+
+Copyright (c) 2009 Institute of Electrical and Electronics 
+Engineers, Inc.
+
+USE AT YOUR OWN RISK
+
+</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="urn:IEEE-1671:2010:Common" schemaLocation="Common.xsd"/>
+	<xs:element name="UUTInstance">
+		<xs:annotation>
+			<xs:documentation>UUT Instance</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="c:HardwareInstance">
+					<xs:attribute name="version" type="c:NonBlankString"/>
+					<xs:attribute name="name" type="c:NonBlankString"/>
+					<xs:attributeGroup ref="c:DocumentRootAttributes"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

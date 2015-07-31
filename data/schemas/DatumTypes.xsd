@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:td="urn:IEEE-1671.1:2009:TestDescription" xmlns:c="urn:IEEE-1671:2010:Common" xmlns:hc="urn:IEEE-1671:2010:HardwareCommon" xmlns:te="urn:IEEE-1671:2010:TestEquipment" xmlns:uut="urn:IEEE-1671.3:2009.03:UUTDescription" xmlns:ta="urn:P-IEEE-1671.5:2008.03:TestAdapterDescription" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:IEEE-1671.1:2009:TestDescription" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.05">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+
+This schema is specified in IEEE Std 1671.1-20XX, "IEEE Standard for ATML: Test Description"
+ 
+This schema is a World Wide Web Consortium (W3C) Extensible Markup Language (XML) binding 
+of the ATML Test Description component defined in IEEE Std 1671.1-20XX,
+"IEEE Standard for ATML: Test Description."
+
+The purpose of this schema is to allow the creation of IEEE Std 1671.1-20XX
+Test Description instance documents.This schema uses the W3C XML Schema definition
+language as the encoding. This allows for interoperability and 
+the exchange of ATML component instances between various systems.
+This schema shall not be modified but may be included in 
+derivative works. 
+
+Copyright (c) 2011 Institute of Electrical and Electronics 
+Engineers, Inc.
+
+USE AT YOUR OWN RISK
+
+		</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="urn:IEEE-1671:2010:Common" schemaLocation="Common.xsd"/>
+	<xs:import namespace="urn:IEEE-1671:2010:HardwareCommon" schemaLocation="HardwareCommon.xsd"/>
+	<xs:complexType name="ValueDescription">
+		<xs:annotation>
+			<xs:documentation>Describes a value, providing an optional nominal value. This type is similar to c:Value, but does not specify the actual value. It is typically used to describe values that will be obtained at run-time through measurement, from the operator, etc.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="DatumDescription" type="td:DatumDescriptionType">
+				<xs:annotation>
+					<xs:documentation>The value consists of one data item.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CollectionDescription" type="td:CollectionDescription">
+				<xs:annotation>
+					<xs:documentation>The value consists of a set of heterogeneous data items. Each item may have a different data type and unit.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IndexedArrayDescription" type="td:IndexedArrayDescriptionType">
+				<xs:annotation>
+					<xs:documentation>The value consists of an array of homogenous data items. All elements have the same data type and unit.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="DatumDescriptionType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Abstract base type for types that describe a value consisting of a data item (e.g., numeric, boolean, string, date-time), an optional nominal value, optional unit information, and optional quality information (range, resolution and accuracy). Note that this is an abstract type, used as base type for other type definitions. Where this type is assigned in the schema, elements with derived types shall be provided. The 'xsi:type' attribute shall be used to indicate the type of the elements. Attributes 'standardUnit' and 'nonStandardUnit' shall be alternative. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+		</xs:annotation>
+		<xs:group ref="c:DatumQuality"/>
+		<xs:attributeGroup ref="c:UnitAttributes">
+			<xs:annotation>
+				<xs:documentation>Unit of the data item.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+	</xs:complexType>
+	<xs:complexType name="CollectionDescription">
+		<xs:annotation>
+			<xs:documentation>Describes a value that consists of a set of heterogeneous data items. Attributes standardUnit and nonStandardUnit shall be alternative. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="c:DatumQuality"/>
+			<xs:element name="ItemDescription" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Describes one data item.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="td:ValueDescription">
+							<xs:attribute name="name" type="c:NonBlankString">
+								<xs:annotation>
+									<xs:documentation>Name of the data item.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="c:UnitAttributes">
+			<xs:annotation>
+				<xs:documentation>Default unit, applies to data items for which a unit is not explicitly defined.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+	</xs:complexType>
+	<xs:complexType name="IndexedArrayDescriptionType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Abstract type, describes a value that consists of an array of homogenous data items. The array shall be zero-based. The elements of the array may be individual data items or collections. All elements of the array shall have the same data type. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically. Note that this is an abstract type, used as base type for other type definitions. Where this type is assigned in the schema, elements with derived types shall be provided. The xsi:type attribute shall be used to indicate the type of the elements. </xs:documentation>
+		</xs:annotation>
+		<xs:group ref="c:DatumQuality"/>
+		<xs:attributeGroup ref="c:UnitAttributes">
+			<xs:annotation>
+				<xs:documentation>Common unit, applies to all array elements.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+		<xs:attribute name="dimensions" type="c:ArrayIndexor">
+			<xs:annotation>
+				<xs:documentation>Specifies the array bounds for each dimension. Implicitly specifies the number of dimensions.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="binaryDescription">
+		<xs:annotation>
+			<xs:documentation>Describes a binary value. Where applicable, can be assigned to elements of type DatumDescriptionType.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:DatumDescriptionType">
+				<xs:sequence>
+					<xs:element name="NominalValue" type="c:binary" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Nominal value. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="binaryArrayDescription">
+		<xs:annotation>
+			<xs:documentation>Describes an array of binary values. Where applicable, can be assigned to elements of type IndexedArrayDescriptionType. Note that it is possible to have elements with this type that have no elements or attributes. The presence of such an element indicates that the described entity is an array with unknown size and number of dimensions, where elements have no unit, that a default value for elements is not specified, and that a nominal value for the described entity is not specified.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:IndexedArrayDescriptionType">
+				<xs:sequence>
+					<xs:element name="DefaultElementValue" type="c:binary" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Default value, applies to all array elements whose value is not explicitly defined through NominalElementValue child elements.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NominalElementValue" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>The value of an array element, for the nominal array value.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="c:binary">
+									<xs:attribute name="position" type="c:ArrayIndexor" use="required">
+										<xs:annotation>
+											<xs:documentation>Index of the element.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="booleanDescription">
+		<xs:annotation>
+			<xs:documentation>Describes a boolean value. Where applicable, can be assigned to elements of type DatumDescriptionType.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:DatumDescriptionType">
+				<xs:sequence>
+					<xs:element name="NominalValue" type="c:boolean" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Nominal value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="booleanArrayDescription">
+		<xs:annotation>
+			<xs:documentation>Describes an array of boolean values. Where applicable, can be assigned to elements of type IndexedArrayDescriptionType. Note that it is possible to have elements with this type that have no elements or attributes. The presence of such an element indicates that the described entity is an array with unknown size and number of dimensions, where elements have no unit, that a default value for elements is not specified, and that a nominal value for the described entity is not specified.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:IndexedArrayDescriptionType">
+				<xs:sequence>
+					<xs:element name="DefaultElementValue" type="c:boolean" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Default value, applies to all array elements whose value is not explicitly defined through NominalElementValue child elements.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NominalElementValue" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>The value of an array element, for the nominal array value.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="c:boolean">
+									<xs:attribute name="position" type="c:ArrayIndexor" use="required">
+										<xs:annotation>
+											<xs:documentation>Index of the element.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="complexDescription">
+		<xs:annotation>
+			<xs:documentation>Describes a complex numeric value (i.e., a value that has real and imaginary components). Where applicable, can be assigned to elements of type DatumDescriptionType.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:DatumDescriptionType">
+				<xs:sequence>
+					<xs:element name="NominalValue" type="c:complex" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Nominal value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="complexArrayDescription">
+		<xs:annotation>
+			<xs:documentation>Describes an array of complex numeric values. Where applicable, can be assigned to elements of type IndexedArrayDescriptionType. Note that it is possible to have elements with this type that have no elements or attributes. The presence of such an element indicates that the described entity is an array with unknown size and number of dimensions, where elements have no unit, that a default value for elements is not specified, and that a nominal value for the described entity is not specified.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:IndexedArrayDescriptionType">
+				<xs:sequence>
+					<xs:element name="DefaultElementValue" type="c:complex" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Default value, applies to all array elements whose value is not explicitly defined through NominalElementValue child elements.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NominalElementValue" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>The value of an array element, for the nominal array value.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="c:complex">
+									<xs:attribute name="position" type="c:ArrayIndexor" use="required">
+										<xs:annotation>
+											<xs:documentation>Index of the element.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="dateTimeDescription">
+		<xs:annotation>
+			<xs:documentation>Describes a date-time value. Where applicable, can be assigned to elements of type DatumDescriptionType.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:DatumDescriptionType">
+				<xs:sequence>
+					<xs:element name="NominalValue" type="c:dateTime" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Nominal value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="dateTimeArrayDescription">
+		<xs:annotation>
+			<xs:documentation>Describes a date-time value. Where applicable, can be assigned to elements of type IndexedArrayDescriptionType. Note that it is possible to have elements with this type that have no elements or attributes. The presence of such an element indicates that the described entity is an array with unknown size and number of dimensions, where elements have no unit, that a default value for elements is not specified, and that a nominal value for the described entity is not specified.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:IndexedArrayDescriptionType">
+				<xs:sequence>
+					<xs:element name="DefaultElementValue" type="c:dateTime" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Default value, applies to all array elements whose value is not explicitly defined through NominalElementValue child elements.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NominalElementValue" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>The value of an array element, for the nominal array value.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="c:dateTime">
+									<xs:attribute name="position" type="c:ArrayIndexor" use="required">
+										<xs:annotation>
+											<xs:documentation>Index of the element.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="hexadecimalDescription">
+		<xs:annotation>
+			<xs:documentation>Describes a hex-encoded binary value. Where applicable, can be assigned to elements of type DatumDescriptionType.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:DatumDescriptionType">
+				<xs:sequence>
+					<xs:element name="NominalValue" type="c:hexadecimal" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Nominal value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="hexadecimalArrayDescription">
+		<xs:annotation>
+			<xs:documentation>Describes an array of hex-encoded binary values. Where applicable, can be assigned to elements of type IndexedArrayDescriptionType. Note that it is possible to have elements with this type that have no elements or attributes. The presence of such an element indicates that the described entity is an array with unknown size and number of dimensions, where elements have no unit, that a default value for elements is not specified, and that a nominal value for the described entity is not specified.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:IndexedArrayDescriptionType">
+				<xs:sequence>
+					<xs:element name="DefaultElementValue" type="c:hexadecimal" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Default value, applies to all array elements whose value is not explicitly defined through NominalElementValue child elements.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NominalElementValue" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>The value of an array element, for the nominal array value.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="c:hexadecimal">
+									<xs:attribute name="position" type="c:ArrayIndexor" use="required">
+										<xs:annotation>
+											<xs:documentation>Index of the element.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="doubleDescription">
+		<xs:annotation>
+			<xs:documentation>Describes a numeric value that corresponds to the IEEE double precision 64-bit floating point type. Where applicable, can be assigned to elements of type DatumDescriptionType.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:DatumDescriptionType">
+				<xs:sequence>
+					<xs:element name="NominalValue" type="c:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Nominal value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="doubleArrayDescription">
+		<xs:annotation>
+			<xs:documentation>Describes an array of floating-point numeric values. Where applicable, can be assigned to elements of type IndexedArrayDescriptionType. Note that it is possible to have elements with this type that have no elements or attributes. The presence of such an element indicates that the described entity is an array with unknown size and number of dimensions, where elements have no unit, that a default value for elements is not specified, and that a nominal value for the described entity is not specified.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:IndexedArrayDescriptionType">
+				<xs:sequence>
+					<xs:element name="DefaultElementValue" type="c:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Default value, applies to all array elements whose value is not explicitly defined through NominalElementValue child elements.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NominalElementValue" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>The value of an array element, for the nominal array value.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="c:double">
+									<xs:attribute name="position" type="c:ArrayIndexor" use="required">
+										<xs:annotation>
+											<xs:documentation>Index of the element.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="integerDescription">
+		<xs:annotation>
+			<xs:documentation>Describes a 32-bit signed integer value. Where applicable, can be assigned to elements of type DatumDescriptionType.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:DatumDescriptionType">
+				<xs:sequence>
+					<xs:element name="NominalValue" type="c:integer" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Nominal value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="integerArrayDescription">
+		<xs:annotation>
+			<xs:documentation>Describes an array of 32-bit signed integer values. Where applicable, can be assigned to elements of type IndexedArrayDescriptionType. Note that it is possible to have elements with this type that have no elements or attributes. The presence of such an element indicates that the described entity is an array with unknown size and number of dimensions, where elements have no unit, that a default value for elements is not specified, and that a nominal value for the described entity is not specified.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:IndexedArrayDescriptionType">
+				<xs:sequence>
+					<xs:element name="DefaultElementValue" type="c:integer" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Default value, applies to all array elements whose value is not explicitly defined through NominalElementValue child elements.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NominalElementValue" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>The value of an array element, for the nominal array value.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="c:integer">
+									<xs:attribute name="position" type="c:ArrayIndexor" use="required">
+										<xs:annotation>
+											<xs:documentation>Index of the element.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="octalDescription">
+		<xs:annotation>
+			<xs:documentation>Describes an octal-encoded binary value. Where applicable, can be assigned to elements of type DatumDescriptionType.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:DatumDescriptionType">
+				<xs:sequence>
+					<xs:element name="NominalValue" type="c:octal" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Nominal value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="octalArrayDescription">
+		<xs:annotation>
+			<xs:documentation>Describes an array of octal-encoded binary values. Where applicable, can be assigned to elements of type IndexedArrayDescriptionType. Note that it is possible to have elements with this type that have no elements or attributes. The presence of such an element indicates that the described entity is an array with unknown size and number of dimensions, where elements have no unit, that a default value for elements is not specified, and that a nominal value for the described entity is not specified.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:IndexedArrayDescriptionType">
+				<xs:sequence>
+					<xs:element name="DefaultElementValue" type="c:octal" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Default value, applies to all array elements whose value is not explicitly defined through NominalElementValue child elements.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NominalElementValue" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>The value of an array element, for the nominal array value.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="c:octal">
+									<xs:attribute name="position" type="c:ArrayIndexor" use="required">
+										<xs:annotation>
+											<xs:documentation>Index of the element.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="stringDescription">
+		<xs:annotation>
+			<xs:documentation>Describes a string value. Where applicable, can be assigned to elements of type DatumDescriptionType.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:DatumDescriptionType">
+				<xs:sequence>
+					<xs:element name="NominalValue" type="c:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Nominal value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="stringArrayDescription">
+		<xs:annotation>
+			<xs:documentation>Describes an array of string values. Where applicable, can be assigned to elements of type IndexedArrayDescriptionType. Note that it is possible to have elements with this type that have no elements or attributes. The presence of such an element indicates that the described entity is an array with unknown size and number of dimensions, where elements have no unit, that a default value for elements is not specified, and that a nominal value for the described entity is not specified.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:IndexedArrayDescriptionType">
+				<xs:sequence>
+					<xs:element name="DefaultElementValue" type="c:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Default value, applies to all array elements whose value is not explicitly defined through NominalElementValue child elements.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NominalElementValue" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>The value of an array element, for the nominal array value.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="c:string">
+									<xs:attribute name="position" type="c:ArrayIndexor" use="required">
+										<xs:annotation>
+											<xs:documentation>Index of the element.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="unsignedIntegerDescription">
+		<xs:annotation>
+			<xs:documentation>Describes a 32-bit unsigned integer value. Where applicable, can be assigned to elements of type DatumDescriptionType.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:DatumDescriptionType">
+				<xs:sequence>
+					<xs:element name="NominalValue" type="c:unsignedInteger" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Nominal value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="unsignedIntegerArrayDescription">
+		<xs:annotation>
+			<xs:documentation>Describes an array of 32-bit unsigned integer values. Where applicable, can be assigned to elements of type IndexedArrayDescriptionType. Note that it is possible to have elements with this type that have no elements or attributes. The presence of such an element indicates that the described entity is an array with unknown size and number of dimensions, where elements have no unit, that a default value for elements is not specified, and that a nominal value for the described entity is not specified.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:IndexedArrayDescriptionType">
+				<xs:sequence>
+					<xs:element name="DefaultElementValue" type="c:unsignedInteger" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Default value, applies to all array elements whose value is not explicitly defined through NominalElementValue child elements.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NominalElementValue" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>The value of an array element, for the nominal array value.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="c:unsignedInteger">
+									<xs:attribute name="position" type="c:ArrayIndexor" use="required">
+										<xs:annotation>
+											<xs:documentation>Index of the element.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ConnectionDatum">
+		<xs:annotation>
+			<xs:documentation>Shall define a signal connection. Where applicable, can be assigned to elements of type DatumType. The optional attributes and child elements of the base type are not applicable and shall not be used.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="c:DatumType">
+				<xs:sequence>
+					<xs:element name="Network" type="hc:Network">
+						<xs:annotation>
+							<xs:documentation>Shall describes one connection. One Node child shall references a Port defined under the Connection ancestor. Other Node children can reference Ports of interface connectors, test points, or components.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ConnectionDatumDescription">
+		<xs:annotation>
+			<xs:documentation>Shall describe a signal connection, without defining the actual ports. Where applicable, can be assigned to elements of type DatumDescriptionType. The optional attributes and elements of the base type are not applicable and shall not be used.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="td:DatumDescriptionType">
+				<xs:sequence>
+					<xs:element name="NominalValue" type="hc:Network"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SignalDescription">
+		<xs:complexContent>
+			<xs:extension base="td:DatumDescriptionType">
+				<xs:attribute name="ID" type="c:NonBlankString" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="ValueFromTypes">
+		<xs:annotation/>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Parameter"/>
+			<xs:enumeration value="TestResult"/>
+			<xs:enumeration value="LocalVariable"/>
+			<xs:enumeration value="GlobalVariable"/>
+			<xs:enumeration value="TestGroupParameter"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ValueToTypes">
+		<xs:annotation/>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TestResult"/>
+			<xs:enumeration value="LocalVariable"/>
+			<xs:enumeration value="GlobalVariable"/>
+			<xs:enumeration value="TestGroupTestResults"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="InValues">
+		<xs:choice>
+			<xs:element name="Immediate" type="c:Value"/>
+			<xs:element name="ValueFrom" type="td:ValueFrom"/>
+			<xs:element name="Reference" type="c:Document">
+				<xs:annotation>
+					<xs:documentation>When present, shall indicate that the value will be retrieved at run-time from an external document, instead of being encoded in the test program. This element shall reference the external document.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="OutValues">
+		<xs:sequence>
+			<xs:element name="ValueTo" type="td:ValueTo" minOccurs="0"/>
+			<xs:element name="ValueDescription" type="td:ValueDescription">
+				<xs:annotation>
+					<xs:documentation>Shall describe the data type and the unit of the result. Types derived from DatumDescriptionType shall be assigned to DatumDescription descendants. Resolution, ErrorLimit, Range and Confidence information can be provided under DatumQuality descendants.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ValueFrom">
+		<xs:attribute name="Type" type="td:ValueFromTypes" use="required"/>
+		<xs:attribute name="RefID" type="c:NonBlankString" use="required">
+			<xs:annotation>
+				<xs:documentation>Unique identifier, enables referencing the parameter.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ValueTo">
+		<xs:attribute name="Type" type="td:ValueToTypes" use="required"/>
+		<xs:attribute name="RefID" type="c:NonBlankString" use="required">
+			<xs:annotation>
+				<xs:documentation>Unique identifier, enables referencing the parameter.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>

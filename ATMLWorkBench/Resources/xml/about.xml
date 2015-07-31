@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/xsl" href="about.xsl"?>
+
+<about>
+  <product>
+    <title>UTRS ATML Workbench</title>
+    <description>The ATML Workbench is an Integrated Development Environment (IDE) used in the creation and maintenance of ATML Documents. The application currently includes three primary tools: the Translator, the Reader and the Allocator. In addition, a custom Signal Model Library is available from UTRS.</description>
+    <license>
+      <![CDATA[
+            This Source Code Form is subject to the terms of the Mozilla Public
+            License, v. 2.0. If a copy of the MPL was not distributed with this
+            file, You can obtain one at <a href="http://mozilla.org/MPL/2.0/" target="_blank" >http://mozilla.org/MPL/2.0/</a>.
+            ]]>
+    </license>
+    <component>
+      <name>ATML Workbench IDE</name>
+      <description>The ATML Workbench is the primary container for each of the tools in the tool set. It provides the user interface and the means for the tools to communicate with each other, as well as the IDE itself.</description>
+    </component>
+    <component>
+      <name>ATML Translator Tool</name>
+      <description>The ATML Translator tool is used to translate ATLAS TPS source code into the ATML Test Description 1671.1 model. The translation process is a staged approach where the initial stage takes the source documents and stores them in a generic, loosely coupled XML format. From there, they are transformed to a more structured XML format and then finally the ATML format. </description>
+    </component>
+    <component>
+      <name>ATML Reader Tool</name>
+      <description>The ATML Reader tool is used to convert configuration files to 1671.4 Test Configuration files. Currently the Reader tool can read the Navy’s MTPSI file and automatically translate it directly to the ATML standard. Other file types may be opened, and utilizing advanced copy/paste, the user can manually create the ATML configuration model. </description>
+    </component>
+    <component>
+      <name>ATML Allocator Tool</name>
+      <description>The ATML Allocator tool reads in the 1671.1 Test Description and the 1671.4 Test Configuration documents and determines which Test Stations are capable of performing the tests required.</description>
+    </component>
+    <component>
+      <name>Signal Model Library</name>
+      <description>
+        <![CDATA[ The Signal Model Library includes IEEE 1641 Signal Test Definition (STD) compliant Test Signal Framework (TSF) models for signals commonly found in CASS ATLAS TPSs. The TSF models were designed to be moderately robust; providing interface parameters for common variables without regard to instrument specific capabilities or limitations. These TSF models are separately covered under copyright by UTRS.
+                <br/><br/>
+                ©2015 Universal Technical Resource Services, Inc. All Rights reserved]]>
+      </description>
+    </component>
+  </product>
+  <environment>
+    <platform>
+      <name>Windows</name>
+      <minimum-required-version>Windows 7 sp1</minimum-required-version>
+    </platform>
+    <platform>
+      <name>.Net</name>
+      <minimum-required-version>4.0</minimum-required-version>
+    </platform>
+  </environment>
+  <development>
+    <language name="C#" ></language>
+    <language name="C++" ></language>
+  </development>
+  <actors>
+    <actor name="William Nichols" title="Vice President Automated Test" >
+      <responsibility>Primary Investigator</responsibility>
+    </actor>
+    <actor name="Kenneth Wright" title="Project Manager" >
+      <responsibility>Project Management and Coordination</responsibility>
+    </actor>
+    <actor name="Paul Garrison" title="Software Engineer/Architect" >
+      <responsibility>Application Design</responsibility>
+      <responsibility>Integrated Development Environment(IDE) Framework</responsibility>
+      <responsibility>IDE Data Collection Screens and Controls</responsibility>
+      <responsibility>Database Development</responsibility>
+      <responsibility>XSLT Development</responsibility>
+      <responsibility>Library Development</responsibility>
+    </actor>
+    <actor name="Jonathan Ott" title="Software Engineer/Architect" >
+      <responsibility>ATLAS Translation Design</responsibility>
+      <responsibility>ATLAS Parsing Engine</responsibility>
+      <responsibility>ATLAS Interpretation Engine</responsibility>
+    </actor>
+    <actor name="Brian Gaboda" title="Systems Engineer" >
+      <responsibility>Signal Model Library</responsibility>
+      <responsibility>Technical Support</responsibility>
+    </actor>
+    <actor name="Christopher Ott" title="Electrical Engineering Student Intern" >
+      <responsibility>IDE Data Collection Screens and Controls</responsibility>
+      <responsibility>Signal Mapping</responsibility>
+    </actor>
+  </actors>
+
+  <platform>
+
+
+  </platform>
+
+  <libraries>
+    <library>
+      <name>Scintilla</name>
+      <description><![CDATA["ScintillaNET is a powerful text editing control for Windows® Forms applications and a managed wrapper around the versatile Scintilla component. Created with the developer in mind, the ScintillaNET API makes it simple to add advanced text editing and syntax highlighting to your application or IDE. In addition ScintillaNET adds features not found in other Scintilla wrappers such as Visual Studio® style code snippets, integrated find and replace dialogs, true regular expression searches, multiple key-command bindings, and back/forward document navigation."]]></description>
+      <license><![CDATA[<a href="https://scintillanet.codeplex.com/license" target="_blank" >Custom License</a>]]></license>
+    </library>
+    <library>
+      <name>DockPanel Suite</name>
+      <description>A docking library framework for .Net Windows Forms development which mimics Visual Studio .Net.</description>
+      <license><![CDATA[<a href="http://opensource.org/licenses/MIT" target="_blank" >MIT License</a>]]></license>
+      <license></license>
+    </library>
+    <library>
+      <name>DotNetZip</name>
+      <description>"DotNetZip is a FAST, FREE class library and toolset for manipulating zip files. Use VB, C# or any .NET language to easily create, extract, or update zip files."</description>
+      <license><![CDATA[<a href="http://dotnetzip.codeplex.com/license" target="_blank" >Microsoft Public License (Ms-PL)</a>]]></license>
+    </library>
+    <library>
+      <name>ATML Utilities Library</name>
+      <description>The ATML Utilities library is a collection of common utility classes that are used by all other libraries and programs. Included in this library are classes used to maintain application context data, properties, registry usage, math and string utilities and an HTTP server, among others.</description>
+      <license><![CDATA[<a href="https://www.mozilla.org/MPL/2.0/" target="_blank" >Mozilla Public License Version 2.0</a>]]></license>
+    </library>
+    <library>
+      <name>ATML Project Library </name>
+      <description>The ATML Project Library is a collection of classes used to manage all the files and interactions for a Test Program Set. At the heart of this library is the Project Manager which manages all the operations for a project such as opening, closing, creating, deleting, changing, importing and exporting files and documents.</description>
+      <license><![CDATA[<a href="https://www.mozilla.org/MPL/2.0/" target="_blank" >Mozilla Public License Version 2.0</a>]]></license>
+    </library>
+    <library>
+      <name>ATML Model Library </name>
+      <description>The ATML Model Library is a collection of classes representing all the schemas required for the ATML specification. These classes are generated directly from the schema XSD files. Many of these classes have been extended for additional functionality that the IDE makes use of. Because the generated classes are created as partial classes, the extensions in no way alter the generated code.</description>
+      <license><![CDATA[<a href="https://www.mozilla.org/MPL/2.0/" target="_blank" >Mozilla Public License Version 2.0</a>]]></license>
+    </library>
+    <library>
+      <name>ATML Process Library </name>
+      <description>The ATML Process Library is a collection of classes that deal directly with processing certain operations used within the Test Description – This library is currently in development and may change in the future.</description>
+      <license><![CDATA[<a href="https://www.mozilla.org/MPL/2.0/" target="_blank" >Mozilla Public License Version 2.0</a>]]></license>
+    </library>
+    <library>
+      <name>ATML Schema Library </name>
+      <description>The ATML Schema Library contains all of the classes necessary in the reading of the ATML Schema files directly. This is done for many reasons, the main one being for validation of data. The overall validation of an XML document against a schema does not necessarily provide enough information to determine exactly where the error resides. For this reason the ability to validate smaller subsets of the schemas has been implemented.</description>
+      <license><![CDATA[<a href="https://www.mozilla.org/MPL/2.0/" target="_blank" >Mozilla Public License Version 2.0</a>]]></license>
+    </library>
+    <library>
+      <name>ATML Manager Library </name>
+      <description>
+        <![CDATA[ The ATML Manager Library is a collection of function specific managers that include the following:
+            <ul>
+                <li><strong>Cache Manager</strong><br/> Maintains a local cache of all lookup tables for fast access.</li>
+                <li><strong>Document Manager</strong><br/> Maintains access to all of the documents within the document database. It provides the means to add, edit and delete documents, retrieve and set content as well as searching capabilities.</li>
+                <li><strong>File Manager</strong><br/> Provides a centralized place to access the file system.</li>
+                <li><strong>Log Manager</strong><br/> Provides a centralized location in which to log messages. Subscribers to the log manager can receive the messages. Log messages can be categorized by either; Error, Warning, Informational or Trace. The IDE Output window is a subscriber for log messages and displays all messages for the user.</li>
+                <li><strong>Message Manager</strong><br/> The Message Manager provides the ability to retrieve and store help messages used by the form controls.</li>
+                <li><strong>Signal Manager</strong><br/> Provides all the functionality that directly relates to Signals such as building signal trees containing the hierarchy of signal relationships, retrieving particular signal models, and the extraction of signals directly from XML elements.</li>
+                <li><strong>XPath Manager</strong><br/> Provides functionality related to the navigation of XML elements</li>
+            </ul>
+                ]]>
+      </description>
+      <license><![CDATA[<a href="https://www.mozilla.org/MPL/2.0/" target="_blank" >Mozilla Public License Version 2.0</a>]]></license>
+    </library>
+    <library>
+      <name>ATML Signal Model Library </name>
+      <description>The ATML Signal Model Library is a collection of classes and methods used to provide access to TSF and BSC signal information.</description>
+      <license><![CDATA[<a href="https://www.mozilla.org/MPL/2.0/" target="_blank" >Mozilla Public License Version 2.0</a>]]></license>
+    </library>
+    <library>
+      <name>ATML Data Access Library </name>
+      <description>The ATML Data Access Library is a collection of entity classes for each of the database tables as well as data access objects that can be used to access and manipulate their data. A code generator is used to create the entity beans directly from the data tables. Anytime a table changes, the entity classes must be regenerated. </description>
+      <license><![CDATA[<a href="https://www.mozilla.org/MPL/2.0/" target="_blank" >Mozilla Public License Version 2.0</a>]]></license>
+    </library>
+    <library>
+      <name>ATML Common Library </name>
+      <description>The ATML Common Library includes most of the data collection screens and controls. These screens and controls may be accessible from any of the tools within the workbench. The controls are designed to mimic the class structures of the ATML model. </description>
+      <license><![CDATA[<a href="https://www.mozilla.org/MPL/2.0/" target="_blank" >Mozilla Public License Version 2.0</a>]]></license>
+    </library>
+    <library>
+      <name>Fat Cow Icon Library</name>
+      <description>All button images have been provided using the <![CDATA[<a href="http://www.fatcow.com/free-icons" target="_blank" >Fat Cow</a>]]> image library.</description>
+      <license><![CDATA[<a href="https://creativecommons.org/licenses/by/3.0/us/legalcode" target="_blank" >Creative Commons Attribution 3.0 License</a>]]></license>
+    </library>
+  </libraries>
+
+</about>

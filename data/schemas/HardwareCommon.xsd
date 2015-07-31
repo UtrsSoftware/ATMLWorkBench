@@ -1,0 +1,2662 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:IEEE-1671:2010:HardwareCommon" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.12" xmlns:c="urn:IEEE-1671:2010:Common" xmlns:hc="urn:IEEE-1671:2010:HardwareCommon" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation xml:lang="en">
+
+      This schema is specified in IEEE Std 1671-2010, "IEEE Standard
+      for Automatic Test Markup Language (ATML) for Exchanging Automatic Test
+      Equipment and Test Information via XML."
+
+      This schema is a World Wide Web Consortium (W3C) Extensible
+      Markup Language (XML) binding of the ATML Hardware Common component defined in IEEE
+      Std 1671-2010,"IEEE Standard for Automatic Test Markup
+      Language (ATML) for Exchanging Automatic Test Equipment and Test
+      Information via XML."
+
+      The purpose of this schema is to provide unique hardware types and attributes
+      for ATML schemas.This schema uses the W3C XML Schema definition
+      language as the encoding. This allows for interoperability and
+      the exchange of ATML component instances between various systems.
+      This schema shall not be modified but may be included in
+      derivative works.
+
+      Copyright (c) 2010 Institute of Electrical and Electronics
+      Engineers, Inc.
+
+      USE AT YOUR OWN RISK
+
+    </xs:documentation>
+  </xs:annotation>
+  <xs:import namespace="urn:IEEE-1671:2010:Common" schemaLocation="Common.xsd"/>
+  <xs:simpleType name="ErrorType">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: xs:string
+        This type shall be used as the base type for the HardwareItemDescription/Errors/Error XML schema attribute for specifying the severity of an error. Examples: Warning, Error, and Fatal.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:complexType name="HardwareItemDescription" abstract="true">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:ItemDescription
+        Properties: base c:ItemDescription, abstract true
+        The HardwareItemDescription complex type shall be the base type for XML schema elements intended to describe hardware entities. Derived types include InstrumentDescription.xsd, UUTDescription.xsd, TestStation.xsd, and TestAdapter.xsd.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:ItemDescription">
+        <xs:sequence>
+          <xs:element name="Interface" type="c:PhysicalInterface">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:PhysicalInterface
+                Properties: isRef 0, content complex
+                The HardwareItemDescription/Interface child element shall identify the electrical interfaces to the hardware item.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Components" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The HardwareItemDescription/Components child element shall be a collector element of the identification of the subassemblies to the subject hardware item.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Component" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: Extension of c:ItemDescriptionReference
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/Components/Component child element shall identify a subassembly of the subject hardware item.
+                    </xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:complexContent>
+                      <xs:extension base="c:ItemDescriptionReference">
+                        <xs:attribute name="ID" type="c:NonBlankString" use="required">
+                          <xs:annotation>
+                            <xs:documentation>A user-defined string uniquely identifying the subassembly. Example: Pre-Amp A1.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                      </xs:extension>
+                    </xs:complexContent>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="ParentComponents" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The HardwareItemDescription/ParentComponents child element shall be a collector element of the identification of the next-higher assembly of the subject hardware item.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Component" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: Extension of c:ItemDescriptionReference
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/ParentComponents/Component child element shall identify the next-higher assembly of the subject hardware item.
+                    </xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:complexContent>
+                      <xs:extension base="c:ItemDescriptionReference">
+                        <xs:attribute name="ID" type="c:NonBlankString" use="required">
+                          <xs:annotation>
+                            <xs:documentation>A user-defined string uniquely identifying the next-higher assembly. Example: Acme Tank.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                      </xs:extension>
+                    </xs:complexContent>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Control" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The HardwareItemDescription/Control child element shall be a collector element of control languages, drivers, extension, firmwares, and tools for the hardware item.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Firmwares" minOccurs="0">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/Control/Firmwares child element shall identify the firmware(s) of the hardware item.
+                    </xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Firmware" type="hc:VersionIdentifier" maxOccurs="unbounded">
+                        <xs:annotation>
+                          <xs:documentation>
+                            Base type: hc:VersionIdentifier
+                            Properties: isRef 0, content complex
+                            The HardwareItemDescription/Control/Firmwares/Firmware child element shall identify firmware for the hardware item.
+                          </xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="Drivers" minOccurs="0">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/Control/Drivers child element shall identify the software interface driver(s) of the hardware item.
+                    </xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Driver" maxOccurs="unbounded">
+                        <xs:annotation>
+                          <xs:documentation>
+                            Base type: Extension of hc:VersionIdentifier
+                            Properties: isRef 0, content complex
+                            The HardwareItemDescription/Control/Drivers/Driver child element shall identify the software interface driver for the hardware item.
+                          </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:complexContent>
+                            <xs:extension base="hc:VersionIdentifier">
+                              <xs:sequence>
+                                <xs:element name="Type" type="hc:Driver">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Base type: hc:Driver
+                                      Properties: isRef 0, content complex
+                                      The HardwareItemDescription/Control/Drivers/Driver/Type child element shall identify the name and location of the driver.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                </xs:element>
+                                <xs:element name="Manufacturer" type="c:ManufacturerData" minOccurs="0">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Base type: c:ManufacturerData
+                                      Properties: isRef 0, content complex
+                                      The HardwareItemDescription/Control/Drivers/Driver/Manufacturer child element shall identify the developer of the driver.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                </xs:element>
+                                <xs:element name="Dependencies" minOccurs="0">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Properties: isRef 0, content complex
+                                      The HardwareItemDescription/Control/Drivers/Driver/Dependencies child element shall identify software and/or firmware dependencies.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Firmware" type="hc:VersionIdentifier" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:annotation>
+                                          <xs:documentation>
+                                            Base type: hc:VersionIdentifier
+                                            Properties: isRef 0, content complex
+                                            The HardwareItemDescription/Control/Drivers/Driver/Dependencies/Firmware child element shall identify the firmware dependency.
+                                          </xs:documentation>
+                                        </xs:annotation>
+                                      </xs:element>
+                                      <xs:element name="Software" type="hc:VersionIdentifier" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:annotation>
+                                          <xs:documentation>
+                                            Base type: hc:VersionIdentifier
+                                            Properties: isRef 0, content complex
+                                            The HardwareItemDescription/Control/Drivers/Driver/Dependencies/Software child element shall identify the software dependency.
+                                          </xs:documentation>
+                                        </xs:annotation>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="Platform">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Properties: isRef 0, content complex
+                                      The HardwareItemDescription/Control/Drivers/Driver/Platform child element shall identify computing hardware requirements needed in order for the driver to execute.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="OperatingSystem" maxOccurs="unbounded">
+                                        <xs:annotation>
+                                          <xs:documentation>
+                                            Base type: Extension of hc:VersionIdentifier
+                                            Properties: isRef 0, content complex
+                                            The HardwareItemDescription/Control/Drivers/Driver/Platform/OperatingSystem child element shall identify computer operating system requirements needed in order for the driver to execute.
+                                          </xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                          <xs:complexContent>
+                                            <xs:extension base="hc:VersionIdentifier">
+                                              <xs:attribute name="servicePack" type="c:NonBlankString" use="optional">
+                                                <xs:annotation>
+                                                  <xs:documentation>The operating system’s service pack identification. Example: Service Pack 1.1. </xs:documentation>
+                                                </xs:annotation>
+                                              </xs:attribute>
+                                            </xs:extension>
+                                          </xs:complexContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="Processor" minOccurs="0">
+                                        <xs:annotation>
+                                          <xs:documentation>
+                                            Properties: isRef 0, content complex
+                                            The HardwareItemDescription/Control/Drivers/Driver/Platform/Processor child element shall identify computer processor speed requirements needed in order for the driver to execute.
+                                          </xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                          <xs:attribute name="speed" type="c:NonBlankString" use="optional">
+                                            <xs:annotation>
+                                              <xs:documentation>The minimum clock speed of the processor required for the software driver to execute. Example: 10 GHz or greater Acme-3 processor.</xs:documentation>
+                                            </xs:annotation>
+                                          </xs:attribute>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="PhysicalMemory" minOccurs="0">
+                                        <xs:annotation>
+                                          <xs:documentation>
+                                            Properties: isRef 0, content complex
+                                            The HardwareItemDescription/Control/Drivers/Driver/Platform/PhysicalMemory child element shall identify computer physical memory requirements needed in order for the driver to execute.
+                                          </xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                          <xs:attribute name="minimum" type="c:NonBlankString" use="optional">
+                                            <xs:annotation>
+                                              <xs:documentation>The minimum physical memory capacity needed for the software driver to execute. Example: 512 MB.</xs:documentation>
+                                            </xs:annotation>
+                                          </xs:attribute>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="HardDisk" minOccurs="0">
+                                        <xs:annotation>
+                                          <xs:documentation>
+                                            Properties: isRef 0, content complex
+                                            The HardwareItemDescription/Control/Drivers/Driver/Platform/HardDisk child element shall identify computer hard disk requirements needed in order for the driver to be stored and to execute.
+                                          </xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                          <xs:attribute name="minimum" type="c:NonBlankString" use="optional">
+                                            <xs:annotation>
+                                              <xs:documentation>The minimum storage capacity needed to store the software driver and permit its execution. Example: 6 GB.</xs:documentation>
+                                            </xs:annotation>
+                                          </xs:attribute>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="Extension" type="c:Extension" minOccurs="0">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Base type: c:Extension
+                                      Properties: isRef 0, content complex
+                                      The HardwareItemDescription/Control/Drivers/Driver/Extension child element shall provide a specific extension point for use cases that require elements not provided in the basic structure.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:extension>
+                          </xs:complexContent>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="ControlLanguages" minOccurs="0">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/Control/ControlLanguages child element shall identify the control language(s) of the hardware item.
+                    </xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="ControlLanguage" type="hc:ControlLanguage" maxOccurs="unbounded">
+                        <xs:annotation>
+                          <xs:documentation>
+                            Base type: hc:ControlLanguage
+                            Properties: isRef 0, content complex
+                            The HardwareItemDescription/Control/ControlLanguages/ControlLanguage child element shall identify the control language for the hardware item.
+                          </xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="Tools" minOccurs="0">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/Control/Tools child element shall identify all software tools associated with the hardware item.
+                    </xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Tool" maxOccurs="unbounded">
+                        <xs:annotation>
+                          <xs:documentation>
+                            Base type: Extension of hc:VersionIdentifier
+                            Properties: isRef 0, content complex
+                            The HardwareItemDescription/Control/Tools/Tool child element shall identify a software tool associated with the hardware item.
+                          </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:complexContent>
+                            <xs:extension base="hc:VersionIdentifier">
+                              <xs:sequence>
+                                <xs:element name="Dependencies" minOccurs="0">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Properties: isRef 0, content complex
+                                      The HardwareItemDescription/Control/Tools/Tool/Dependencies child element shall identify a tool’s software and/or driver dependencies.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:choice maxOccurs="unbounded">
+                                      <xs:element name="Driver">
+                                        <xs:annotation>
+                                          <xs:documentation>
+                                            Base type: Extension of hc:VersionIdentifier
+                                            Properties: isRef 0, content complex
+                                            The HardwareItemDescription/Control/Tools/Tool/Dependencies/Driver child element shall identify a tool’s driver dependency.
+                                          </xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                          <xs:complexContent>
+                                            <xs:extension base="hc:VersionIdentifier"/>
+                                          </xs:complexContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="Software">
+                                        <xs:annotation>
+                                          <xs:documentation>
+                                            Base type: Extension of hc:VersionIdentifier
+                                            Properties: isRef 0, content complex
+                                            The HardwareItemDescription/Control/Tools/Tool/Dependencies/Software child element shall identify a tool’s software dependency.
+                                          </xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                          <xs:complexContent>
+                                            <xs:extension base="hc:VersionIdentifier"/>
+                                          </xs:complexContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:choice>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute name="filePath" type="c:NonBlankString" use="optional">
+                                <xs:annotation>
+                                  <xs:documentation>The location of the software tool, within the operating system structure, on the hard disk.</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:extension>
+                          </xs:complexContent>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="Extension" type="c:Extension" minOccurs="0">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: c:Extension
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/Control/Extension child element shall provide a specific extension point for use cases that require elements not provided in the basic structure.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Documentation" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The HardwareItemDescription/Documentation child element shall be a collector element of the documentation of the subject hardware item to be assembled.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Document" type="c:Document" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: c:Document
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/Documentation/Document child element shall identify a document for the subject hardware item.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="ConfigurationOptions" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The HardwareItemDescription/ConfigurationOptions child element shall identify the configuration option(s) of the hardware item. These options are values the user can modify, which will persist after a power cycle of the hardware item.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Option" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/ConfigurationOptions/Option child element shall identify the name of the configuration item.
+                    </xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:attribute name="name" type="c:NonBlankString" use="required">
+                      <xs:annotation>
+                        <xs:documentation>A descriptive or common name for the hardware item value the user can modify, which will persist after a power cycle.</xs:documentation>
+                      </xs:annotation>
+                    </xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="FactoryDefaults" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The HardwareItemDescription/FactoryDefaults child element shall identify the default factory settings of the hardware item.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Default" type="c:NamedValue" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: c:NamedValue
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/FactoryDefaults/Default child element shall identify a default factory setting of the hardware item.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="CalibrationRequirements" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The HardwareItemDescription/CalibrationRequirements child element shall identify the calibration requirements of the hardware item.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="CalibrationRequirement" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/CalibrationRequirements/CalibrationRequirement child element shall identify both the support equipment needed to run calibration and the calibration procedure.
+                    </xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="SupportEquipment" type="c:NonBlankString" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                          <xs:documentation>
+                            Base type: c:NonBlankString
+                            Properties: isRef 0, content simple
+                            Facets: minLength 1, whiteSpace replace
+                            The HardwareItemDescription/CalibrationRequirements/CalibrationRequirement/SuppoertEquipment child element shall identify the support equipment needed to run calibration.
+                          </xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="Procedure" type="c:Document" maxOccurs="unbounded">
+                        <xs:annotation>
+                          <xs:documentation>
+                            Base type: c:Document
+                            Properties: isRef 0, content complex
+                            The HardwareItemDescription/CalibrationRequirements/CalibrationRequirement/Procedure child element shall identify the calibration procedure.
+                          </xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="frequency" type="xs:duration" use="required">
+                      <xs:annotation>
+                        <xs:documentation>An indication of how often calibration shall be performed.</xs:documentation>
+                      </xs:annotation>
+                    </xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="OperationalRequirements" type="hc:OperationalRequirements" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: hc:OperationalRequirements
+                Properties: isRef 0, content complex
+                The HardwareItemDescription/OperationalRequirements child element shall identify the operational requirements of the hardware item.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EnvironmentalRequirements" type="c:EnvironmentalRequirements" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:EnvironmentalRequirements
+                Properties: isRef 0, content complex
+                The HardwareItemDescription/EnvironmentalRequirements child element shall identify the operational and/or storage and transport requirements for the hardware item.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PowerRequirements" type="hc:PowerSpecifications" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: hc:PowerSpecifications
+                Properties: isRef 0, content complex
+                The HardwareItemDescription/PowerRequirements child element shall be a collector element of the identification of ac or dc power requirements for the subject hardware item.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PhysicalCharacteristics" type="hc:PhysicalCharacteristics" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: hc:PhysicalCharacteristics
+                Properties: isRef 0, content complex
+                The HardwareItemDescription/PhysicalCharacteristics child element shall be a collector element of the identification of the mass, volume, and measurements for the subject hardware item.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Errors" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The HardwareItemDescription/Errors child element shall identify the type, source, and identification of all errors associated with the hardware item.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Error" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/Errors/Error child element shall identify an error associated with the hardware item.
+                    </xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Description" type="c:NonBlankString">
+                        <xs:annotation>
+                          <xs:documentation>
+                            Base type: c:NonBlankString
+                            Properties: isRef 0, content simple
+                            Facets: minLength 1, whiteSpace replace
+                            The HardwareItemDescription/Errors/Error/Description child element shall provide a description of the error associated with the hardware item.
+                          </xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="type" type="hc:ErrorType" use="optional">
+                      <xs:annotation>
+                        <xs:documentation>The severity of the error. Example: Fatal.</xs:documentation>
+                      </xs:annotation>
+                    </xs:attribute>
+                    <xs:attribute name="source" type="c:NonBlankString" use="optional">
+                      <xs:annotation>
+                        <xs:documentation>A descriptive or common name for the source of the error. Example: Power-up BIT.</xs:documentation>
+                      </xs:annotation>
+                    </xs:attribute>
+                    <xs:attribute name="ID" type="c:NonBlankString" use="required">
+                      <xs:annotation>
+                        <xs:documentation>A user-defined string uniquely identifying the error. Example: built-in test (BIT) #5 failure.</xs:documentation>
+                      </xs:annotation>
+                    </xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="NetworkList" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The HardwareItemDescription/NetworkList child element shall identify how the each port on the hardware item is connected.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Network" type="hc:Network" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: hc:Network
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/NetworkList/Network child element shall identify the port connection.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="LegalDocuments" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The HardwareItemDescription/LegalDocuments child element shall be a collector element of legal documents for the subject hardware item to be assembled.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:choice maxOccurs="unbounded">
+                <xs:element name="Warranty" type="c:Document">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: c:Document
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/LegalDocuments/Warranty child element shall identify warranty documentation for the subject hardware item.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="License" type="c:Document">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: c:Document
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/LegalDocuments/License child element shall identify licensing documentation for the subject hardware item.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="Exportability" type="c:Document">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: c:Document
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/LegalDocuments/Exportability child element shall identify exportability documentation for the subject hardware item.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="Conformance" type="c:Document">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: c:Document
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/LegalDocuments/Conformance child element shall identify conformance documentation for the subject hardware item.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="Safety" type="c:Document">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: c:Document
+                      Properties: isRef 0, content complex
+                      The HardwareItemDescription/LegalDocuments/Safety child element shall identify safety documentation for the subject hardware item.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:choice>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ControlLanguage" abstract="true">
+    <xs:annotation>
+      <xs:documentation>
+        Properties: abstract true
+        The ControlLanguage complex type shall be the base type for XML schema elements intended to document control languages. Derived types include standard commands for programmable instrumentation (SCPI), message based, and register based.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Documentation" type="c:Document" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Document
+            Properties: isRef 0, content complex
+            The ControlLanguage/Documentation child element shall document control languages.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SCPI">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:ControlLanguage
+        Properties: base hc:ControlLanguage
+        The SCPI complex type shall be the base type for XML schema elements intended to identify the document that contains the instrument’s SCPI commands.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:ControlLanguage"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Register">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:ControlLanguage
+        Properties: base hc:ControlLanguage
+        The Register complex type shall be the base type for XML schema child elements intended to identify the document that contains the instrument’s register commands.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:ControlLanguage"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Generic">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:ControlLanguage
+        Properties: base hc:ControlLanguage
+        The Generic complex type shall be the base type for XML schema elements intended to identify the document that contains the instrument’s generic control language specification.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:ControlLanguage"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DriverModule">
+    <xs:annotation>
+      <xs:documentation>
+        The DriverModule complex type shall be the base type for XML schema elements intended to identify instrument driver executables. For example, all forms of interchangeable virtual instrumentation (IVI) drivers are software executables.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="fileName" type="c:NonBlankString" use="required">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common computer-based name for the driver.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="installationDirectory" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common computer-based path to the directory where the driver is installed.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="Driver" abstract="true">
+    <xs:annotation>
+      <xs:documentation>
+        Properties: abstract true
+        The Driver complex type shall be the base type for XML schema elements intended to document instrument drivers.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="Bit16" type="hc:DriverModule">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: hc:DriverModule
+            Properties: isRef 0, content complex
+            The Driver/Bit16 child element shall identify the 16-bit instrument driver.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Bit32" type="hc:DriverModule">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: hc:DriverModule
+            Properties: isRef 0, content complex
+            The Driver/Bit32 child element shall identify the 32-bit instrument driver.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Bit64" type="hc:DriverModule">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: hc:DriverModule
+            Properties: isRef 0, content complex
+            The Driver/Bit64 child element shall identify the 64-bit instrument driver.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Unified">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The Driver/Unified child element shall identify the unified instrument driver (e.g., a driver that can function as either a 32-bit or a 64-bit driver).
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Bit32" type="hc:DriverModule">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: hc:DriverModule
+                  Properties: isRef 0, content complex
+                  The Driver/Unified/Bit32 child element shall identify the unified 32-bit instrument driver.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Bit64" type="hc:DriverModule">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: hc:DriverModule
+                  Properties: isRef 0, content complex
+                  The Driver/Unified/Bit64 child element shall identify the unified 64-bit instrument driver.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="VPP">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:Driver
+        Properties: base hc:Driver
+        The VPP complex type shall be the base type for XML schema elements intended to document properties of a VMEbus extensions for instrumentation (VXI) plug and play (VPP) driver.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:Driver">
+        <xs:attribute name="prefix" type="c:NonBlankString" use="required">
+          <xs:annotation>
+            <xs:documentation>The prefix to be used for all API functions in the VPP driver.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="IVI" abstract="true">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:Driver
+        Properties: base hc:Driver, abstract true
+        The IVI complex type shall be the base type for XML schema elements intended to document properties of an interchangeable virtual instrumentation (IVI) driver.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:Driver">
+        <xs:sequence>
+          <xs:element name="Class" type="c:NonBlankString" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:NonBlankString
+                Properties: isRef 0, content simple
+                Facets: minLength 1, whiteSpace replace
+                The IVI/Class child element shall identify the IVI class (or classes) provided by the IVI driver.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ComplianceDocument" type="c:Document" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:Document
+                Properties: isRef 0, content complex
+                The IVI/ComplianceDocument child element shall identify the IVI compliance document.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="IVI-C">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:IVI
+        Properties: base hc:IVI
+        The IVI-C complex type shall be the base type for XML schema elements intended to document properties of an IVI C language (IVI-C) driver.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:IVI">
+        <xs:attribute name="prefix" type="c:NonBlankString" use="required">
+          <xs:annotation>
+            <xs:documentation>A descriptive or common name for the prefix to be used for all application programming interface (API) functions in the IVI-C driver. </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="IVI-COM">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:IVI
+        Properties: base hc:IVI
+        The IVI-COM complex type shall be the base type for XML schema elements intended to document properties of an IVI component object module (IVI-COM) driver.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:IVI">
+        <xs:attribute name="progID" type="c:NonBlankString" use="required">
+          <xs:annotation>
+            <xs:documentation>A user-defined string uniquely identifying the driver class.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="IVI.NET">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:IVI
+        Properties: base hc:IVI
+        The IVI.NET complex type shall be the base type for XML schema elements intended to document properties of an IVI.NET driver.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:IVI">
+        <xs:attribute name="assemblyQualifiedClassName" type="c:NonBlankString" use="required">
+          <xs:annotation>
+            <xs:documentation>A instantiation of the driver class.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Item">
+    <xs:annotation>
+      <xs:documentation>
+        The Item complex type shall be the base type for hardware entities.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Description" type="c:NonBlankString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The Item/Description child element shall be a description of the hardware item.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Extension" type="c:Extension" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Extension
+            Properties: isRef 0, content complex
+            The Item/Extension child element shall provide a specific extension point for use cases that require elements not provided in the basic structure.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="c:NonBlankString" use="required">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common name for the hardware item.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="RepeatedItem">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:Item
+        Properties: base hc:Item
+        The RepeatedItem complex type shall be the base type for XML schema elements intended to document multiple identical items with a single element within an instance document.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:Item">
+        <xs:attributeGroup ref="c:RepeatedItemAttributes"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Resource">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:RepeatedItem
+        Properties: base hc:RepeatedItem
+        The Resource complex type shall be the base type for XML schema elements intended to document a resource and define its interface(s).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:RepeatedItem">
+        <xs:sequence>
+          <xs:element name="Interface" type="c:Interface">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:Interface
+                Properties: isRef 0, content complex
+                The Resource/Interface child element shall identify the electrical interface(s) to the hardware item.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Triggers" type="hc:Triggers" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: hc:Triggers
+                Properties: isRef 0, content complex
+                The Resource/Triggers child element shall identify the triggering associated with the hardware item.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="index" type="xs:int" use="optional">
+          <xs:annotation>
+            <xs:documentation>The index of the element within an hc:RepeatedItem array.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Resources">
+    <xs:annotation>
+      <xs:documentation>
+        The Resources complex type shall be the base type for XML schema elements intended to document resources and define their interfaces.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Resource" type="hc:Resource" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: hc:Resource
+            Properties: isRef 0, content complex
+            The Resources/Resource child element shall identify a resource and to define the resources interface.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Triggers">
+    <xs:annotation>
+      <xs:documentation>
+        The Triggers complex type shall be the base type for XML schema elements intended to document properties of one or more trigger signals.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Trigger" type="hc:Trigger" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: hc:Trigger
+            Properties: isRef 0, content complex
+            The Triggers/Trigger child element shall document the properties of a trigger signal.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Switching">
+    <xs:annotation>
+      <xs:documentation>
+        The Switching complex type shall be the base type for XML schema elements intended to document properties of a switching subsystem.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="Switch" type="hc:Switch">
+          <xs:annotation>
+            <xs:documentation>
+              Base type: hc:Switch
+              Properties: isRef 0, content complex
+              The Switching/Switch child element shall document the properties of a switch.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="CrossPointSwitch" type="hc:CrossPointSwitch">
+          <xs:annotation>
+            <xs:documentation>
+              Base type: hc:CrossPointSwitch
+              Properties: isRef 0, content complex
+              The Switching/CrossPointSwitch child element shall document the properties of a cross point switch.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="MatrixSwitch" type="hc:MatrixSwitch">
+          <xs:annotation>
+            <xs:documentation>
+              Base type: hc:MatrixSwitch
+              Properties: isRef 0, content complex
+              The Switching/MatrixSwitch child element shall document the properties of a matrix switch.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Switch">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:RepeatedItem
+        Properties: base hc:RepeatedItem
+        The Switch complex type shall be the base type for XML schema elements intended to document properties of a switch.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:RepeatedItem">
+        <xs:sequence>
+          <xs:element name="Interface" type="c:Interface">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:Interface
+                Properties: isRef 0, content complex
+                The Switch/Interface child element shall identify the hardware interface to the switch.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Connections">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The Switch/Connections child element shall identify relay settings.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="RelaySetting" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Properties: isRef 0, content complex
+                      The Switch/Connections/RelaySetting child element shall identify a relay setting.
+                    </xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="RelayConnection" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                          <xs:documentation>
+                            Properties: isRef 0, content complex
+                            The Switch/Connections/RelaySetting/RelayConnection child element shall identify a path established by the relay setting.
+                          </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:attribute name="from" type="c:NonBlankString" use="required">
+                            <xs:annotation>
+                              <xs:documentation>A descriptive or common name for the beginning point to which the path is associated. Example: J1-34.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                          <xs:attribute name="to" type="c:NonBlankString" use="required">
+                            <xs:annotation>
+                              <xs:documentation>A descriptive or common name for the end point to which the path is associated. Example: J1-243.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="name" type="xs:string" use="required">
+                      <xs:annotation>
+                        <xs:documentation>A descriptive or common name for the relay’s position. Example: Open.</xs:documentation>
+                      </xs:annotation>
+                    </xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CrossPointSwitch">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:Item
+        Properties: base hc:Item
+        The CrossPointSwitch complex type shall be the base type for XML schema elements intended to document properties of a cross point switch.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:Item">
+        <xs:sequence>
+          <xs:element name="Columns">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The CrossPointSwitch/Columns child element shall document properties of the columns of a cross point switch.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Port" type="hc:SwitchPort" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: hc:SwitchPort
+                      Properties: isRef 0, content complex
+                      The CrossPointSwitch/Columns/Port child element shall document properties of the port in the columns of the cross point switch.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Rows">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The CrossPointSwitch/Rows child element shall document properties of the rows of a cross point switch.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Port" type="hc:SwitchPort" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: hc:SwitchPort
+                      Properties: isRef 0, content complex
+                      The CrossPointSwitch/Rows/Port child element shall document properties of the port in the rows of the cross point switch.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="lineCount" type="xs:int" use="required">
+          <xs:annotation>
+            <xs:documentation>The number of matrix lines available to connect the rows and columns.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SwitchPort">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:RepeatedItem
+        Properties: base hc:RepeatedItem
+        The SwitchPort complex type shall be the base type for XML schema elements intended to document properties of the switch port.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:RepeatedItem">
+        <xs:sequence>
+          <xs:element name="Pin" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The SwitchPort/Pin child element shall identify a physical pin of a switch.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:attribute name="name" type="c:NonBlankString" use="required">
+                <xs:annotation>
+                  <xs:documentation>A descriptive or common name for the switch pin.</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+              <xs:attribute name="line" type="xs:int" use="required">
+                <xs:annotation>
+                  <xs:documentation>The number of lines available to connect the rows or columns.</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MatrixSwitch">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:Item
+        Properties: base hc:Item
+        The MatrixSwitch complex type shall be the base type for XML schema elements intended to document the name of a matrix switch.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:Item">
+        <xs:sequence>
+          <xs:element name="Columns">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The MatrixSwitch/Columns child element shall document properties of the columns of a matrix switch.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Pin" type="hc:MatrixPort" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: hc:MatrixPort
+                      Properties: isRef 0, content complex
+                      The MatrixSwitch/Columns/Pin child element shall document properties of the pin in the columns of a matrix switch.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Rows">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The MatrixSwitch/Rows child element shall document properties of the rows of a matrix switch.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Pin" type="hc:MatrixPort" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: hc:MatrixPort
+                      Properties: isRef 0, content complex
+                      The MatrixSwitch/Rows/Pin child element shall document properties of the pin in the rows of a matrix switch.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MatrixPort">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:RepeatedItem
+        Properties: base hc:RepeatedItem
+        The MatrixPort complex type shall be the base type for XML schema elements intended to document properties of matrix switch port(s).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:RepeatedItem"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Network">
+    <xs:annotation>
+      <xs:documentation>
+        The Network complex type shall be the base type for XML schema elements intended to document properties of how various hardware entities are connected.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Node" type="hc:NetworkNode" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: hc:NetworkNode
+            Properties: isRef 0, content complex
+            The Network/Node child element shall identify the properties of the network node to which the hardware item is connected.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="c:NonBlankString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The Network/Description child element shall provide a description of the network connection.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Extension" type="c:Extension" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Extension
+            Properties: isRef 0, content complex
+            The Network/Extension child element shall provide a specific extension point for use cases that require elements not provided in the basic structure.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="c:RepeatedItemAttributes"/>
+  </xs:complexType>
+  <xs:complexType name="NetworkNode">
+    <xs:annotation>
+      <xs:documentation>
+        The NetworkNode complex type shall be the base type for XML schema elements intended to document properties of the network node to which the hardware item is connected.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Path">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: Extension of c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whitespace replace
+            The NetworkNode/Path child element describes the XPath expression that shall evaluate to a single node. This single node is part of the path.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="c:NonBlankString">
+              <xs:attribute name="documentId" type="c:NonBlankString" use="optional">
+                <xs:annotation>
+                  <xs:documentation>The UUID for the document referenced by the element.</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Description" type="c:NonBlankString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whitespace replace
+            The NetworkNode/Description child element shall describe the network node to which the hardware item is connected.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Extension" type="c:Extension" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Extension
+            Properties: isRef 0, content complex
+            The NetworkNode/Extension child element shall provide a specific extension point for use cases that require elements not provided in the basic structure.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FacilitiesRequirements">
+    <xs:annotation>
+      <xs:documentation>
+        The FacilityRequirements complex type shall be the base type for XML schema elements intended to document properties of the facility required to perform testing.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FacilitiesInterface" type="c:Interface" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Interface
+            Properties: isRef 0, content complex
+            The FacilitiesRequirements/FacilitiesInterface child element shall identify any nonpower interfaces (in the form of a c:Interface) of the hardware item.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FacilityRequirementsDocuments" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The FacilitiesRequirements/FacilityRequirementsDocuments child element shall identify all of the facility’s requirements documents for the hardware item.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="FacilitiesRequirementsDocument" type="c:Document" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:Document
+                  Properties: isRef 0, content complex
+                  The FacilitiesRequirements/FacilityRequirementsDocuments/FacilitiesRequirementsDocument element shall identify the facility’s requirements document for the hardware item.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Hydraulic" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: xs:string
+            Properties: isRef 0, content simple
+            The FacilitiesRequirements/Hydraulic child element shall identify hydraulic requirements of the hardware item.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Pneumatic" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: xs:string
+            Properties: isRef 0, content simple
+            The FacilitiesRequirements/Pneumatic child element shall identify pneumatic requirements of the hardware item.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Cooling" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: xs:string
+            Properties: isRef 0, content simple
+            The FacilitiesRequirements/Cooling child element shall identify any cooling requirements of the hardware item.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Extension" type="c:Extension" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Extension
+            Properties: isRef 0, content complex
+            The FacilitiesRequirements/Extension child element shall provide a specific extension point for use cases that require elements not provided in the basic structure.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OperationalRequirements">
+    <xs:annotation>
+      <xs:documentation>
+        The OperationalRequirements complex type shall be the base type for XML schema elements intended to document the operational requirements that must be satisfied in order for proper operation of the hardware item.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OperationalRequirement" type="c:NamedValue" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NamedValue
+            Properties: isRef 0, content complex
+            The OperationalRequirements/OperationalRequirement child element shall textually describe an operational requirement of the hardware item.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="warmUpTime" type="xs:duration" use="required">
+      <xs:annotation>
+        <xs:documentation>The warm-up time of the hardware item. </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="PhysicalCharacteristics">
+    <xs:annotation>
+      <xs:documentation>
+        The PhysicalCharacteristics complex type shall be the base type for XML schema elements intended to document the physical characteristics of a hardware item.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="Mass" type="c:double" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:double
+            Properties: isRef 0, content complex
+            The PhysicalCharacteristics/Mass child element shall identify the mass of the subject hardware item.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Volume" type="c:double" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:double
+            Properties: isRef 0, content complex
+            The PhysicalCharacteristics/Volume child element shall identify the physical volume of the subject hardware item.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LinearMeasurements" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The PhysicalCharacteristics/LinearMeasurements child element shall be a collector element of the identification of the lineal measurements of the subject hardware item.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:all>
+            <xs:element name="Height" type="c:double" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:double
+                  Properties: isRef 0, content complex
+                  The PhysicalCharacteristics/LinearMeasurements/Height child element shall identify the lineal height measurement of the subject hardware item.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Width" type="c:double" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:double
+                  Properties: isRef 0, content complex
+                  The PhysicalCharacteristics/LinearMeasurements/Width child element shall identify the lineal width measurement of the subject hardware item.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Depth" type="c:double" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:double
+                  Properties: isRef 0, content complex
+                  The PhysicalCharacteristics/LinearMeasurements/Depth child element shall identify the lineal depth measurement of the subject hardware item.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="RackUSize" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Properties: isRef 0, content complex
+                  The PhysicalCharacteristics/LinearMeasurements/RackUSize child element shall identify the rack unit size of the subject hardware item.
+                </xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="value" type="xs:double" use="required">
+                  <xs:annotation>
+                    <xs:documentation>The dimensionless rack unit height of the hardware item. Example: 3. Note that 1 rack unit is 1.75 in (44.45 mm).</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+          </xs:all>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Other" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The PhysicalCharacteristics/Other child element shall identify other physical characteristics of the subject hardware item not delineated as a child element of PhysicalCharacteristics.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Value" type="c:NamedValue" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:NamedValue
+                  Properties: isRef 0, content complex
+                  The PhysicalCharacteristics/Other/Value child element shall identify any other physical characteristics of the subject hardware item not specifically contained within the PhysicalCharacteristics complex type.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+  <xs:complexType name="PowerSpecifications">
+    <xs:annotation>
+      <xs:documentation>
+        The PowerSpecifications complex type shall be the base type for XML schema elements intended to document the input power requirements of a hardware item.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="AC">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The PowerSpecifications/AC child element shall be a collector element of the identification of ac power characteristics for the subject hardware item.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Frequency" type="c:Limit">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:Limit
+                  Properties: isRef 0, content complex
+                  The PowerSpecifications/AC/Frequency child element shall identify the frequency of the identified phase.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Voltage" type="c:Limit">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:Limit
+                  Properties: isRef 0, content complex
+                  The PowerSpecifications/AC/Voltage child element shall identify the voltage of the identified phase.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:choice minOccurs="0">
+              <xs:element name="Amperage" type="c:Limit">
+                <xs:annotation>
+                  <xs:documentation>
+                    Base type: c:Limit
+                    Properties: isRef 0, content complex
+                    The PowerSpecifications/AC/Amperage child element shall identify the amperage of the identified phase.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="PowerDraw" type="c:Limit">
+                <xs:annotation>
+                  <xs:documentation>
+                    Base type: c:Limit
+                    Properties: isRef 0, content complex
+                    The PowerSpecifications/AC/PowerDraw child element shall indicate the amount of current (in amperes), as upper and lower limits, demanded of a supply circuit by the parent entity inheriting this data type.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:choice>
+            <xs:element name="ConnectorPins" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Properties: isRef 0, content complex
+                  The PowerSpecifications/AC/ConnectorPins child element shall identify the ac power connector pins.
+                </xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="ConnectorPin" type="c:ConnectorLocation" maxOccurs="unbounded">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Properties: isRef 0, content complex
+                        The PowerSpecifications/AC/ConnectorPins/ConnectorPin child element shall identify a particular ac power connector pin.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="Description" type="c:NonBlankString" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:NonBlankString
+                  Properties: isRef 0, content simple
+                  Facets: minLength 1, whiteSpace replace
+                  The PowerSpecifications/AC/Description child element shall describe the ac power. This description may include such items as three-phase configurations (delta or wye), electromagnetic interference and electromagnetic compatibility (EMI/EMC) characteristics, etc.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="phase" type="xs:double" use="optional">
+            <xs:annotation>
+              <xs:documentation>The dimensionless number of phases to the ac power form. The default shall be 1. Example: 3 (indicating a three-phase ac requirement that is either a delta or a wye configuration).</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DC">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The PowerSpecifications/DC child element shall be a collector of a hardware item’s description and permits the identification of dc power characteristics for the subject hardware item.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Voltage" type="c:Limit">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:Limit
+                  Properties: isRef 0, content complex
+                  The PowerSpecifications/DC/Voltage child element shall identify the voltage of the dc power.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:choice minOccurs="0">
+              <xs:element name="Amperage" type="c:Limit">
+                <xs:annotation>
+                  <xs:documentation>
+                    Base type: c:Limit
+                    Properties: isRef 0, content complex
+                    The PowerSpecifications/DC/Amperage child element shall identify the amperage of the dc power.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="PowerDraw" type="c:Limit">
+                <xs:annotation>
+                  <xs:documentation>
+                    Base type: c:Limit
+                    Properties: isRef 0, content complex
+                    The PowerSpecifications/DC/PowerDraw child element shall indicate the amount of current (in amperes), as upper and lower limits, demanded of a supply circuit by the parent entity inheriting this data type.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:choice>
+            <xs:element name="ConnectorPins" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Properties: isRef 0, content complex
+                  The PowerSpecifications/DC/ConnectorPins/ConnectorPin child element shall identify the dc power connector pins.
+                </xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="ConnectorPin" type="c:ConnectorLocation" maxOccurs="unbounded">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Properties: isRef 0, content complex
+                        The PowerSpecifications/DC/ConnectorPins/ConnectorPin child element shall identify a particular dc power connector pin.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="Description" type="c:NonBlankString" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:NonBlankString
+                  Properties: isRef 0, content simple
+                  Facets: minLength 1, whiteSpace replace
+                  The PowerSpecifications/DC/Description child element shall describe the dc power.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="polarity" type="xs:double" use="optional">
+            <xs:annotation>
+              <xs:documentation>An indication of the polarity of the dc voltage with respect to ground. Examples: positive and negative.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ripple" type="xs:double" use="optional">
+            <xs:annotation>
+              <xs:documentation>The ac component of the dc voltage.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="VersionIdentifier">
+    <xs:annotation>
+      <xs:documentation>
+        The VersionIdentifier complex type shall be the base type for XML schema elements intended to document versions of software, firmware, or operating system supported by the entity. This information shall be either the minimum or maximum version number.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="name" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common name for the version.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="version" type="c:NonBlankString" use="required">
+      <xs:annotation>
+        <xs:documentation>An identification of the version number.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="qualifier" use="required">
+      <xs:annotation>
+        <xs:documentation>An indication of whether the version specified is the minimum or maximum.</xs:documentation>
+      </xs:annotation>
+      <xs:simpleType>
+        <xs:restriction base="xs:NMTOKENS">
+          <xs:enumeration value="Min"/>
+          <xs:enumeration value="Max"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="Trigger">
+    <xs:annotation>
+      <xs:documentation>
+        The Trigger complex type shall be the base type for XML schema elements intended to document properties of a trigger signal.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Description" type="c:NonBlankString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The Trigger/Description child element shall provide an accurate description of what the trigger signal is (e.g., electrically, in time, what the trigger is based upon).
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TriggerProperties">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The Trigger/TriggerProperties child element shall identify the signal that will generate the trigger.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="TriggerPropertyGroup" type="hc:TriggerPropertyGroup" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: hc:TriggerPropertyGroup
+                  Properties: isRef 0, content complex
+                  The Trigger/TriggerProperties/TriggerPropertyGroup child element shall identify the properties of the trigger signal.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TriggerPorts">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The Trigger/TriggerPorts child element shall identify the ports on which the trigger may occur.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="TriggerPort" type="hc:TriggerPort" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: hc:TriggerPort
+                  Properties: isRef 0, content complex
+                  The Trigger/TriggerPorts/TriggerPort child element shall identify the port on which the trigger will occur.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="c:NonBlankString" use="required">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common name for the trigger.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="TriggerPropertyGroup" abstract="true">
+    <xs:annotation>
+      <xs:documentation>
+        Properties: abstract true
+        The TriggerPropertyGroup complex type shall be the base type for XML schema elements intended to document properties of a trigger signal.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Description" type="c:NonBlankString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The TriggerPropertyGroup/Description child element shall describe the trigger signal.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Extension" type="c:Extension" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Extension
+            Properties: isRef 0, content complex
+            The TriggerPropertyGroup/Extension child element shall provide a specific extension point for use cases that require elements not provided in the basic structure.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="c:NonBlankString" use="required">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common name for the signal that will generate the trigger.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="AnalogTriggerPropertyGroup">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:TriggerPropertyGroup
+        Properties: base hc:TriggerPropertyGroup
+        The AnalogTriggerPropertyGroup complex type shall be the base type for XML schema elements intended to document properties of an analog signal-based trigger.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:TriggerPropertyGroup">
+        <xs:sequence>
+          <xs:element name="Level" type="hc:LevelType">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: hc:LevelType
+                Properties: isRef 0, content complex
+                The AnalogTriggerPropertyGroup/Level child element shall identify an analog trigger level (value, dimensions, and resolution).
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DigitalTriggerPropertyGroup">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:TriggerPropertyGroup
+        Properties: base hc:TriggerPropertyGroup
+        The DigitalTriggerPropertyGroup complex type shall be the base type for XML schema elements intended to document properties of a digital signal-based trigger.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:TriggerPropertyGroup">
+        <xs:sequence>
+          <xs:element name="Detection" type="hc:DetectionType">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: hc:DetectionType
+                Properties: isRef 0, content complex
+                The DigitalTriggerPropertyGroup/Detection child element shall identify the properties of a digital trigger.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MinPulseWidth" type="hc:MinPulseWidthType">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: hc:MinPulseWidthType
+                Properties: isRef 0, content complex
+                The DigitalTriggerPropertyGroup/MinPulseWidth child element shall identify the minimum pulse-width of the digital trigger.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SoftwareTriggerPropertyGroup">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:TriggerPropertyGroup
+        Properties: base hc:TriggerPropertyGroup
+        The SoftwareTriggerPropertyGroup complex type shall be the base type for XML schema elements intended to document properties of a trigger initiated by software.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:TriggerPropertyGroup"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LANTriggerPropertyGroup">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:TriggerPropertyGroup
+        Properties: base hc:TriggerPropertyGroup
+        The LANTriggerPropertyGroup complex type shall be the base type for XML schema elements intended to document properties of a local area network (LAN) trigger.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:TriggerPropertyGroup"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LevelType">
+    <xs:annotation>
+      <xs:documentation>
+        The LevelType complex type shall be the base type for XML schema elements intended to document properties of an analog voltage in order for a trigger to occur.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="value" type="xs:double" use="required">
+      <xs:annotation>
+        <xs:documentation>The amplitude of the trigger signal.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="units" type="hc:LevelUnits" use="required">
+      <xs:annotation>
+        <xs:documentation>The units associated with the trigger signal amplitude. Either %FullScale or +/-V shall be specified.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="numberOfBits" type="xs:int" use="required">
+      <xs:annotation>
+        <xs:documentation>The resolution of the trigger signal amplitude reading. An integer number shall be specified.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="DetectionType">
+    <xs:annotation>
+      <xs:documentation>
+        The DetectionType complex type shall be the base type for XML schema elements intended to document properties of a digital trigger. The properties shall be either edge detection or level detection.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="edgeDetection" type="hc:DigitalEdge" use="optional">
+      <xs:annotation>
+        <xs:documentation>An identification of the digital edge that shall be present for the trigger to occur. The edge shall be Rising, Falling, or Selectable.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="levelDetection" type="hc:DigitalLevel" use="optional">
+      <xs:annotation>
+        <xs:documentation>An identification of the digital level that shall be present for the trigger to occur. The level shall be High, Low, or Selectable.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="MinPulseWidthType">
+    <xs:annotation>
+      <xs:documentation>
+        The MinPulseWidthType complex type shall be the base type for XML schema elements intended to document the minimum pulse width of a digital-signal-based trigger.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="value" type="xs:double" use="required">
+      <xs:annotation>
+        <xs:documentation>The numeric value of the pulse width.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="units" type="hc:PulseUnits" use="required">
+      <xs:annotation>
+        <xs:documentation>The dimension associated with the pulse width’s value. Allowable dimensions shall be S, mS, uS, nS, pS, or fS.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="TriggerPort">
+    <xs:annotation>
+      <xs:documentation>
+        The TriggerPort complex type shall be the base type for XML schema elements intended to document properties of a trigger port.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Description" type="c:NonBlankString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The TriggerPort/Description child element shall identify the interfaces that this trigger may be routed either to or from.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="c:NonBlankString" use="required">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common name for the port.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="direction" type="c:PortDirection" use="required">
+      <xs:annotation>
+        <xs:documentation>An enumeration providing for the specification of the direction in which data move on the described port. Enumeration values are Input, Output, and Bi-Directional.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="type" type="hc:TriggerPortType" use="required">
+      <xs:annotation>
+        <xs:documentation>An identification of the type of signal that will be present at the port (i.e., Digital, Analog, Software, or LAN).</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:simpleType name="TriggerPortType">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:string
+        Enumerations: Digital | Analog | Software | LAN
+        This type shall be used as the base type for the TriggerPort XML schema attribute for specifying what type of trigger will be on a particular port.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Digital"/>
+      <xs:enumeration value="Analog"/>
+      <xs:enumeration value="Software"/>
+      <xs:enumeration value="LAN"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LevelUnits">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:string
+        Enumerations: %FullScale | +/-V
+        This type shall be used as the base type for the LevelType XML schema attribute to specify the dimension of this attribute.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="%FullScale"/>
+      <xs:enumeration value="+/-V"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DigitalEdge">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:string
+        Enumerations: Rising | Falling | Selectable
+        This type shall be used as the base type for the DetectionType XML schema attribute for specifying the edge of a digital trigger signal.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Rising"/>
+      <xs:enumeration value="Falling"/>
+      <xs:enumeration value="Selectable"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DigitalLevel">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:string
+        Enumerations: High | Low | Selectable
+        This type shall be used as the base type for the DetectionType XML schema attribute for specifying the logic level of a digital trigger signal.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="High"/>
+      <xs:enumeration value="Low"/>
+      <xs:enumeration value="Selectable"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PulseUnits">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:string
+        Enumerations: S | mS | uS | nS | pS | fS
+        This type shall be used as the base type for the MinPulseWidthType XML schema attribute for specifying the dimensions of the units.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="mS"/>
+      <xs:enumeration value="uS"/>
+      <xs:enumeration value="nS"/>
+      <xs:enumeration value="pS"/>
+      <xs:enumeration value="fS"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Capabilities">
+    <xs:annotation>
+      <xs:documentation>
+        The Capabilities complex type shall be used as the base type for XML schema elements intended to document capabilities and interconnections of a hardware item.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="CapabilitiesReference" type="c:DocumentReference">
+          <xs:annotation>
+            <xs:documentation>
+              Base type: c:DocumentReference
+              Properties: isRef 0, content complex
+              The Capabilities/CapabilitiesReference child element shall identify an external document containing a description of the capabilities.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Capability" type="hc:Capability">
+          <xs:annotation>
+            <xs:documentation>
+              Base type: hc:Capability
+              Properties: isRef 0, content complex
+              The Capabilities/Capability child element shall identify the capability and interface of a hardware item.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="CapabilityMap" type="hc:CapabilityMap">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: hc:CapabilityMap
+            Properties: isRef 0, content complex
+            The Capabilities/CapabilityMap child element shall identify how the hardware item is connected.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Capability">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:Item
+        Properties: base hc:Item
+        The Capability complex type shall identify a specific capability and interface of a hardware item.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:Item">
+        <xs:sequence>
+          <xs:element name="Interface" type="c:Interface">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:Interface
+                Properties: isRef 0, content complex
+                The Capability/Interface child element shall identify the interface (as ports and optionally connectors) to the c:Capability/SignalDescription of the hardware item.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SignalDescription" type="c:Extension" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:Extension
+                Properties: isRef 0, content complex
+                The Capability/SignalDescription child element shall identify the signal capability at the c:Capability/Interface interface of the hardware item.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CapabilityMap">
+    <xs:annotation>
+      <xs:documentation>
+        The CapabilityMap complex type shall document the mapping of capabilities to interfaces.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Mapping" type="hc:Mapping" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: hc:Mapping
+            Properties: isRef 0, content complex
+            The CapabiliyMap/Mapping child element shall identify the capability to interface mapping.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Mapping">
+    <xs:annotation>
+      <xs:documentation>
+        The Mapping complex type shall be the base type for XML schema elements intended to document the mapping of capabilities to ports of the hardware item.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Map" type="hc:Network" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: hc:Network
+            Properties: isRef 0, content complex
+            The Mapping/Map child element shall identify a specific capability to a specific port.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="c:RepeatedItemAttributes"/>
+  </xs:complexType>
+  <xs:complexType name="Specifications">
+    <xs:annotation>
+      <xs:documentation>
+        The Specifications complex type shall be the specification, and groupings of specifications, that share a common set of conditions. Specifications may be used to define specification traceability (e.g., the certification of the specification) and define the conditions under which the specification is measured.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Conditions" type="hc:SpecificationConditions" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: hc:SpecificationConditions
+            Properties: isRef 0, content complex
+            The Specifications/Conditions child element shall identify the conditions under which a specification is measured.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Certifications" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The Specifications/Certifications child element shall identify traceability information for each specification.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Certification" type="c:NonBlankString" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:NonBlankString
+                  Properties: isRef 0, content simple
+                  Facets: minLength 1, whiteSpace replace
+                  The Specifications/Certifications/Certification child element shall identify the certification of the specification.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="Specification" type="hc:Specification">
+          <xs:annotation>
+            <xs:documentation>
+              Base type: hc:Specification
+              Properties: isRef 0, content complex
+              The Specifications/Specification child element shall identify the specification.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Group" type="hc:SpecificationGroup">
+          <xs:annotation>
+            <xs:documentation>
+              Base type: hc:SpecificationGroup
+              Properties: isRef 0, content complex
+              The Specifications/Group child element shall uniquely name a group of specifications that are sharing a common set of conditions.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Specification" abstract="true">
+    <xs:annotation>
+      <xs:documentation>
+        Properties: abstract true
+        The Specification complex type shall be the base type for XML schema elements intended to document each of the actual specifications used to develop the instruments: hc:Characteristic, hc:Feature, hc:Guaranteed, hc:Nominal, hc:Typical, or hc:Specifications collections.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Description" type="c:NonBlankString">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The Specification/Description child element shall provide a short description in English of the specification.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Definition" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The Specification/Definition child element shall provide the mathematical description of how the specification is defined and verified, or it shall identify the document where the definition can be found.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:element name="Text" type="c:NonBlankString">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:NonBlankString
+                  Properties: isRef 0, content simple
+                  Facets: minLength 1, whiteSpace replace
+                  The Specification/Definition/Text child element shall provide a description of the specification and provide a description of how the specification is verified.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Document" type="c:Document">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:Document
+                  Properties: isRef 0, content complex
+                  The Specification/Definition/Document child element shall identify the document where the specification definitions can be located.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Conditions" type="hc:SpecificationConditions" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: hc:SpecificationConditions
+            Properties: isRef 0, content complex
+            The Specification/Conditions child element shall identify the conditions under which the specification is measured.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Limits" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The Specification/Limits child element shall identify limits for the specification.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Limit" type="c:Limit" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:Limit
+                  Properties: isRef 0, content complex
+                  The Specification/Limits/Limit child element shall identify the specification limit.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Graph" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The Specification/Graph child element shall identify specification(s) that can be represented and conveyed to humans only graphically. This identification shall be either via extension or by specifying the URL where the graphical data can be located.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:element name="URL" type="c:NonBlankURI">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:NonBlankURI
+                  Properties: isRef 0, content simple
+                  Facets: minLength 1
+                  The Specification/Graph/URL child element shall identify the URL where the graphical data can be located.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Extension" type="c:Extension">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:Extension
+                  Properties: isRef 0, content complex
+                  The Specification/Graph/Extension child element shall provide a specific extension point for use cases that require elements not provided in the basic structure.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SupplementalInformation" type="c:NonBlankString" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The Specification/SupplementalInformation child element shall identify any additional information that may be required in order to clarify the specification (such as information typically found in instrumentation datasheet footnotes).
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RequiredOptions" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The Specification/RequiredOptions child element shall identify any instrumentation options that are required to be installed in the instrument in order for the specification to be valid.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Option" type="c:NonBlankString" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:NonBlankString
+                  Properties: isRef 0, content simple
+                  Facets: minLength 1, whiteSpace replace
+                  The Specification/RequiredOptions/Option child element shall identify an installed instrument option.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ExclusiveOptions" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The Specification/ExclusiveOptions child element shall identify any instrumentation options that, if installed in the instrument, would invalidate the specification.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Option" type="c:NonBlankString" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:NonBlankString
+                  Properties: isRef 0, content simple
+                  Facets: minLength 1, whiteSpace replace
+                  The Specification/ExclusiveOptions/Option child element shall identify an instrument option that, if installed in the instrument, would invalidate the specification.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="c:NonBlankString" use="required">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common name for the specification. Example: Acme ABCD DMM Product Specifications.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="SpecificationGroup">
+    <xs:annotation>
+      <xs:documentation>
+        The SpecificationGroup complex type shall define the groupings of specifications that share a common set of conditions.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Description" type="c:NonBlankString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The SpecificationGroup/Description child element shall textually describe the specification group.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Conditions" type="hc:SpecificationConditions" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: hc:SpecificationConditions
+            Properties: isRef 0, content complex
+            The SpecificationGroup/Conditions child element shall identify the conditions under which the grouped specifications are measured.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="Specification" type="hc:Specification">
+          <xs:annotation>
+            <xs:documentation>
+              Base type: hc:Specification
+              Properties: isRef 0, content complex
+              The SpecificationGroup/Specification child element shall identify the hc:Specification (name).
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Group" type="hc:SpecificationGroup">
+          <xs:annotation>
+            <xs:documentation>
+              Base type: hc:SpecificationGroup
+              Properties: isRef 0, content complex
+              The SpecificationGroup/Group child element shall uniquely name a group of specifications that are sharing a common set of conditions.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="name" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common name for the specification group. Example: AC Characteristics.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="SpecificationConditions">
+    <xs:annotation>
+      <xs:documentation>
+        The SpecificationConditions complex type shall identify the conditions under which the specification is valid.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Condition" type="c:NonBlankString" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The SpecificationConditions/Condition child element shall identify a specification condition (e.g., the instrument specification shall be considered valid only after a 30 min warm-up period).
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Guaranteed">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:Specification
+        Properties: base hc:Specification
+        The Guaranteed complex type shall be the base type for XML schema elements intended to document the specifications of the hardware item that are the basis for determining whether the hardware item is in need of repair. Should the hardware item not meet the specifications provided by Guaranteed, the hardware item should be classified as either unhealthy or not functioning.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:Specification"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Typical">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:Specification
+        Properties: base hc:Specification
+        The Typical complex type shall define specification(s) that the instrument is expected to meet.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:Specification">
+        <xs:attribute name="expectedSuccessRange" type="xs:double" use="optional">
+          <xs:annotation>
+            <xs:documentation>The percentage of actual instruments that would be expected to actually meet the specification (expressed as a percentage). Example: 95.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Nominal">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:Specification
+        Properties: base hc:Specification
+        The Nominal complex type shall describe specifications of the instrument that are true by design (however, not tested or measured).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:Specification"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Characteristic">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:Specification
+        Properties: base hc:Specification
+        The Characteristic complex type shall describe the performance that may be expected from the instrument.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:Specification"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Feature">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of hc:Specification
+        Properties: base hc:Specification
+        The Feature complex type shall be the base type for XML schema elements intended to document the features of the instrument not described within a performance description (see hc:Characteristic).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="hc:Specification"/>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{869A81F4-256E-4910-8FEE-DFE1F7E0A8EE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ATML1671Translator</RootNamespace>
+    <AssemblyName>ATML1671Translator</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\..\common\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug%28x64%29|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug%28x64%29\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release%28x64%29|x86'">
+    <OutputPath>bin\x86\Release%28x64%29\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\common\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>..\common\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug%28x64%29|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\common\Debug%28x64%29\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release%28x64%29|AnyCPU'">
+    <OutputPath>..\common\Release%28x64%29\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>utrs_ATML1671Translator.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ScintillaNET, Version=2.6.0.0, Culture=neutral, PublicKeyToken=948d6c9751444115, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\common\ScintillaNet\ScintillaNET.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.9.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\common\3rdparty\DockPanel\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ATLAS\ASPResults.cs">
+      <DependentUpon>ASPResults.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ATLAS\AtlasSourceExtract.cs">
+      <DependentUpon>AtlasSourceExtract.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ATLAS\AtlasSourceParsed.cs">
+      <DependentUpon>AtlasSourceParsed.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ATLAS\atlas_LookupCatalog.cs">
+      <DependentUpon>atlas_LookupCatalog.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="controls\ControlExtensions.cs" />
+    <Compile Include="exceptions\TranslationException.cs" />
+    <Compile Include="forms\ATMLProcedureSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLProcedureSelection.Designer.cs">
+      <DependentUpon>ATMLProcedureSelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLSignalMappingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLSignalMappingForm.Designer.cs">
+      <DependentUpon>ATMLSignalMappingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLSourceComparer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLSourceComparer.Designer.cs">
+      <DependentUpon>ATMLSourceComparer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLTranslatorOutputWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLTranslatorOutputWindow.Designer.cs">
+      <DependentUpon>ATMLTranslatorOutputWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLTranslatorToolWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLTranslatorToolWindow.Designer.cs">
+      <DependentUpon>ATMLTranslatorToolWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="model\ATLAS1.Designer.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="translator\AixmlTranslator.cs" />
+    <Compile Include="translator\ATMLTranslator.cs" />
+    <Compile Include="translator\IATMLTranslatorConsumer.cs" />
+    <Compile Include="translator\SignalMapper.cs" />
+    <Compile Include="translator\TranslationLibrary.cs" />
+    <EmbeddedResource Include="forms\ATMLProcedureSelection.resx">
+      <DependentUpon>ATMLProcedureSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLSignalMappingForm.resx">
+      <DependentUpon>ATMLSignalMappingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLSourceComparer.resx">
+      <DependentUpon>ATMLSourceComparer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLTranslatorOutputWindow.resx">
+      <DependentUpon>ATMLTranslatorOutputWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLTranslatorToolWindow.resx">
+      <DependentUpon>ATMLTranslatorToolWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="ATLAS\ASPResults.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ATLAS\AtlasSourceExtract.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ATLAS\AtlasSourceParsed.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ATLAS\atlas_LookupCatalog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="model\ATLAS1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="utrs_ATML1671Translator.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="resources\compiler.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ATMLLibraries\ATMLCommonLibrary\ATMLCommonLibrary.csproj">
+      <Project>{71632688-04AE-491A-9D2F-EE05FC0400D4}</Project>
+      <Name>ATMLCommonLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLLibraries\ATMLDataAccessLibrary\ATMLDataAccessLibrary.csproj">
+      <Project>{F48E6BE2-2E30-4048-8E38-F4F3DEF51D03}</Project>
+      <Name>ATMLDataAccessLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLLibraries\ATMLManagerLibrary\ATMLManagerLibrary.csproj">
+      <Project>{A82AAA85-A772-40A2-84C2-15C6997D029F}</Project>
+      <Name>ATMLManagerLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLLibraries\ATMLModelLibrary\ATMLModelLibrary.csproj">
+      <Project>{99B831F6-9B1A-49DF-B836-B86CDDB6C682}</Project>
+      <Name>ATMLModelLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLLibraries\ATMLProjectLibrary\ATMLProjectLibrary.csproj">
+      <Project>{2D038881-418B-4B2E-9AA8-89525DBA8BA6}</Project>
+      <Name>ATMLProjectLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLLibraries\ATMLSchemaLibrary\ATMLSchemaLibrary.csproj">
+      <Project>{6BFD6798-ACEA-41B2-8EA3-8D5C8A8BD5FB}</Project>
+      <Name>ATMLSchemaLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLLibraries\ATMLSignalModelLibrary\ATMLSignalModelLibrary.csproj">
+      <Project>{5386282E-A995-4E29-9FE6-C39D03B7C52B}</Project>
+      <Name>ATMLSignalModelLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLLibraries\ATMLUtilities\ATMLUtilitiesLibrary.csproj">
+      <Project>{42F58F52-995B-4244-A4FB-17EF4C09A874}</Project>
+      <Name>ATMLUtilitiesLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

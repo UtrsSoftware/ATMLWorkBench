@@ -1,0 +1,2726 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:IEEE-1671:2010:Common" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.17" xmlns:c="urn:IEEE-1671:2010:Common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation xml:lang="en">
+
+      This schema is specified in IEEE Std 1671-2010, "IEEE Standard
+      for Automatic Test Markup Language (ATML) for Exchanging Automatic Test
+      Equipment and Test Information via XML."
+
+      This schema is a World Wide Web Consortium (W3C) Extensible
+      Markup Language (XML) binding of the ATML Common component defined in IEEE
+      Std 1671-2010,"IEEE Standard for Automatic Test Markup
+      Language (ATML) for Exchanging Automatic Test Equipment and Test
+      Information via XML."
+
+      The purpose of this schema is to provide unique types and attributes
+      for ATML schemas.This schema uses the W3C XML Schema definition
+      language as the encoding. This allows for interoperability and
+      the exchange of ATML component instances between various systems.
+      This schema shall not be modified but may be included in
+      derivative works.
+
+      Copyright (c) 2010 Institute of Electrical and Electronics
+      Engineers, Inc.
+
+      USE AT YOUR OWN RISK
+
+    </xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="ArrayIndexor" final="restriction">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:string
+        Properties: final restriction
+        Regular expression: \[([0-9]+)((,([0-9]+))*)\] (Restricts contents to a comma-delimited set of decimal numbers.)
+        This type shall be used as the base type of any attribute or element that specifies the size of an array or the index of an element within an array. In use, attributes derived from this element shall contain a string designating an n-dimensional array index or array dimension, with the format [a,b,c,…,n], where a,b,c,…n are numeric indices. When a derived attribute specifies the size of an array, the attribute shall indicate the maximum size of each dimension of the array. When a derived attribute indicates a specific element of an array, the index value(s) shall be zero-based ordinal numbers. Examples: (element index: [0] or [0,1] or [2,2,0]; maximum array index: [2,3] or [3,3,3]). Indexes shall be only positive; in other words, no negative indexing is permitted.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\[([0-9]+)((,([0-9]+))*)\]"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ComparisonOperator">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:string
+        Enumerations: GT | GE | LT | LE
+        This type shall be used as the base type for any XML schema attribute or element that specifies a comparison operator between two elements.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="GT"/>
+      <xs:enumeration value="GE"/>
+      <xs:enumeration value="LT"/>
+      <xs:enumeration value="LE"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:attributeGroup name="ClassifiedAttributes">
+    <xs:annotation>
+      <xs:documentation>
+        This attribute group shall be used by all XML schemas that require security classification identification.
+        Name
+        Type
+        Description
+        Use
+
+        classified
+        xs:Boolean
+        An indication that the element is or is not classified.
+        Optional
+
+        securityClassification
+        c:NonBlankString
+        A use-case-determined string declaring the security classification level of the element containing this attribute and the subordinate branch of the XML document.
+        Optional
+
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="classified" type="xs:boolean" use="optional">
+      <xs:annotation>
+        <xs:documentation>An indication that the element is or is not classified.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="securityClassification" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>A use-case determined string declaring the security classification level of the element containing this attribute and the subordinate branch of the XML document.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="DocumentRootAttributes">
+    <xs:annotation>
+      <xs:documentation>
+        In accordance with Annex A, this attribute group shall be used as the root element for all XML schemas.
+        This attribute group includes the following attribute, in addition to those inherited from the c:ClassifiedAttributes attribute group (classified and securityClassification).
+        Name
+        Type
+        Description
+        Use
+
+        uuid
+        c:Uuid
+        As defined in c:Uuid, uuid is a universal unique identifier for the element containing this attribute.
+        Required
+
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="uuid" type="c:Uuid" use="required">
+      <xs:annotation>
+        <xs:documentation>A universal unique identifier for the element containing this attribute.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attributeGroup ref="c:ClassifiedAttributes"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="RepeatedItemAttributes">
+    <xs:annotation>
+      <xs:documentation>
+        This attribute group shall be used as the root element of all XML schemas that provide for the duplication of an item.
+        Name
+        Type
+        Description
+        Use
+
+        baseIndex
+        xs:int
+        Starting index for the items.
+        Optional
+
+        count
+        xs:int
+        Number of identical items.
+        Optional
+
+        incrementedBy
+        xs:int
+        Specifies the value by which the items are to be incremented.
+        Optional
+
+        replacementCharacter
+        c:NonBlankString
+        Specifies the character replacement in association with the calculated index.
+        Optional
+
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="baseIndex" type="xs:int" use="optional">
+      <xs:annotation>
+        <xs:documentation>Starting index for the items.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="count" type="xs:int" use="optional">
+      <xs:annotation>
+        <xs:documentation>Number fo identical items</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="incrementBy" type="xs:int" use="optional">
+      <xs:annotation>
+        <xs:documentation>Specifies the value to increment by when calculating the value with which the replacement character is replaced.  Allows for defining items where paired items have different characteristics.  Defaults to 1.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="replacementCharacter" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>Character replaced with calculated index when repeated items are expanded. </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="UnitAttributes">
+    <xs:annotation>
+      <xs:documentation>
+        In nearly all ATS use cases, strictly limiting units of measure to SI or English units is restrictive. In numerous cases, it is desirable to qualify a unit with an additional text string, e.g., Peak-to-Peak or RMS for voltage measurements. This attribute group allows for the inclusion of a standard SI unit of measure (as defined in IEEE Std 260.1 [B18]), a nonstandard unit of measure, and a qualifier thereto.
+        Name
+        Type
+        Description
+        Use
+
+        nonStandardUnit
+        c:NonBlankString
+        Any nonstandard unit not already defined in IEEE Std 260.1
+        Optional
+
+        standardUnit
+        c:StandardUnit
+        When used, this attribute shall contain only a unit of measure defined in IEEE Std 260.1
+        Optional
+
+        unitQualifier
+        c:NonBlankString
+        A textual qualifier that is to be applied to the attribute of either the standardUnit or nonStandardUnit. Examples: RMS or Peak-to-Peak for a standardUnit of volts.
+        Optional
+
+        NOTE—If one is not sure if a particular unit being utilized is standard or nonstandard, assume it is nonstandard, and represent it as a nonStandardUnit.
+
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="standardUnit" type="c:StandardUnit" use="optional"/>
+    <xs:attribute name="nonStandardUnit" type="c:NonBlankString" use="optional"/>
+    <xs:attribute name="unitQualifier" type="c:NonBlankString" use="optional"/>
+  </xs:attributeGroup>
+  <xs:simpleType name="EqualityComparisonOperator">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:string
+        Enumerations: EQ | NE | CIEQ | CINE
+        This type shall be used as the base type for any XML schema attribute or element that specifies a comparison operator between two elements.
+        EQ = Case-sensitive equal for strings, equal for all other datatypes.
+        NE = Case-sensitive not-equal for strings, not equal for all other datatypes.
+        CIEQ = Case-insensitive equal for strings, equal for all other datatypes.
+        CINE = Case-insensitive not-equal for strings, not equal for all other datatypes.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EQ"/>
+      <xs:enumeration value="NE"/>
+      <xs:enumeration value="CIEQ"/>
+      <xs:enumeration value="CINE"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="HexValue">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:string
+        Regular expression: (0[x|X])?([0-9]|[a-f]|[A-F])* (Restricts contents to a hexadecimal number.)
+        This type shall be used as the base type for any XML schema attribute or element that contains a hex-encoded binary value. This binary value contains the optional string 0x followed by a finite-length sequence of characters 0–9 and a–f.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(0(x|X))?([0-9]|[a-f]|[A-F])*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LogicalOperator">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:string
+        Enumerations: AND | OR
+        This type shall be used as the base type for any XML schema attribute or element that specifies a boolean logic combination of two elements.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AND"/>
+      <xs:enumeration value="OR"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MaskOperator">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:string
+        Enumerations: AND | OR | XOR
+        This type shall be used as the base type for any XML schema attribute or element that specifies a boolean logic combination of two mask values.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AND"/>
+      <xs:enumeration value="OR"/>
+      <xs:enumeration value="XOR"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NonBlankString">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:string
+        This type shall be used as the base type of any XML schema attribute or element that is required to be nonblank. This type uses the XML &amp;lt;xs:minLength value=”1”/&amp;gt; specification to create a non-nullable string, i.e., a string that must contain at least one character. Also, white space will be collapsed (i.e., multiple space characters will be replaced with a single space).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="replace"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NonBlankURI">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:anyURI
+        This type shall be used as the base type of any XML schema attribute or element that is intended to contain a nonblank uniform resource identifier (URI). This type uses the XML &amp;lt;xs:minLength value=”1”/&amp;gt; specification to create a non-nullable string, i.e., a string that must contain at least one character. Also, white space will be collapsed (i.e., multiple space characters will be replaced with a single space).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:anyURI">
+      <xs:minLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PortDirection">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:string
+        Enumerations: Input | Output | Bi-Directional
+        This type shall be used as the base type for any XML schema attribute or element that describes a port and requires specification of data movement direction on that port.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Input"/>
+      <xs:enumeration value="Output"/>
+      <xs:enumeration value="Bi-Directional"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PortType">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:string
+        Enumerations: Ground | Analog | Digital | Power | Optical | Software
+        This type shall be used as the base type for any XML schema attribute or element that describes a port and requires specification of the type of the port.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Ground"/>
+      <xs:enumeration value="Analog"/>
+      <xs:enumeration value="Digital"/>
+      <xs:enumeration value="Power"/>
+      <xs:enumeration value="Optical"/>
+      <xs:enumeration value="Software"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StandardUnit">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:string
+        This type is defined only as a convenience. The StandardUnit type shall be used by any XML schema attribute or element that contains the unit of measure for a numerical value (e.g., volts, ohms, MHz). The contents of this attribute shall be compliant with IEEE Std 260.1 [B18].
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="Uuid">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: restriction of xs:string
+        Pattern: [A-Fa-f0-9]{32}|(\{|\()?[A-Fa-f0-9]{8}-([A-Fa-f0-9]{4}-){3}[A-Fa-f0-9]{12}(\}|\))?
+        This type is used by other XML schema attributes or elements that will hold a universal unique identifier (UUID), commonly known as either a globally unique identifier (GUID) or UUID. The regular expression defined limits the contents of an attribute to either a single 32-digit hexadecimal string or a 32-digit hex string patterned as [8]-[4]-[4]-[4]-[12] digits.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Fa-f0-9]{32}|(\{|\()?[A-Fa-f0-9]{8}-([A-Fa-f0-9]{4}-){3}[A-Fa-f0-9]{12}(\}|\))?"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="binary">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:DatumType
+        Properties: base c:DatumType
+        The binary complex type shall be the “xsi:type” of any element of type c:DatumType that contains a binary value.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:DatumType">
+        <xs:attribute name="value" use="required">
+          <xs:annotation>
+            <xs:documentation>A finite-length sequence of characters 0 and 1.</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="([0-1])*"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="binaryArray">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:IndexedArrayType
+        Properties: base c:IndexedArrayType
+        The binaryArray complex type shall be the “xsi:type” of any element of type c:IndexedArrayType that contains an array of binary values.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:IndexedArrayType">
+        <xs:sequence>
+          <xs:element name="DefaultElementValue" type="c:binary" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:binary
+                Properties: isRef 0, content complex
+                The binaryArray/DefaultElementValue child element shall contain the default binary value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Element" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: Extension of c:binary
+                Properties: isRef 0, content complex
+                The binaryArray/Element child element shall contain the binary value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension base="c:binary">
+                  <xs:attribute name="position" type="c:ArrayIndexor" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The element value’s index within the array.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="boolean">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:DatumType
+        Properties: base c:DatumType
+        The boolean complex type shall be the “xsi:type” of any element of type c:DatumType that contains a boolean value.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:DatumType">
+        <xs:attribute name="value" type="xs:boolean" use="required">
+          <xs:annotation>
+            <xs:documentation>A finite-length sequence of characters 0 and 1.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="booleanArray">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:IndexedArrayType
+        Properties: base c:IndexedArrayType
+        The booleanArray complex type shall be the “xsi:type” of any element of type c:IndexedArrayType that contains an array of boolean values.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:IndexedArrayType">
+        <xs:sequence>
+          <xs:element name="DefaultElementValue" type="c:boolean" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:boolean
+                Properties: isRef 0, content complex
+                The booleanArray/DefaultElementValue child element shall contain the default boolean value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Element" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: Extension of c:boolean
+                Properties: isRef 0, content complex
+                The booleanArray/Element child element shall contain the boolean value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension base="c:boolean">
+                  <xs:attribute name="position" type="c:ArrayIndexor" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The element value’s index within the array.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CollectionArray">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:IndexedArrayType
+        Properties: base c:IndexedArrayType
+        The CollectionArray complex type shall be the “xsi:type” of any element of type c:IndexedArrayType that contains an array of boolean values.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:IndexedArrayType">
+        <xs:sequence>
+          <xs:element name="DefaultElementValue" type="c:Collection" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:Collection
+                Properties: isRef 0, content complex
+                The CollectionArray/DefaultElementValue child element shall contain the default value of the collection array element.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Element" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: Extension of c:Collection
+                Properties: isRef 0, content complex
+                The CollectionArray/Element child element shall contain the value of the collection array element.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension base="c:Collection">
+                  <xs:attribute name="position" type="c:ArrayIndexor" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The element value’s index within the array.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Collection">
+    <xs:annotation>
+      <xs:documentation>
+        The Collection complex type shall be the base type for XML schema elements intended to contain multiple data values, i.e., unordered sets of values, ordered vectors of values (with the order of items in the vector being represented by the order of c:Collection/Item child elements), or collections of named values, also known as records (with the names being represented by the name attribute of the c:Collection/Item child element).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:group ref="c:DatumQuality"/>
+      <xs:element name="Item" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: Extension of c:Value
+            Properties: isRef 0, content complex
+            The Collection/Item child element shall contain an individual data value or vector. This child element is recursive; thus a Collection/Item may be a collection of data values or vectors.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="c:Value">
+              <xs:attribute name="name" type="c:NonBlankString" use="optional">
+                <xs:annotation>
+                  <xs:documentation>A descriptive or common name for the individual data value or vector.</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="defaultStandardUnit" type="c:StandardUnit" use="optional">
+      <xs:annotation>
+        <xs:documentation>This attribute shall contain a unit of measure as defined in IEEE Std 260.1™ [B18].</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="defaultNonStandardUnit" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>This attribute shall contain any nonstandard unit, not already defined in IEEE Std 260.1.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="defaultUnitQualifier" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>A textual qualifier that is to be applied to the attribute of either the standardUnit or nonStandardUnit. Examples include RMS and Peak-to-Peak for a unit of volts.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="complex">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:DatumType
+        Properties: base c:DatumType
+        The complex complex type shall be the “xsi:type” for any element of type c:DatumType that will contain complex numbers (i.e., with real and imaginary components).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:DatumType">
+        <xs:attribute name="real" type="xs:double" use="required">
+          <xs:annotation>
+            <xs:documentation>The real part of the complex value.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="imaginary" type="xs:double" use="required">
+          <xs:annotation>
+            <xs:documentation>The imaginary part of the complex value.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="complexArray">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:IndexedArrayType
+        Properties: base c:IndexedArrayType
+        The complexArray complex type shall be the base type of any XML schema element that will contain an array of complex numbers (i.e., with real and imaginary components).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:IndexedArrayType">
+        <xs:sequence>
+          <xs:element name="DefaultElementValue" type="c:complex" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:complex
+                Properties: isRef 0, content complex
+                The complexArray/DefaultElementValue child element shall contain the default value of the complex array element.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Element" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: Extension of c:complex
+                Properties: isRef 0, content complex
+                The complexArray/Element child element shall contain the value of the complex array element.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension base="c:complex">
+                  <xs:attribute name="position" type="c:ArrayIndexor" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The element value’s index within the array.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="dateTime">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:DatumType
+        Properties: base c:DatumType
+        The dateTime complex type shall be the “xsi:type” of any XML schema element of c:DatumType that contains a date-time value.
+        The specific format for dateTime data shall follow the ISO 8601 [B43] variable-length character form: [YYYY]-[MM]-[DD]T[hh:mm:ss(.s)][TZD], where .s represents optional fractional seconds and TZD must be Z or +hh:mm or -hh:mm. By default, all dateTime elements are assumed to represent coordinated universal time (UTC). If a different time zone is represented by the literal value of the data element, the specific UTC offset must be appended to the literal. For example, 2009-07-08T12:00:00+05:00 is 2009-07-08T07:00:00Z.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:DatumType">
+        <xs:attribute name="value" type="xs:dateTime" use="required">
+          <xs:annotation>
+            <xs:documentation>The dateTime value as described.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="dateTimeArray">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:IndexedArrayType
+        Properties: base c:IndexedArrayType
+        The dateTimeArray complex type shall be the “xsi:type” of any element of type c:IndexedArrayType that contains an array of date-time values.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:IndexedArrayType">
+        <xs:sequence>
+          <xs:element name="DefaultElementValue" type="c:dateTime" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:dateTime
+                Properties: isRef 0, content complex
+                The dateTimeArray/DefaultElementValue child element shall contain the default date and time value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Element" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: Extension of c:dateTime
+                Properties: isRef 0, content complex
+                The dateTimeArray/Element child element shall contain the date and time value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension base="c:dateTime">
+                  <xs:attribute name="position" type="c:ArrayIndexor" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The element value’s index within the array.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DatumType" abstract="true">
+    <xs:annotation>
+      <xs:documentation>
+        Properties: abstract True
+        The DatumType complex type shall be the base type for XML schema elements that contain a numeric, boolean, string, or a date-time data value, each with an optional unit.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:group ref="c:DatumQuality"/>
+    <xs:attributeGroup ref="c:UnitAttributes"/>
+  </xs:complexType>
+  <xs:complexType name="double">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:DatumType
+        Properties: base c:DatumType
+        The double complex type shall be the base type for any XML schema element, including elements of type c:DatumType, that contains a numeric value that corresponds to the IEEE 754 double precision 64-bit floating point type.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:DatumType">
+        <xs:attribute name="value" type="xs:double" use="required">
+          <xs:annotation>
+            <xs:documentation>The numeric value of the element.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="doubleArray">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:IndexedArrayType
+        Properties: base c:IndexedArrayType
+        The doubleArray complex type shall be the “xsi:type” of any element of type c:IndexedArrayType that contains an array of numeric values that correspond to the IEEE 754 double precision 64-bit floating point type.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:IndexedArrayType">
+        <xs:sequence>
+          <xs:element name="DefaultElementValue" type="c:double" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:double
+                Properties: isRef 0, content complex
+                The doubleArray/DefaultElementValue child element shall contain the default double precision 64-bit floating point value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Element" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: Extension of c:double
+                Properties: isRef 0, content complex
+                The doubleArray/Element child element shall contain the double precision 64-bit floating point value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension base="c:double">
+                  <xs:attribute name="position" type="c:ArrayIndexor" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The element value’s index within the array.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="hexadecimal">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:DatumType
+        Properties: base c:DatumType
+        The hexadecimal complex type shall be the “xsi:type” of any element of type c:DatumType that contains a hex-encoded binary value.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:DatumType">
+        <xs:attribute name="value" type="c:HexValue" use="required">
+          <xs:annotation>
+            <xs:documentation>The numeric value of the element. Hexadecimal digits shall be formatted as 0x followed by a finite-length sequence of characters 0–9 and a–f. Letters may be either lowercase or uppercase.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="hexadecimalArray">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:IndexedArrayType
+        Properties: base c:IndexedArrayType
+        The hexadecimalArray complex type shall be the “xsi:type” of any element of type c:IndexedArrayType that contains an array of hex-encoded binary values.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:IndexedArrayType">
+        <xs:sequence>
+          <xs:element name="DefaultElementValue" type="c:hexadecimal" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:hexadecimal
+                Properties: isRef 0, content complex
+                The hexadecimalArray/DefaultElementValue child element shall contain the default hexadecimal value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Element" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: Extension of c:hexadecimal
+                Properties: isRef 0, content complex
+                The hexadecimalArray/Element child element shall contain the hexadecimal value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension base="c:hexadecimal">
+                  <xs:attribute name="position" type="c:ArrayIndexor" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The element value’s index within the array.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="IndexedArrayType" abstract="true">
+    <xs:annotation>
+      <xs:documentation>
+        Properties: abstract true
+        The IndexedArrayType complex type shall be the base type for any XML schema element that will contain an array of numeric, boolean, string, or date-time data values, or an array of collections, with an optional unit. The array may be sparse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:group ref="c:DatumQuality"/>
+    <xs:attributeGroup ref="c:UnitAttributes"/>
+    <xs:attribute name="dimensions" type="c:ArrayIndexor" use="required">
+      <xs:annotation>
+        <xs:documentation>A string designating an n-dimensional array index or array dimension, with the format [a,b,c,…,n], where a,b,c,…n are numeric indices. Example: [3,4] specifies a 3by4 two-dimensional array.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="integer">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:DatumType
+        Properties: base c:DatumType
+        The integer complex type shall be the “xsi:type” for elements of type c:DatumType that contain a 32-bit signed integer value.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:DatumType">
+        <xs:attribute name="value" type="xs:int" use="required">
+          <xs:annotation>
+            <xs:documentation>The numeric value of the element, between +2 147 483 647 and -2 147 483 648 (inclusive).</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="integerArray">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:IndexedArrayType
+        Properties: base c:IndexedArrayType
+        The integerArray complex type shall be the “xsi:type” of any element(s) of type c:IndexedArrayType that contain an array of 32-bit signed integer values.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:IndexedArrayType">
+        <xs:sequence>
+          <xs:element name="DefaultElementValue" type="c:integer" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:integer
+                Properties: isRef 0, content complex
+                The integerArray/DefaultElementValue child element shall contain the default integer value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Element" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: Extension of c:integer
+                Properties: isRef 0, content complex
+                The integerArray/Element child element shall contain the integer value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension base="c:integer">
+                  <xs:attribute name="position" type="c:ArrayIndexor" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The element value’s index within the array.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="long">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:DatumType
+        Properties: base c:DatumType
+        The long complex type shall be the “xsi:type” for elements of type c:DatumType that contain a 64-bit signed integer value.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:DatumType">
+        <xs:attribute name="value" type="xs:long" use="required">
+          <xs:annotation>
+            <xs:documentation>The numeric value, between +9 223 372 036 854 755 807 and -9 223 372 036 854 755 808 (inclusive).</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="longArray">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:IndexedArrayType
+        Properties: base c:IndexedArrayType
+        The longArray complex type shall be the “xsi:type” for elements of type c:IndexedArrayType that contain an array of 32-bit signed integer value.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:IndexedArrayType">
+        <xs:sequence>
+          <xs:element name="DefaultElementValue" type="c:long" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:long
+                Properties: isRef 0, content complex
+                The longArray/DefaultElementValue child element shall contain the default integer value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Element" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: Extension of c:long
+                Properties: isRef 0, content complex
+                The longArray/Element child element shall contain the integer value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension base="c:long">
+                  <xs:attribute name="position" type="c:ArrayIndexor" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The element value’s index within the array.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="octal">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:DatumType
+        Properties: base c:DatumType
+        The octal complex type shall be the base type for any XML schema elements of type c:DatumType that contain an octal-encoded binary value.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:DatumType">
+        <xs:attribute name="value" use="required">
+          <xs:annotation>
+            <xs:documentation>The octal representation of the numeric value. The attribute shall contain the character 0 followed by a finite-length sequence of characters 0–7.</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="(0)([0-7])*"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="octalArray">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:IndexedArrayType
+        Properties: base c:IndexedArrayType
+        The octalArray complex type shall be the “xsi:type” of any element of type c:IndexedArrayType that contains an array of octal-encoded binary values.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:IndexedArrayType">
+        <xs:sequence>
+          <xs:element name="DefaultElementValue" type="c:octal" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:octal
+                Properties: isRef 0, content complex
+                The octalArray/DefaultElementValue child element shall contain the default octal value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Element" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: Extension of c:octal
+                Properties: isRef 0, content complex
+                The octalArray/Element child element shall contain the octal value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension base="c:octal">
+                  <xs:attribute name="position" type="c:ArrayIndexor" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The element value’s index within the array.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="string">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:DatumType
+        Properties: base c:DatumType
+        The string complex type shall be the “xsi:type” of any attribute or an element of type c:DatumType that contains a string value.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:DatumType">
+        <xs:sequence>
+          <xs:element name="Value" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: xs:string
+                Properties: isRef 0, content simple
+                The string/Value child element shall contain the value of a string.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="stringArray">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:IndexedArrayType
+        Properties: base c:IndexedArrayType
+        The stringArray complex type shall be the “xsi:type” of any element of type c:IndexedArrayType that contains an array of string values.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:IndexedArrayType">
+        <xs:sequence>
+          <xs:element name="DefaultElementValue" type="c:string" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:string
+                Properties: isRef 0, content complex
+                The stringArray/DefaultElementValue child element shall contain the default string value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Element" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: Extension of c:string
+                Properties: isRef 0, content complex
+                The stringArray/Element child element shall contain the string value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension base="c:string">
+                  <xs:attribute name="position" type="c:ArrayIndexor" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The element value’s index within the array.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="unsignedInteger">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:DatumType
+        Properties: base c:DatumType
+        The unsignedInteger complex type shall be the “xsi:type” for elements of type c:DatumType that contain a 32-bit unsigned integer value.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:DatumType">
+        <xs:attribute name="value" type="xs:unsignedInt" use="required">
+          <xs:annotation>
+            <xs:documentation>The numeric value, between 0 and 4 294 967 295 (inclusive).</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="unsignedIntegerArray">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:IndexedArrayType
+        Properties: base c:IndexedArrayType
+        The unsignedIntegerArray complex type shall be the “xsi:type” of any element of type c:IndexedArrayType that contains an array of unsigned integer values.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:IndexedArrayType">
+        <xs:sequence>
+          <xs:element name="DefaultElementValue" type="c:unsignedInteger" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:unsignedInteger
+                Properties: isRef 0, content complex
+                The unsignedIntegerArray/DefaultElementValue child element shall contain the default unsigned integer value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Element" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: Extension of c:unsignedInteger
+                Properties: isRef 0, content complex
+                The unsignedIntegerArray/Element child element shall contain the unsigned integer value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension base="c:unsignedInteger">
+                  <xs:attribute name="position" type="c:ArrayIndexor" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The element value’s index within the array.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="unsignedLong">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:DatumType
+        Properties: base c:DatumType
+        The unsignedLong complex type shall be the “xsi:type” for elements of type c:DatumType that contain a 64-bit unsigned integer value.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:DatumType">
+        <xs:attribute name="value" type="xs:unsignedLong" use="required">
+          <xs:annotation>
+            <xs:documentation>The numeric value, between 0 and 18 466 744 073 709 551 615 (inclusive).</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="unsignedLongArray">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:IndexedArrayType
+        Properties: base c:IndexedArrayType
+        The unsignedLongArray complex type shall be the “xsi:type” for elements of type c:IndexedArrayType that contain an array of 32-bit unsigned integer values.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:IndexedArrayType">
+        <xs:sequence>
+          <xs:element name="DefaultElementValue" type="c:unsignedLong" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:unsignedLong
+                Properties: isRef 0, content complex
+                The unsignedLongArray/DefaultElementValue child element shall contain the default integer value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Element" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: Extension of c:unsignedLong
+                Properties: isRef 0, content complex
+                The unsignedLongArray/Element child element shall contain the integer value of the array element.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension base="c:unsignedLong">
+                  <xs:attribute name="position" type="c:ArrayIndexor" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The element value’s index within the array.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Connector">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:ItemDescription
+        Properties: base c:ItemDescription
+        The Connector complex type shall be the base type of any XML schema element that will contain connector information.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:ItemDescription">
+        <xs:sequence>
+          <xs:element name="Pins" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The Connector/Pins child element shall contain descriptive information for each of the pins in the connector.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Pin" type="c:ConnectorPin" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: c:ConnectorPin
+                      Properties: isRef 0, content complex
+                      The Connector/Pins/Pin child element shall contain descriptive information of a particular pin in the connector.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="ID" type="c:NonBlankString" use="required">
+          <xs:annotation>
+            <xs:documentation>A user-defined string uniquely identifying the connector. Example: J1.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="location" use="required">
+          <xs:annotation>
+            <xs:documentation>A descriptive or common name of where the connector is located. Example: Front Panel.</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Front"/>
+              <xs:enumeration value="Back"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="type" type="c:NonBlankString" use="required">
+          <xs:annotation>
+            <xs:documentation>A descriptive or common name for the type of connector. Example: MIL-C-38999.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="matingConnectorType" type="c:NonBlankString" use="optional">
+          <xs:annotation>
+            <xs:documentation>A descriptive or common name for the mating connector. Example: The mating connector for a 15-pin d-shell connector (male) is a 15-pin d-shell connector (female).</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ConnectorLocation">
+    <xs:annotation>
+      <xs:documentation>
+        The ConnectorLocation complex type shall be the base type of any XML schema element that will contain information associated with the location of an electrical connector.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="connectorID" type="c:NonBlankString" use="required">
+      <xs:annotation>
+        <xs:documentation>A user-defined string uniquely identifying the connector.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="pinID" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>A user-defined string uniquely identifying the pin within the connector.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="ConnectorPin">
+    <xs:annotation>
+      <xs:documentation>
+        Properties: isRef 0, content complex
+        The ConnectorPin complex type shall be the base type of any XML schema element that will contain connector pin information.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Definition" type="c:ItemDescription" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:ItemDescription
+            Properties: isRef 0, content complex
+            The ConnectorPin/Definition child element shall define a particular pin in the connector.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="ID" type="c:NonBlankString" use="required">
+      <xs:annotation>
+        <xs:documentation>A user-defined string uniquely identifying the connector pin.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="name" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common name for the connector pin.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attributeGroup ref="c:RepeatedItemAttributes"/>
+  </xs:complexType>
+  <xs:complexType name="Document">
+    <xs:annotation>
+      <xs:documentation>
+        The Document complex type shall be the base type for any XML schema element that will capture identification information for a document. This information may be in the form of a universal unique identifier (UUID) and the name of the document, a universal resource locator (URL), or the contents of the document. For documents that consist only of short strings, the Text element may be used to capture the entire contents of the document.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0">
+        <xs:element name="URL" type="c:NonBlankURI">
+          <xs:annotation>
+            <xs:documentation>
+              Base type: c:NonBlankURI
+              Properties: isRef 0, content simple
+              Facets: minLength 1
+              The Document/URL child element shall contain the URL of the Web site where the document is located.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Text" type="c:NonBlankString">
+          <xs:annotation>
+            <xs:documentation>
+              Base type: c:NonBlankString
+              Properties: isRef 0, content simple
+              Facets: minLength 1, whiteSpace replace
+              The Document/Text child element shall contain the actual text of the document.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="Extension" type="c:Extension" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Extension
+            Properties: isRef 0, content complex
+            The Document/Extension child element shall provide a specific extension point for use cases that require elements not provided in the basic structure.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="uuid" type="c:Uuid" use="required">
+      <xs:annotation>
+        <xs:documentation>The universal unique identifier for the document.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="name" type="c:NonBlankString" use="required">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common name for the document</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="controlNumber" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>A unique identifier for the document.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="version" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>The version identification of the document.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="DocumentList">
+    <xs:annotation>
+      <xs:documentation>
+        The DocumentList complex type shall be the base type for any XML schema element that will identify one or more documents.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Document" type="c:Document" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            The DocumentList/Document child element shall capture identification information for a document. This information may be in the form of a UUID and the name of the document, a URL, or the contents of the document.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentReference">
+    <xs:annotation>
+      <xs:documentation>
+        The DocumentReference complex type shall be the base type for any XML schema element that will identify an external document.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="ID" type="c:NonBlankString" use="required">
+      <xs:annotation>
+        <xs:documentation>A user-defined string uniquely identifying the document.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="uuid" type="c:Uuid" use="required">
+      <xs:annotation>
+        <xs:documentation>The universal unique identifier for the document.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="EnvironmentalElements">
+    <xs:annotation>
+      <xs:documentation>
+        The EnvironmentalElements complex type shall be the base type for any XML schema element that requires the statement of environmental specifications or values.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Altitude" type="c:Limit" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Limit
+            Properties: isRef 0, content complex
+            The EnvironmentalElements/Altitude child element shall contain an altitude value.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Humidity" type="c:Limit" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Limit
+            Properties: isRef 0, content complex
+            The EnvironmentalElements/Humidity child element shall contain the relative humidity value.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Shock" type="c:Limit" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Limit
+            Properties: isRef 0, content complex
+            The EnvironmentalElements/Shock child element shall contain the physical shock value.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Temperature" type="c:Limit" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Limit
+            Properties: isRef 0, content complex
+            The EnvironmentalElements/Temperature child element shall contain the temperature value.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Vibration" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The EnvironmentalElements/Vibration child element shall contain the physical vibration value.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Frequency" type="c:Limit" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:Limit
+                  Properties: isRef 0, content complex
+                  The EnvironmentalElements/Vibration/Frequency child element shall contain the natural resonance frequency value.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Displacement" type="c:Limit" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:Limit
+                  Properties: isRef 0, content complex
+                  The EnvironmentalElements/Vibration/Displacement child element shall contain the displacement (the amplitude of a point on the item) value.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Velocity" type="c:Limit" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:Limit
+                  Properties: isRef 0, content complex
+                  The EnvironmentalElements/Vibration/Velocity child element shall contain the acceleration (rate of change of velocity of a point in an item) value.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EnvironmentalRequirements">
+    <xs:annotation>
+      <xs:documentation>
+        The EnvironmentalRequirements complex type shall be the base type for any XML schema element that requires the statement of operational and/or of storage and transport environmental requirements. Typically, this element would be used as part of a XML schema describing hardware.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Operation" type="c:EnvironmentalElements" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:EnvironmentalElements
+            Properties: isRef 0, content complex
+            The EnvironmentalRequirements/Operation child element shall contain operational environmental requirements.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StorageTransport" type="c:EnvironmentalElements" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:EnvironmentalElements
+            Properties: isRef 0, content complex
+            The EnvironmentalRequirements/StorageTransport child element shall contain storage or transport environmental requirements.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Extension" final="#all">
+    <xs:annotation>
+      <xs:documentation>
+        Properties: final #all
+        The Extension complex type is provided for the convenience of XML schema developers. The Extension type shall be used only as the base type of extension elements in XML schemas. Such elements are provided to permit implementers to extend a XML schema as required to meet the unique needs of their use case. Use follows the W3C standard XML extension mechanism.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:any namespace="##other" processContents="lax" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HardwareInstance">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:ItemInstance
+        Properties: base c:ItemInstance
+        The HardwareInstance complex type shall be the base type for any XML schema element that is intended to capture data describing or identifying a specific instance of physical hardware.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:ItemInstance">
+        <xs:sequence>
+          <xs:element name="ManufactureDate" type="xs:dateTime" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: xs:dateTime
+                Properties: isRef 0, content simple
+                The HardwareInstance/ManufactureDate child element shall identify the date the hardware item was manufactured.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Calibration" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The HardwareInstance/Calibration child element shall contain the date and time the hardware item was last calibrated.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:attribute name="time" type="xs:dateTime" use="required">
+                <xs:annotation>
+                  <xs:documentation>The date and time value.</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Components" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The HardwareInstance/Components child element shall identify the next-lower assembly belonging to the parent hardware item.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Component" type="c:ItemInstanceReference" maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Base type: c:ItemInstanceReference
+                      Properties: isRef 0, content complex
+                      The HardwareInstance/Components/Component child element shall identify each next-lower assembly belonging to the parent hardware item.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="ParentComponent" type="c:HardwareInstance" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:HardwareInstance
+                Properties: isRef 0, content complex
+                The HardwareInstance/ParentComponent child element shall identify the next-higher assembly to which the parent hardware item belongs.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PowerOn" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Properties: isRef 0, content complex
+                The HardwareInstance/PowerOn child element shall indicate the number of power-on cycles and the total power-on time experienced by the hardware item at the time of creation of the XML instance document.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:attribute name="count" type="xs:int" use="required">
+                <xs:annotation>
+                  <xs:documentation>The number of power-on cycles.</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+              <xs:attribute name="time" type="xs:duration" use="required">
+                <xs:annotation>
+                  <xs:documentation>The total power-on time.</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="IdentificationNumber">
+    <xs:annotation>
+      <xs:documentation>
+        The IdentificationNumber complex type shall be the base type of any XML schema element that will contain entity identification (such as hardware part number).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="number" type="c:NonBlankString" use="required">
+      <xs:annotation>
+        <xs:documentation>The part number of the entity.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="type" use="required">
+      <xs:annotation>
+        <xs:documentation>An indication of whether this is a part number, model number, or other.</xs:documentation>
+      </xs:annotation>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Part"/>
+          <xs:enumeration value="Model"/>
+          <xs:enumeration value="Other"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="ItemDescription">
+    <xs:annotation>
+      <xs:documentation>
+        The ItemDescription complex type shall be the base type for any XML schema element that is intended to contain descriptive and identification information for any entity.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Description" type="c:NonBlankString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The ItemDescription/Description child element shall contain a free-form textual description of the item described.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Identification">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The ItemDescription/Identification child element shall identify a class of the described item.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:all>
+            <xs:element name="Version" type="c:NonBlankString" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:NonBlankString
+                  Properties: isRef 0, content simple
+                  Facets: minLength 1, whiteSpace replace
+                  The ItemDescription/Identification/Version child element shall contain a textual description of the version of the item.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="ModelName" type="c:NonBlankString">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:NonBlankString
+                  Properties: isRef 0, content simple
+                  Facets: minLength 1, whiteSpace replace
+                  The ItemDescription/Identification/ModelName child element shall contain the model name of the item.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="IdentificationNumbers" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Properties: isRef 0, content complex
+                  The ItemDescription/Identification/IdentificationNumbers child element shall be a collector for an unbounded set of IdentificationNumber or ManufacturerIdentificationNumber child elements. This element identifies multiple part or model numbers for the described item (such as a user and/or manufacturer part number).
+                </xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:choice maxOccurs="unbounded">
+                  <xs:element name="IdentificationNumber" type="c:UserDefinedIdentificationNumber">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Base type: c:UserDefinedIdentificationNumber
+                        Properties: isRef 0, content complex
+                        The ItemDescription/Identification/IdentificationNumbers/IdentificationNumber child element shall provide for multiple end-user-assigned part or model numbers for the described item.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="ManufacturerIdentificationNumber" type="c:ManufacturerIdentificationNumber">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Base type: c:ManufacturerIdentificationNumber
+                        Properties: isRef 0, content complex
+                        The ItemDescription/Identification/IdentificationNumbers/ManufacturerIdentificationNumber child element shall provide for multiple manufacturers’ assigned part or model numbers, which are not the end-users’ assigned part number, for the described item.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="Manufacturers" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Properties: isRef 0, content complex
+                  The ItemDescription/Identification/Manufacturers child element shall identify the manufacturers of the item.
+                </xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Manufacturer" type="c:ManufacturerData" maxOccurs="unbounded">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Base type: c:ManufacturerData
+                        Properties: isRef 0, content complex
+                        The ItemDescription/Identification/Manufacturers/Manufacturer child element shall identify the manufacturer of the item.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="Extension" type="c:Extension" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:Extension
+                  Properties: isRef 0, content complex
+                  The ItemDescription/Identification/Extension child element shall provide a specific extension point for use cases that require elements not provided in the basic structure.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:all>
+          <xs:attribute name="designator" type="c:NonBlankString" use="optional">
+            <xs:annotation>
+              <xs:documentation>An alphanumeric string that identifies an item within a larger assembly. For example, a reference designator such as A25 to indicate a circuit card number.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Extension" type="c:Extension" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Extension
+            Properties: isRef 0, content complex
+            The ItemDescription/Extension child element shall provide a specific extension point for use cases that require elements not provided in the basic structure.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="version" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>A string designating the version of the described item.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="name" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common name for the described item.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="ItemDescriptionReference">
+    <xs:annotation>
+      <xs:documentation>
+        The ItemDescriptionReference complex type shall be the base type for any XML schema element that requires element(s) referencing c:ItemDescription element(s).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:choice minOccurs="0">
+      <xs:element name="DescriptionDocumentReference" type="c:DocumentReference">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:DocumentReference
+            Properties: isRef 0, content complex
+            The ItemDescriptionReference/DescriptionDocumentReference child element shall identify the UUID corresponding to the specific instance document.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Definition" type="c:ItemDescription">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:ItemDescription
+            Properties: isRef 0, content complex
+            The ItemDescriptionReference/Definition child element shall uniquely identify a specific description of an item.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="Interface">
+    <xs:annotation>
+      <xs:documentation>
+        The Interface complex type shall be the base type for any XML schema element that describes electrical interfaces to a device.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Ports">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The Interface/Ports child element shall serve as a collector element of an unbounded set of c:Port elements.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Port" type="c:Port" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:Port
+                  Properties: isRef 0, content complex
+                  The Interface/Ports/Port child element shall contain the name of the depicted port.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ItemInstance">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:ItemDescriptionReference
+        Properties: base c:ItemDescriptionReference
+        The ItemInstance complex type shall be the base type for any XML schema element that is intended to capture identification information specifying a single instance of an item.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:ItemDescriptionReference">
+        <xs:sequence>
+          <xs:element name="SerialNumber" type="c:NonBlankString">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:NonBlankString
+                Properties: isRef 0, content simple
+                Facets: minLength 1, whiteSpace replace
+                The ItemInstance/SerialNumber child element shall uniquely identify a specific instance of an item.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ItemInstanceReference">
+    <xs:annotation>
+      <xs:documentation>
+        The ItemInstanceReference complex type shall be the base type for any XML schema element that requires an element to reference a c:ItemInstance that has no serial number.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="InstanceDocumentReference" type="c:DocumentReference">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:DocumentReference
+            Properties: isRef 0, content complex
+            The ItemInstanceReference/InstanceDocumentReference child element shall identify the UUID corresponding to the specific instance document.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Definition" type="c:ItemInstance">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:ItemInstance
+            Properties: isRef 0, content complex
+            The ItemInstanceReference/Definition child element shall uniquely identify a specific instance of an item.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="LimitPair">
+    <xs:annotation>
+      <xs:documentation>
+        The LimitPair complex type shall be the base type for any element that captures paired boundary condition data used in a comparison or evaluation.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Limit" type="c:SingleLimit" minOccurs="2" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:SingleLimit
+            Properties: isRef 0, content complex
+            The LimitPair/Limit child element shall contain two (and only two) limit values.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Nominal" type="c:Value" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Value
+            Properties: isRef 0, content complex
+            The LimitPair/Nominal child element shall contain the expected or preferred value to be captured.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="operator" type="c:LogicalOperator" use="required">
+      <xs:annotation>
+        <xs:documentation>The comparison with the two boundary limits may be for a value between the limits or outside the limits. The LogicalOperator AND explicitly indicates a between comparison; OR explicitly indicates an outside comparison. Example: GT 3 AND LT 7 (between) vs. GT 10 OR LT 3 (outside). While the logical operator may be inferred from the combination of limit values and comparison types, the LogicalOperator attribute permits better definition and less possibility for misinterpretation.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="name" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common name for the limit pair expressed in the element.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="LimitExpected">
+    <xs:annotation>
+      <xs:documentation>
+        The LimitExpected complex type shall be the base type for any XML schema element that requires identification of the desired or expected value that will be used for the purposes of limit comparison.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:Value">
+        <xs:attribute name="comparator" type="c:EqualityComparisonOperator" use="required">
+          <xs:annotation>
+            <xs:documentation>The comparison logic to be applied to the limit. Examples: EQ or NE.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LimitMask">
+    <xs:annotation>
+      <xs:documentation>
+        The LimitMask complex type shall be the base type for any XML schema element that requires identification of a numeric mask value.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Expected" type="c:Value">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Value
+            Properties: isRef 0, content complex
+            The LimitMask/Expected child element shall contain the expected pattern.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MaskValue" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: Extension of c:Value
+            Properties: isRef 0, content complex
+            The LimitMask/MaskValue child element shall contain the mask pattern.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="c:Value">
+              <xs:attribute name="name" type="c:NonBlankString" use="optional">
+                <xs:annotation>
+                  <xs:documentation>A descriptive or common name for the limit.</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+              <xs:attribute name="operation" type="c:MaskOperator" use="required">
+                <xs:annotation>
+                  <xs:documentation>The logical operation that is to be applied (AND, OR, or XOR) to the mask and the value.</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Limit">
+    <xs:annotation>
+      <xs:documentation>
+        The Limit complex type shall be the base type for any element that contains limit data where such data are a comparison to a single value. The datatypes must be consistent for the purposes of comparison, e.g., should a limit be represented as a string, then strings shall be used through the entire limit description so that strings can be compared to strings.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="Expected" type="c:LimitExpected">
+          <xs:annotation>
+            <xs:documentation>
+              Base type: c:LimitExpected
+              Properties: isRef 0, content complex
+              The Limit/Expected child element shall identify the desired or expected value that will be used for the purposes of limit comparison.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="SingleLimit" type="c:SingleLimit">
+          <xs:annotation>
+            <xs:documentation>
+              Base type: c:SingleLimit
+              Properties: isRef 0, content complex
+              The Limit/SingleLimit child element shall contain the value being used for the purposes of limit comparison.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="LimitPair" type="c:LimitPair">
+          <xs:annotation>
+            <xs:documentation>
+              Base type: c:LimitPair
+              Properties: isRef 0, content complex
+              The Limit/LimitPair child element shall contain the pair of limit values for the use cases where the limit is bounded by a pair of values.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Mask" type="c:LimitMask">
+          <xs:annotation>
+            <xs:documentation>
+              Base type: c:LimitMask
+              Properties: isRef 0, content complex
+              The Limit/Mask child element shall contain the numeric mask value.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="Description" type="c:NonBlankString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The Limit/Description child element shall contain a textual description of the limit being described.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Extension" type="c:Extension" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Extension
+            Properties: isRef 0, content complex
+            The Limit/Extension child element shall provide a specific extension point for use cases that require elements not provided in the basic structure.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="operator" type="c:LogicalOperator" use="optional">
+      <xs:annotation>
+        <xs:documentation>The comparison with the two boundary limits may be for a value between the limits or outside the limits. The LogicalOperator AND explicitly indicates a between comparison; OR explicitly indicates an outside comparison. Example: GT 3 AND LT 7 (between) vs. GT 10 OR LT 3 or GT 5 OR GT 10 (outside). While the logical operator may be inferred from the combination of limit values and comparison types, the c:LogicalOperator attribute permits better definition and less possibility for misinterpretation.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="name" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common name for the limit expressed in the element.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="MailingAddress">
+    <xs:annotation>
+      <xs:documentation>
+        The MailingAddress complex type shall be the base type for any XML schema element that will contain a street or mailing address. An example is the mailing address information for a manufacturer.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Address1" type="c:NonBlankString">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The MailingAddress/Address1 child element shall contain a textual description of the physical street address.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address2" type="c:NonBlankString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The MailingAddress/Address2 child element shall contain a textual description of additional street address information (e.g., suite number, mail stop) that shall be associated with c:MailingAddress/Address1.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="City" type="c:NonBlankString">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The MailingAddress/City child element shall contain a textual description of the city that shall be associated with c:MailingAddress/Address1.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="State" type="c:NonBlankString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The MailingAddress/State child element shall contain the U.S. state (Examples: Florida and Hawaii) typically appended to an U.S. postal address.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Country" type="c:NonBlankString">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The MailingAddress/Country child element shall contain a textual description of the territory occupied by a nation.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PostalCode" type="c:NonBlankString">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The MailingAddress/PostalCode child element shall contain a series of letters and/or digits typically appended to the postal address for the purposes of sorting mail (Example: U.S. Postal Service ZIP code).
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ManufacturerData">
+    <xs:annotation>
+      <xs:documentation>
+        The ManufacturerData complex type shall be the base type for any XML schema element that is intended to contain information identifying the manufacturer of an item.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="Contacts" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The ManufacturerData/Contacts child element shall be a collector for an unbounded set of child ManufacturerData/Contacts/Contact elements.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Contact" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  Properties: isRef 0, content complex
+                  The ManufacturerData/Contacts/Contact child element shall identify the contact’s email address, name, and telephone number.
+                </xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="name" type="c:NonBlankString" use="required">
+                  <xs:annotation>
+                    <xs:documentation>The contact’s given name. </xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="email" type="c:NonBlankString" use="optional">
+                  <xs:annotation>
+                    <xs:documentation>The email address for the contact.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="phoneNumber" type="c:NonBlankString" use="optional">
+                  <xs:annotation>
+                    <xs:documentation>The contact’s telephone number. </xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="FaxNumber" type="c:NonBlankString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The ManufacturerData/FaxNumber child element shall contain a textual representation of the facsimile telephone number of the manufacturer of the item.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MailingAddress" type="c:MailingAddress" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:MailingAddress
+            Properties: isRef 0, content complex
+            The ManufacturerData/MailingAddress child element shall contain a textual representation of the postal mailing address of the manufacturer of the item.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="URL" type="c:NonBlankURI" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankURI
+            Properties: isRef 0, content simple
+            Facets: minLength 1
+            The ManufacturerData/URL child element shall contain the URL of the Web site for the manufacturer of the items.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:all>
+    <xs:attribute name="name" type="c:NonBlankString" use="required">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common name for the manufacturer.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="cageCode" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>The commercial and government entity (CAGE) code for the company indicated by the name attribute.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="ManufacturerIdentificationNumber">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:IdentificationNumber
+        Properties: base c:IdentificationNumber
+        The ManufacturerIdentificationNumber complex type shall be the base type for any XML schema element that will identify the manufacturer of an item.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:IdentificationNumber">
+        <xs:attribute name="manufacturerName" type="c:NonBlankString" use="required">
+          <xs:annotation>
+            <xs:documentation>A descriptive or common name for the manufacturer.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="NamedValue">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:Value
+        Properties: base c:Value
+        The NamedValue complex type shall be the base type for any XML schema element that will contain a data value with which a textual name must be associated.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:Value">
+        <xs:attribute name="name" type="c:NonBlankString" use="required">
+          <xs:annotation>
+            <xs:documentation>A descriptive or common name for the subject data value.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Operator">
+    <xs:annotation>
+      <xs:documentation>
+        The Operator complex type shall be the base type for any XML schema element that contains identifying information for the human operator of an ATE or other test equipment.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OtherData" type="c:NamedValue" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NamedValue
+            Properties: isRef 0, content complex
+            The Operator/OtherData child element shall contain information associated with the subject operator beyond that provided for in the parent element attributes.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="ID" type="c:NonBlankString" use="required">
+      <xs:annotation>
+        <xs:documentation>A user-defined string uniquely identifying the contact.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="name" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common name for the operator.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="Organization">
+    <xs:annotation>
+      <xs:documentation>
+        The Organization complex type shall be the base type for any XML schema element that contains identifying information for an organization or entity.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="Address" type="c:MailingAddress" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:MailingAddress
+            Properties: isRef 0, content complex
+            The Organization/Address child element shall contain the mailing address of the manufacturer.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Contacts" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The Organization/Contacts child element shall contain the contact information for the manufacturer of the item. This includes e-mail addresses and phone numbers.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Contact" type="c:Person" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:Person
+                  Properties: isRef 0, content complex
+                  The Organization/Contacts/Contact child element shall be a container of contact information.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="FaxNumber" type="c:NonBlankString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The Organization/FaxNumber child element shall contain the facsimile number of the manufacturer.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="URL" type="c:NonBlankURI" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankURI
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The Organization/URL child element shall contain the uniform resource locator of the manufacturer.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WorkCenter" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The Organization/WorkCenter child element shall identify the shop in which information was collected.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="name" type="c:NonBlankString" use="required">
+            <xs:annotation>
+              <xs:documentation>A descriptive or common name for the work center.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:all>
+    <xs:attribute name="name" type="c:NonBlankString" use="required">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common name for the manufacturer.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="cageCode" type="c:NonBlankString" use="optional">
+      <xs:annotation>
+        <xs:documentation>The CAGE code for the company indicated by the name attribute.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="Person">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:Operator
+        Properties: base c:Operator
+        The Person complex type shall be the base type for any XML schema element that contains identifying information for a person.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:Operator">
+        <xs:sequence>
+          <xs:element name="Address" type="c:MailingAddress" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: c:MailingAddress
+                Properties: isRef 0, content complex
+                The Person/Address child element shall identify the mailing address for the person.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="affiliation" type="c:NonBlankString" use="optional">
+          <xs:annotation>
+            <xs:documentation>The organization the person represents.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="email" type="c:NonBlankString" use="optional">
+          <xs:annotation>
+            <xs:documentation>The persons e-mail address.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="phoneNumber" type="c:NonBlankString" use="optional">
+          <xs:annotation>
+            <xs:documentation>The persons telephone number.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PhysicalInterface">
+    <xs:annotation>
+      <xs:documentation>
+        The PhysicalInterface complex type shall be the base type for any XML schema element that contains identifying information for the physical interface of an ATE or other test equipment.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="Ports">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The PhysicalInterface/Ports child element shall be a collector for an unbounded set of child c:Port elements.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Port" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: Extension of c:Port
+                  Properties: isRef 0, content complex
+                  The PhysicalInterface/Ports/Port child element shall identify a physical port of a hardware item.
+                </xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:complexContent>
+                  <xs:extension base="c:Port">
+                    <xs:sequence>
+                      <xs:element name="ConnectorPins" minOccurs="0">
+                        <xs:annotation>
+                          <xs:documentation>
+                            Properties: isRef 0, content complex
+                            The PhysicalInterface/Ports/ConnectorPins child element shall be a collector for an unbounded set of c:ConnectorPin child elements.
+                          </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="ConnectorPin" type="c:ConnectorLocation" maxOccurs="unbounded">
+                              <xs:annotation>
+                                <xs:documentation>
+                                  Base type: c:ConnectorLocation
+                                  Properties: isRef 0, content complex
+                                  The PhysicalInterface/Ports/ConnectorPins/ConnectorPin child element shall identify a physical pin of a connector.
+                                </xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:extension>
+                </xs:complexContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Connectors">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The PhysicalInterface/Connectors child element shall be a collector for an unbounded set of child PhysicalInterface/Connectors/Connector elements.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Connector" type="c:Connector" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  Base type: c:Connector
+                  Properties: isRef 0, content complex
+                  The PhysicalInterface/Connectors/Connector child element shall identify a physical connector of a hardware item.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="Port">
+    <xs:annotation>
+      <xs:documentation>
+        The Port complex type shall be the base type for any XML schema element that contains identifying information for the port of an ATE or other test equipment.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Extension" type="c:Extension" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Extension
+            Properties: isRef 0, content complex
+            The Port/Extension child element shall contain a specific extension point for use cases that require elements not provided in the basic structure.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="c:NonBlankString" use="required">
+      <xs:annotation>
+        <xs:documentation>A descriptive or common name for the port.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="direction" type="c:PortDirection" use="optional">
+      <xs:annotation>
+        <xs:documentation>An enumeration providing for the specification of the direction in which data moves on the described port. Enumeration values are Input, Output, and Bi-Directional.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="type" type="c:PortType" use="optional">
+      <xs:annotation>
+        <xs:documentation>An enumeration providing for the specification of the type of the described port. Enumeration values are Ground, Analog, Digital, Power, Optical, or Software. </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="SingleLimit">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:Value
+        Properties: base c:Value
+        The SingleLimit complex type shall be the base type of any element that will contain a single limit value used in a comparison.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:Value">
+        <xs:attribute name="comparator" type="c:ComparisonOperator" use="required">
+          <xs:annotation>
+            <xs:documentation>A limit describes a boundary. There may be uses cases where comparisons are made with multiple values. In such cases, these multiple value comparisons may be combined with logical AND or OR operators.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SoftwareInstance">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:ItemInstance
+        Properties: base c:ItemInstance
+        The SoftwareInstance complex type shall be the base type for any XML schema element that is intended to capture identification information specifying a single instance of a software item.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:ItemInstance">
+        <xs:sequence>
+          <xs:element name="ReleaseDate" type="xs:date" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Base type: xs:date
+                Properties: isRef 0, content simple
+                The SoftwareInstance/ReleaseDate child element shall contain the actual release date of the referenced software item.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="UserDefinedIdentificationNumber">
+    <xs:annotation>
+      <xs:documentation>
+        Base type: Extension of c:IdentificationNumber
+        Properties: base c:IdentificationNumber
+        The UserDefinedIdentificationNumber complex type shall be the base type for any XML schema element that will identify an item.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="c:IdentificationNumber">
+        <xs:attribute name="qualifier" type="c:NonBlankString" use="required">
+          <xs:annotation>
+            <xs:documentation>An adjective providing additional descriptive data that further specify or identify the ‘number’ attribute. Example: the identification number specified by the user.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Value">
+    <xs:annotation>
+      <xs:documentation>
+        The Value complex type shall be utilized for XML schema elements that contain values (e.g., boolean, numeric, date-time, string, collections, arrays). Different child elements shall be used to represent a single data value, a collection of data values, or an array of data values.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="Datum" type="c:DatumType">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:DatumType
+            Properties: isRef 0, content complex
+            The Value/Datum child element shall contain a single data value (boolean, numeric, date-time, or string).
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Collection" type="c:Collection">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Collection
+            Properties: isRef 0, content complex
+            The Value/Collection child element shall contain a group of data values that constitute a single entity or set.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IndexedArray" type="c:IndexedArrayType">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:IndexedArrayType
+            Properties: isRef 0, content complex
+            The Value/IndexedArray child element shall contain multidimensional arrays of data. This information includes simple name/value pairs as well as more complex matrices.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="WorkOrder">
+    <xs:annotation>
+      <xs:documentation>
+        The WorkOrder complex type shall be utilized for the identification of a work order related to, or authorizing, the testing of the UUT.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="WorkOrderNumber" type="c:NonBlankString">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The WorkOrder/WorkOrderNumber child element shall identify the instance document or collection of information across multiple levels of maintenance.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WorkItemNumber" type="c:NonBlankString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The WorkOrder/WorkItemNumber child element shall identify the instance document or collection of information at a particular level of maintenance.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MaintenanceLevel" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Properties: isRef 0, content complex
+            The WorkOrder/MaintenanceLevel child element shall identify the level of maintenance.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="abbreviation" type="c:NonBlankString" use="required">
+            <xs:annotation>
+              <xs:documentation>The abbreviation for the level of maintenance. Examples: I and D.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="name" type="c:NonBlankString" use="optional">
+            <xs:annotation>
+              <xs:documentation>A descriptive or common name for the level of maintenance. Examples: Intermediate and Depot.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Description" type="c:NonBlankString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:NonBlankString
+            Properties: isRef 0, content simple
+            Facets: minLength 1, whiteSpace replace
+            The WorkOrder/Description child element shall contain the narrative for the work order.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Extension" type="c:Extension" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Extension
+            Properties: isRef 0, content complex
+            The WorkOrder/Extension child element shall provide a specific extension point for use cases that require elements not provided in the basic structure.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:group name="DatumQuality">
+    <xs:annotation>
+      <xs:documentation>
+        The DatumQuality group shall be used by any element that requires the specification of any of the group’s child elements.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Resolution" type="xs:double" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: xs:double
+            Properties: isRef 0, content simple
+            The DatumQuality/Resolution child element shall contain the required resolution.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrorLimits" type="c:Limit" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Limit
+            Properties: isRef 0, content complex
+            The DatumQuality/ErrorLimits child element shall contain the error limits.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Range" type="c:Limit" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: c:Limit
+            Properties: isRef 0, content complex
+            The DatumQuality/Range child element shall contain the range.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Confidence" type="xs:double" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Base type: xs:double
+            Properties: isRef 0, content simple
+            The DatumQuality/Confidence child element shall contain the required confidence.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+</xs:schema>

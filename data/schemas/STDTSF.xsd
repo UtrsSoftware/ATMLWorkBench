@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="urn:IEEE-1641:2010:STDTSF" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.01" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:std="urn:IEEE-1641:2010:STDBSC" xmlns:tsf="urn:IEEE-1641:2010:STDTSF">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+This schema is specified in IEEE Std 1641-20XX, "IEEE Standard for Signal and Test Definition." This schema is a World Wide Web Consortium (W3C) Extensible Markup Language (XML) binding of Annex I Extensible markup language (XML) signal descriptions Clause I.3 TSF XML schema" The purpose of this schema is to provide unique types and attributes for IEEE 1641 schemas.This schema uses the W3C XML Schema definition language as the encoding. This allows for interoperability and the exchange of signal component instances between various systems.This schema shall not be modified but may be included in derivative works. 
+Copyright (c) 2009 Institute of Electrical and Electronics Engineers, Inc. USE AT YOUR OWN RISK
+</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="urn:IEEE-1641:2010:STDBSC" schemaLocation="STDBSC.xsd"/>
+	<xs:import namespace="http://www.w3.org/2001/XMLSchema" schemaLocation="http://www.w3.org/2001/XMLSchema.xsd"/>
+	<xs:complexType name="descriptionType" mixed="true">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:any namespace="##any" processContents="lax" minOccurs="0"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TSFType">
+		<xs:all>
+			<xs:element name="interface">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:annotation>
+							<xs:documentation>Any XMLSchema definition can be used whose element/attribute types map onto a 1641 type</xs:documentation>
+						</xs:annotation>
+            <!--xs:element ref="xs:schema"/-->
+						<!--xs:any namespace="http://www.w3.org/2001/XMLSchema" processContents="strict" maxOccurs="unbounded"/-->
+          </xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="model">
+				<xs:complexType>
+					<xs:annotation>
+						<xs:documentation>Eithe define a Standard URI or a Signal Model</xs:documentation>
+					</xs:annotation>
+					<xs:choice>
+						<xs:element name="standard">
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:anyURI">
+										<xs:attribute name="title" type="xs:string"/>
+										<xs:attribute name="number" type="xs:string"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element ref="std:Signal"/>
+						<!--xs:any namespace="urn:IEEE-1641:2010:STDBSC" processContents="strict" maxOccurs="unbounded"/-->
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="description" type="tsf:descriptionType" minOccurs="0"/>
+		</xs:all>
+		<xs:attribute name="name" type="xs:NCName" use="required"/>
+		<xs:attribute name="uuid" type="tsf:Uuid" use="required"/>
+		<xs:attribute name="couuid" type="tsf:Uuid" use="optional"/>
+		<xs:attribute name="hidden" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="group" type="xs:string" use="optional"/>
+		<xs:anyAttribute namespace="##other" processContents="strict"/>
+		<!--xs:anyAttribute namespace="##other" processContents="lax"/-->
+	</xs:complexType>
+	<xs:simpleType name="Uuid">
+		<xs:annotation>
+			<xs:documentation>Each TSFLibrary and TSF within a document shall have a unique ID; TSFs with the same Uuid are the same TSFs</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString">
+			<xs:pattern value="[A-Fa-f0-9]{32}|(\{|\()?[A-Fa-f0-9]{8}-([A-Fa-f0-9]{4}-){3}[A-Fa-f0-9]{12}(\}|\))?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="TSFLibrary">
+		<xs:annotation>
+			<xs:documentation>TSFLibrary represents the IEEE 1641 intechangeable Signal Model Library</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="description" type="tsf:descriptionType" minOccurs="0"/>
+				<xs:element name="TSF" type="tsf:TSFType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:NCName" use="required"/>
+			<xs:attribute name="uuid" type="tsf:Uuid" use="required"/>
+			<xs:attribute name="version" type="xs:string" use="optional"/>
+			<xs:attribute name="targetNamespace" type="xs:anyURI" use="optional"/>
+			<xs:anyAttribute namespace="##other" processContents="strict"/>
+			<!--xs:anyAttribute namespace="##other" processContents="lax"/-->
+		</xs:complexType>
+		<xs:unique name="Unique_TSF_names">
+			<xs:annotation>
+				<xs:documentation>All TSF Names are Unique with a library</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="*"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+		<xs:unique name="Unique_uuids">
+			<xs:annotation>
+				<xs:documentation>All uuids Unique with a library</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath=".|tsf:*"/>
+			<xs:field xpath="@uuid"/>
+		</xs:unique>
+	</xs:element>
+</xs:schema>

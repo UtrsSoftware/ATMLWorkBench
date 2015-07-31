@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <!-- definition of root element -->
+    <xsd:element name="atlas_ase" type="AtlasSourceExtract" />
+    
+    <!-- definition of attributes -->
+    <xsd:attribute name="tpsname" type="xsd:string" />
+    <xsd:attribute name="tpsfile" type="xsd:string" />
+    <xsd:attribute name="filename" type="xsd:string" />
+    <xsd:attribute name="sourcefile" type="xsd:string" />
+    <xsd:attribute name="lineno" type="xsd:int" />    
+    <xsd:attribute name="testno" type="xsd:string" />
+    <xsd:attribute name="stepno" type="xsd:string" />
+  
+    <!-- definition of simple elements -->
+    <xsd:element name="flag" type="xsd:string" />
+    <xsd:element name="verb" type="xsd:string" />
+    <xsd:element name="remainder" type="xsd:string" />
+    <xsd:element name="source" type="xsd:string" />
+
+    <!-- definition of complex element types -->
+    <xsd:complexType name="ASEStatno">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute ref="testno" />
+                <xsd:attribute ref="stepno" />
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="ASEStatement">
+        <xsd:sequence>
+            <xsd:element ref="flag" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="statno" type="ASEStatno" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="verb" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="remainder" minOccurs="1" maxOccurs="1" />
+            <xsd:element ref="source" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+        <xsd:attribute ref="lineno" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ASEStatements">
+        <xsd:sequence>
+            <xsd:element name="statement" type="ASEStatement" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ASESourcefile">
+        <xsd:sequence>
+            <xsd:element name="statements" type="ASEStatements" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+        <xsd:attribute ref="filename" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ASESourcefiles">
+        <xsd:sequence>
+            <xsd:element name="sourcefile" type="ASESourcefile" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!-- definition of root element type -->
+    <xsd:complexType name="AtlasSourceExtract">
+      <xsd:sequence>
+          <xsd:element name="sourcefiles" type="ASESourcefiles" minOccurs="0" maxOccurs="1" />
+      </xsd:sequence>
+      <xsd:attribute ref="tpsname" />
+      <xsd:attribute ref="tpsfile" />
+    </xsd:complexType>
+</xsd:schema>

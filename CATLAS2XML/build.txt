@@ -1,0 +1,18 @@
+Target Runtime Environment
+   1) Windows XP SP3 or higher.
+
+Build Environment
+   1) Windows XP SP3 or higher.
+   1) Microsoft Visual Studio 2008 Version 9.0.30729.1 SP.
+   2) Microsoft (R) 32-bit C/C++ Optimizing Compiler Version 15.00.30729.01 for 80x86.
+   3) xerces-c-3.1.1 (statically linked).
+
+
+NOTES:
+   1) Change location of xerces header files (currently set to: ..\..\xerces\xerces-c-3.1.1\src)
+   2) Change location of xerces library file (currently set to: ..\aixml\libs\xerces-c_static_3.lib)
+   3) In file atlas_main.cpp, function "main", #define "TEST_CASES" and the include file that is associated with it, contain proprietary test information and is not included. For a successful build, no change is necessary.
+   4) All the C/C++ code was written with portability in mind. Without much effort, it should be possible to port to other build environments. 
+   5) Any MS-Windows APIs are only used for debug build purposes and are #ifdef/#defined within the source code.
+
+

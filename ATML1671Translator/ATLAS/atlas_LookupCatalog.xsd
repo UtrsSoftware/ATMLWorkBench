@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <!-- definition of root element -->
+    <xsd:element name="atlas_lu" type="LookupCatalog" />
+    
+    <!-- definition of attributes -->
+    <xsd:attribute name="tpsname" type="xsd:string" />
+    <xsd:attribute name="tablename" type="xsd:string" />
+    <xsd:attribute name="filename" type="xsd:string" />
+    <xsd:attribute name="subfile" type="xsd:string" />
+  
+    <!-- definition of simple elements -->
+    <xsd:element name="label" type="xsd:string" />
+    <xsd:element name="ssname" type="xsd:string" />
+
+    <!-- definition of complex elements -->
+    <xsd:element name="Lookup">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="label" />
+                <xsd:element ref="ssname" />
+            </xsd:sequence>
+            <xsd:attribute ref="subfile" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="Lookuptable">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="Lookup" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="Lookupfile">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="Lookuptable" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+            <xsd:attribute ref="tpsname" />
+            <xsd:attribute ref="tablename" />
+            <xsd:attribute ref="filename" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- definition of root element type -->
+    <xsd:complexType name="LookupCatalog">
+        <xsd:sequence>
+            <xsd:element ref="Lookupfile" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

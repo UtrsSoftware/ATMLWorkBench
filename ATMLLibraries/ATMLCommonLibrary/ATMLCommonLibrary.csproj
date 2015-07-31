@@ -1,0 +1,3165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{71632688-04AE-491A-9D2F-EE05FC0400D4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ATMLCommonLibrary</RootNamespace>
+    <AssemblyName>ATMLCommonLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\common\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\common\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>utrs_ATMLCommonLibrary.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug%28x64%29|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\common\Debug%28x64%29\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release%28x64%29|AnyCPU'">
+    <OutputPath>..\..\common\Release%28x64%29\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>true</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AxInterop.AcroPDFLib">
+      <HintPath>..\..\..\..\..\common\Adobe\Signed\AxInterop.AcroPDFLib.dll</HintPath>
+    </Reference>
+    <Reference Include="AxInterop.WMPLib">
+      <HintPath>..\..\..\..\..\common\Adobe\Signed\AxInterop.WMPLib.dll</HintPath>
+    </Reference>
+    <Reference Include="DataGridViewNumericUpDownElements, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\common\Debug\DataGridViewNumericUpDownElements.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="ScintillaNET, Version=2.6.0.0, Culture=neutral, PublicKeyToken=948d6c9751444115, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\common\ScintillaNet\ScintillaNET.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.9.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\common\3rdparty\DockPanel\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="controls\ATMLControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\ATMLPreviewPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\ATMLPreviewPanel.Designer.cs">
+      <DependentUpon>ATMLPreviewPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\awb\AWBButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\awb\AWBToolTip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\awb\ControlExtensions.cs" />
+    <Compile Include="controls\awb\AWBDropListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\awb\AWBDropListView.Designer.cs">
+      <DependentUpon>AWBDropListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\awb\AWBEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\awb\AWBEditor.Designer.cs">
+      <DependentUpon>AWBEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\awb\AWBListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\awb\AWBQuantityControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\awb\AWBQuantityControl.Designer.cs">
+      <DependentUpon>AWBQuantityControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\awb\AWBTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\awb\AWBTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\awb\AWBTextBox.Designer.cs">
+      <DependentUpon>AWBTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\awb\AWBTextCollectionList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\awb\AWBTextCollectionList.Designer.cs">
+      <DependentUpon>AWBTextCollectionList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\awb\AWBDurationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\awb\AWBDurationControl.Designer.cs">
+      <DependentUpon>AWBDurationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\awb\AWBXmlTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\awb\AWBXmlTreeView.Designer.cs">
+      <DependentUpon>AWBXmlTreeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\awb\ScrollBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\awb\ScrollBox.Designer.cs">
+      <DependentUpon>ScrollBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\BusControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\BusControl.Designer.cs">
+      <DependentUpon>BusControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\BusListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\BusListControl.designer.cs">
+      <DependentUpon>BusListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\BusListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\bus\BusListView.designer.cs">
+      <DependentUpon>BusListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\DeviceCategorySelectionComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\bus\DeviceCategorySelectionComboBox.Designer.cs">
+      <DependentUpon>DeviceCategorySelectionComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\BusForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\bus\BusForm.Designer.cs">
+      <DependentUpon>BusForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\EIA232Control.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\EIA232Control.Designer.cs">
+      <DependentUpon>EIA232Control.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\EthernetControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\EthernetControl.Designer.cs">
+      <DependentUpon>EthernetControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\IEEE1394Control.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\IEEE1394Control.Designer.cs">
+      <DependentUpon>IEEE1394Control.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\IEEE488Control.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\IEEE488Control.Designer.cs">
+      <DependentUpon>IEEE488Control.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\LXIControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\LXIControl.Designer.cs">
+      <DependentUpon>LXIControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\PCIControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\PCIControl.Designer.cs">
+      <DependentUpon>PCIControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\PCIeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\PCIeControl.Designer.cs">
+      <DependentUpon>PCIeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\PXIControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\PXIControl.Designer.cs">
+      <DependentUpon>PXIControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\PXIeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\PXIeControl.Designer.cs">
+      <DependentUpon>PXIeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\SupportedClockSourcesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\SupportedClockSourcesControl.Designer.cs">
+      <DependentUpon>SupportedClockSourcesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\USBControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\USBControl.Designer.cs">
+      <DependentUpon>USBControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\VMEControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\VMEControl.Designer.cs">
+      <DependentUpon>VMEControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\VXIBackplaneVoltagesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\VXIBackplaneVoltagesControl.Designer.cs">
+      <DependentUpon>VXIBackplaneVoltagesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\VXIControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\VXIControl.Designer.cs">
+      <DependentUpon>VXIControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\VXIKeyingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\VXIKeyingControl.Designer.cs">
+      <DependentUpon>VXIKeyingControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\VXIModuleCoolingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\VXIModuleCoolingControl.Designer.cs">
+      <DependentUpon>VXIModuleCoolingControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\VXITriggerLinesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\VXITriggerLinesControl.Designer.cs">
+      <DependentUpon>VXITriggerLinesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\calibration\CalibrationRequirementListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\calibration\CalibrationRequirementListControl.Designer.cs">
+      <DependentUpon>CalibrationRequirementListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\calibration\CalibrationRequirementsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\calibration\CalibrationRequirementsForm.Designer.cs">
+      <DependentUpon>CalibrationRequirementsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\calibration\CalibrationRequirementsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\calibration\CalibrationRequirementsControl.designer.cs">
+      <DependentUpon>CalibrationRequirementsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\capability\CapabilitiesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\capability\CapabilitiesControl.Designer.cs">
+      <DependentUpon>CapabilitiesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\capability\CapabilityInterfaceListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\capability\CapabilityInterfaceListControl.Designer.cs">
+      <DependentUpon>CapabilityInterfaceListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\collection\CollectionItemControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\collection\CollectionItemControl.Designer.cs">
+      <DependentUpon>CollectionItemControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\collection\CollectionItemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\collection\CollectionItemForm.Designer.cs">
+      <DependentUpon>CollectionItemForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\common\IndexArrayControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\common\IndexArrayControl.Designer.cs">
+      <DependentUpon>IndexArrayControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\common\NamedValueListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\common\NamedValueListControl.Designer.cs">
+      <DependentUpon>NamedValueListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\component\ComponentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\component\ComponentControl.Designer.cs">
+      <DependentUpon>ComponentControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\component\ParentComponentListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\component\ParentComponentListControl.Designer.cs">
+      <DependentUpon>ParentComponentListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorConfigurationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorConfigurationForm.Designer.cs">
+      <DependentUpon>ConnectorConfigurationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorSelectionForm.Designer.cs">
+      <DependentUpon>ConnectorSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\controller\ControllerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\controller\ControllerControl.Designer.cs">
+      <DependentUpon>ControllerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\controller\ControllerDriveForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\controller\ControllerDriveForm.designer.cs">
+      <DependentUpon>ControllerDriveForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\controller\ControllerDriveListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\controller\ControllerDriveListControl.designer.cs">
+      <DependentUpon>ControllerDriveListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\controller\ControllerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\controller\ControllerForm.designer.cs">
+      <DependentUpon>ControllerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\controller\ControllerOperatingSystemControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\controller\ControllerOperatingSystemControl.designer.cs">
+      <DependentUpon>ControllerOperatingSystemControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\controller\ControllerOperatingSystemListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\controller\ControllerOperatingSystemListControl.designer.cs">
+      <DependentUpon>ControllerOperatingSystemListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\controller\ControllerOperatingSystemsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\controller\ControllerOperatingSystemsForm.designer.cs">
+      <DependentUpon>ControllerOperatingSystemsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\control\ControlControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\control\ControlControl.Designer.cs">
+      <DependentUpon>ControlControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\control\language\ControlLanguageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\control\language\ControlLanguageControl.Designer.cs">
+      <DependentUpon>ControlLanguageControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\control\language\ControlLanguageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\control\language\ControlLanguageForm.Designer.cs">
+      <DependentUpon>ControlLanguageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\control\language\ControlLanguageListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\control\language\ControlLanguageListControl.Designer.cs">
+      <DependentUpon>ControlLanguageListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\controller\ControllerDriveControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\controller\ControllerDriveControl.Designer.cs">
+      <DependentUpon>ControllerDriveControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\controller\ControllerListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\controller\ControllerListControl.Designer.cs">
+      <DependentUpon>ControllerListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\controller\ControllerProcessorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\controller\ControllerProcessorControl.Designer.cs">
+      <DependentUpon>ControllerProcessorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\control\tool\ControlToolDependancyControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\control\tool\ControlToolDependancyControl.Designer.cs">
+      <DependentUpon>ControlToolDependancyControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\control\tool\ControlToolDependancyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\control\tool\ControlToolDependancyForm.Designer.cs">
+      <DependentUpon>ControlToolDependancyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\control\tool\ControlToolDependancyListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\control\tool\ControlToolDependancyListControl.Designer.cs">
+      <DependentUpon>ControlToolDependancyListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\control\FirmwareListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\control\FirmwareListControl.Designer.cs">
+      <DependentUpon>FirmwareListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\control\tool\ControlToolControlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\control\tool\ControlToolControlForm.Designer.cs">
+      <DependentUpon>ControlToolControlForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\control\tool\ControlToolListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\control\tool\ControlToolListControl.Designer.cs">
+      <DependentUpon>ControlToolListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\datum\DatumTextBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\datum\DatumTextBox.Designer.cs">
+      <DependentUpon>DatumTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\datum\DatumTypeDoubleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\datum\DatumTypeDoubleControl.Designer.cs">
+      <DependentUpon>DatumTypeDoubleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\document\DocumentLibraryListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\document\DocumentLibraryListControl.Designer.cs">
+      <DependentUpon>DocumentLibraryListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\document\DocumentLibrarySelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\document\DocumentLibrarySelectionForm.Designer.cs">
+      <DependentUpon>DocumentLibrarySelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\document\DocumentReferenceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\document\DocumentReferenceForm.Designer.cs">
+      <DependentUpon>DocumentReferenceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\document\LegalDocumentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\document\LegalDocumentForm.Designer.cs">
+      <DependentUpon>LegalDocumentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\control\driver\ControlDriverForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\control\driver\ControlDriverForm.Designer.cs">
+      <DependentUpon>ControlDriverForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\DriverForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\driver\DriverForm.Designer.cs">
+      <DependentUpon>DriverForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\control\driver\ControlDriverListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\control\driver\ControlDriverListControl.Designer.cs">
+      <DependentUpon>ControlDriverListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\DriverSelectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\driver\DriverSelectionControl.designer.cs">
+      <DependentUpon>DriverSelectionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\DriverSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\driver\DriverSelectionForm.designer.cs">
+      <DependentUpon>DriverSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\IVICDriverControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\driver\IVICDriverControl.Designer.cs">
+      <DependentUpon>IVICDriverControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\IVICOMDriverControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\driver\IVICOMDriverControl.Designer.cs">
+      <DependentUpon>IVICOMDriverControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\IVINETDriverControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\driver\IVINETDriverControl.Designer.cs">
+      <DependentUpon>IVINETDriverControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\SelectedDriverListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\driver\SelectedDriverListControl.Designer.cs">
+      <DependentUpon>SelectedDriverListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\VPPDriverControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\driver\VPPDriverControl.Designer.cs">
+      <DependentUpon>VPPDriverControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\environmental\EnvironmentalElementsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\environmental\EnvironmentalElementsControl.designer.cs">
+      <DependentUpon>EnvironmentalElementsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\environmental\EnvironmentalElementsVibrationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\environmental\EnvironmentalElementsVibrationControl.designer.cs">
+      <DependentUpon>EnvironmentalElementsVibrationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\environmental\EnvironmentalRequirementsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\environmental\EnvironmentalRequirementsControl.designer.cs">
+      <DependentUpon>EnvironmentalRequirementsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\equipment\TerminalBlockListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\equipment\TerminalBlockListControl.Designer.cs">
+      <DependentUpon>TerminalBlockListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\equipment\TerminalBlockForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\equipment\TerminalBlockForm.designer.cs">
+      <DependentUpon>TerminalBlockForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\equipment\TestAdapterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\equipment\TestAdapterControl.Designer.cs">
+      <DependentUpon>TestAdapterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\equipment\TestAdapterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\equipment\TestAdapterForm.Designer.cs">
+      <DependentUpon>TestAdapterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\equipment\TestAdapterListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\equipment\TestAdapterListControl.Designer.cs">
+      <DependentUpon>TestAdapterListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\equipment\TestEquipmentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\equipment\TestEquipmentControl.Designer.cs">
+      <DependentUpon>TestEquipmentControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\equipment\TerminalBlockControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\equipment\TerminalBlockControl.Designer.cs">
+      <DependentUpon>TerminalBlockControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\equipment\TestStationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\equipment\TestStationControl.Designer.cs">
+      <DependentUpon>TestStationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\equipment\TestStationDescriptionInstrumentListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\equipment\TestStationDescriptionInstrumentListControl.Designer.cs">
+      <DependentUpon>TestStationDescriptionInstrumentListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\equipment\TestStationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\equipment\TestStationForm.Designer.cs">
+      <DependentUpon>TestStationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\equipment\TestStationListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\equipment\TestStationListControl.Designer.cs">
+      <DependentUpon>TestStationListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\error\ErrorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\error\ErrorForm.designer.cs">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\error\ErrorListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\error\ErrorListControl.designer.cs">
+      <DependentUpon>ErrorListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\error\ErrorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\error\ErrorControl.designer.cs">
+      <DependentUpon>ErrorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\Extensions.cs" />
+    <Compile Include="controls\driver\DriverModuleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\driver\DriverModuleControl.Designer.cs">
+      <DependentUpon>DriverModuleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\DriverControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\driver\DriverControl.Designer.cs">
+      <DependentUpon>DriverControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\DriverUnifiedControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\driver\DriverUnifiedControl.Designer.cs">
+      <DependentUpon>DriverUnifiedControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\IVIDriverControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\driver\IVIDriverControl.Designer.cs">
+      <DependentUpon>IVIDriverControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\document\LegalDocumentListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\document\LegalDocumentListControl.Designer.cs">
+      <DependentUpon>LegalDocumentListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\document\LegalDocumentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\document\LegalDocumentControl.Designer.cs">
+      <DependentUpon>LegalDocumentControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\hardware\characteristics\PhysicalCharacteristicsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\hardware\characteristics\PhysicalCharacteristicsControl.designer.cs">
+      <DependentUpon>PhysicalCharacteristicsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\hardware\characteristics\PhysicalCharLinearControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\hardware\characteristics\PhysicalCharLinearControl.designer.cs">
+      <DependentUpon>PhysicalCharLinearControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\hardware\ConfigurationOptionListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\hardware\ConfigurationOptionListControl.Designer.cs">
+      <DependentUpon>ConfigurationOptionListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\equipment\FacilitiesRequirementsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\equipment\FacilitiesRequirementsControl.Designer.cs">
+      <DependentUpon>FacilitiesRequirementsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\control\driver\ControlDriver.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\control\driver\ControlDriver.designer.cs">
+      <DependentUpon>ControlDriver.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\control\driver\ControlDriverControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\control\driver\ControlDriverControl.designer.cs">
+      <DependentUpon>ControlDriverControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\control\driver\ControlDriverDependenciesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\control\driver\ControlDriverDependenciesControl.designer.cs">
+      <DependentUpon>ControlDriverDependenciesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\platform\DriverPlatformControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\driver\platform\DriverPlatformControl.designer.cs">
+      <DependentUpon>DriverPlatformControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\platform\DriverPlatformHardDiskControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\driver\platform\DriverPlatformHardDiskControl.designer.cs">
+      <DependentUpon>DriverPlatformHardDiskControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\platform\DriverPlatformOperatingSystemControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\driver\platform\DriverPlatformOperatingSystemControl.designer.cs">
+      <DependentUpon>DriverPlatformOperatingSystemControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\platform\DriverPlatformOperatingSystemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\driver\platform\DriverPlatformOperatingSystemForm.designer.cs">
+      <DependentUpon>DriverPlatformOperatingSystemForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\platform\DriverPlatformPhysicalMemoryControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\driver\platform\DriverPlatformPhysicalMemoryControl.designer.cs">
+      <DependentUpon>DriverPlatformPhysicalMemoryControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\platform\DriverPlatformProcessorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\driver\platform\DriverPlatformProcessorControl.designer.cs">
+      <DependentUpon>DriverPlatformProcessorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\driver\platform\PlatformOperatingSystemListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\driver\platform\PlatformOperatingSystemListControl.designer.cs">
+      <DependentUpon>PlatformOperatingSystemListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\hardware\FactoryDefaultsListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\hardware\FactoryDefaultsListControl.Designer.cs">
+      <DependentUpon>FactoryDefaultsListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\control\tool\ControlToolControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\control\tool\ControlToolControl.Designer.cs">
+      <DependentUpon>ControlToolControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\hardware\VersionIdentifierControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\hardware\VersionIdentifierControl.Designer.cs">
+      <DependentUpon>VersionIdentifierControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\hardware\VersionIdentifierForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\hardware\VersionIdentifierForm.Designer.cs">
+      <DependentUpon>VersionIdentifierForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\equipment\TestStationDescriptionInstrumentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\equipment\TestStationDescriptionInstrumentControl.Designer.cs">
+      <DependentUpon>TestStationDescriptionInstrumentControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\equipment\TestStationDescriptionInstrumentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\equipment\TestStationDescriptionInstrumentForm.Designer.cs">
+      <DependentUpon>TestStationDescriptionInstrumentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\hardware\VersionIdentifierListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\hardware\VersionIdentifierListControl.Designer.cs">
+      <DependentUpon>VersionIdentifierListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\instrument\InstrumentListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\instrument\InstrumentListControl.Designer.cs">
+      <DependentUpon>InstrumentListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\ItemDescriptionReferenceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\ItemDescriptionReferenceControl.Designer.cs">
+      <DependentUpon>ItemDescriptionReferenceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\limit\ExpectedLimitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\limit\ExpectedLimitForm.Designer.cs">
+      <DependentUpon>ExpectedLimitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\limit\ExpectedLimitControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\limit\ExpectedLimitControl.Designer.cs">
+      <DependentUpon>ExpectedLimitControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\limit\LimitMaskValueControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\limit\LimitMaskValueControl.Designer.cs">
+      <DependentUpon>LimitMaskValueControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\limit\LimitMaskValueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\limit\LimitMaskValueForm.Designer.cs">
+      <DependentUpon>LimitMaskValueForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\limit\LimitSimpleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\limit\LimitSimpleControl.Designer.cs">
+      <DependentUpon>LimitSimpleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\lists\ATMLLibraryListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\lists\InterfaceMappingTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\lists\ItemDescriptionListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\lists\ItemDescriptionListControl.Designer.cs">
+      <DependentUpon>ItemDescriptionListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\lists\ItemDescriptionReferenceListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\lists\ItemDescriptionReferenceListControl.Designer.cs">
+      <DependentUpon>ItemDescriptionReferenceListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\manufacturer\ManufacturerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\manufacturer\ManufacturerControl.Designer.cs">
+      <DependentUpon>ManufacturerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\network\NetworkNodeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\network\NetworkNodeControl.Designer.cs">
+      <DependentUpon>NetworkNodeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\network\NetworkNodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\network\NetworkNodeForm.Designer.cs">
+      <DependentUpon>NetworkNodeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\network\NetworkNodePathControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\network\NetworkNodePathControl.Designer.cs">
+      <DependentUpon>NetworkNodePathControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\operational\OperationalRequirementsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\operational\OperationalRequirementsControl.designer.cs">
+      <DependentUpon>OperationalRequirementsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathControl.Designer.cs">
+      <DependentUpon>PathControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathForm.Designer.cs">
+      <DependentUpon>PathForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathListControl.Designer.cs">
+      <DependentUpon>PathListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathNodeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathNodeControl.Designer.cs">
+      <DependentUpon>PathNodeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathNodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathNodeForm.Designer.cs">
+      <DependentUpon>PathNodeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathNodeListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathNodeListControl.Designer.cs">
+      <DependentUpon>PathNodeListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathSignalDelayControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathSignalDelayControl.designer.cs">
+      <DependentUpon>PathSignalDelayControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathSignalDelayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathSignalDelayForm.Designer.cs">
+      <DependentUpon>PathSignalDelayForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathSignalDelayListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathSignalDelayListControl.Designer.cs">
+      <DependentUpon>PathSignalDelayListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathSParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathSParameterControl.Designer.cs">
+      <DependentUpon>PathSParameterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathSParameterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathSParameterForm.Designer.cs">
+      <DependentUpon>PathSParameterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathSParameterListCntrlListCntrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathSParameterListCntrlListCntrl.Designer.cs">
+      <DependentUpon>PathSParameterListCntrlListCntrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathSParameterListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathSParameterListControl.Designer.cs">
+      <DependentUpon>PathSParameterListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathSParameterDataControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathSParameterDataControl.Designer.cs">
+      <DependentUpon>PathSParameterDataControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathSParameterDataForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathSParameterDataForm.Designer.cs">
+      <DependentUpon>PathSParameterDataForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathSParameterDataListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathSParameterDataListControl.Designer.cs">
+      <DependentUpon>PathSParameterDataListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathVSWRValueControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathVSWRValueControl.Designer.cs">
+      <DependentUpon>PathVSWRValueControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathVSWRValueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathVSWRValueForm.Designer.cs">
+      <DependentUpon>PathVSWRValueForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\path\PathVSWRValueListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\path\PathVSWRValueListControl.Designer.cs">
+      <DependentUpon>PathVSWRValueListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\PdfView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\physical\PhysicalTypeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\physical\PhysicalTypeControl.Designer.cs">
+      <DependentUpon>PhysicalTypeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\physical\PhysicalTypeErrorLimitControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\physical\PhysicalTypeErrorLimitControl.Designer.cs">
+      <DependentUpon>PhysicalTypeErrorLimitControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\physical\PhysicalTypeErrorLimitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\physical\PhysicalTypeErrorLimitForm.Designer.cs">
+      <DependentUpon>PhysicalTypeErrorLimitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\physical\PhysicalTypeErrorLimitListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\physical\PhysicalTypeErrorLimitListControl.Designer.cs">
+      <DependentUpon>PhysicalTypeErrorLimitListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\physical\PhysicalTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\physical\PhysicalTypeForm.Designer.cs">
+      <DependentUpon>PhysicalTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\physical\PhysicalTypeRangeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\physical\PhysicalTypeRangeControl.Designer.cs">
+      <DependentUpon>PhysicalTypeRangeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\physical\PhysicalTypeRangeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\physical\PhysicalTypeRangeForm.Designer.cs">
+      <DependentUpon>PhysicalTypeRangeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\physical\PhysicalTypeRangeListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\physical\PhysicalTypeRangeListControl.Designer.cs">
+      <DependentUpon>PhysicalTypeRangeListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\power\ACPowerSpecListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\power\ACPowerSpecListControl.Designer.cs">
+      <DependentUpon>ACPowerSpecListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\power\DCPowerSpecListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\power\DCPowerSpecListControl.Designer.cs">
+      <DependentUpon>DCPowerSpecListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\power\PowerOnDefaultListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\power\PowerOnDefaultListControl.Designer.cs">
+      <DependentUpon>PowerOnDefaultListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\limit\LimitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\limit\LimitForm.Designer.cs">
+      <DependentUpon>LimitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\limit\SimpleLimitControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\limit\SimpleLimitControl.Designer.cs">
+      <DependentUpon>SimpleLimitControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\limit\SingleLimitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\limit\SingleLimitForm.Designer.cs">
+      <DependentUpon>SingleLimitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\limit\SingleLimitSimpleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\limit\SingleLimitSimpleControl.Designer.cs">
+      <DependentUpon>SingleLimitSimpleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\power\PowerRequirementListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\power\PowerRequirementListControl.Designer.cs">
+      <DependentUpon>PowerRequirementListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\QualifierComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\QualifierComboBox.Designer.cs">
+      <DependentUpon>QualifierComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\resource\ResourcePortSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\resource\ResourcePortSelectionForm.Designer.cs">
+      <DependentUpon>ResourcePortSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\power\ACPowerSpecificationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\power\ACPowerSpecificationControl.Designer.cs">
+      <DependentUpon>ACPowerSpecificationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\power\DCPowerSpecificationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\power\DCPowerSpecificationControl.Designer.cs">
+      <DependentUpon>DCPowerSpecificationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\power\PowerSpecificationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\power\PowerSpecificationForm.Designer.cs">
+      <DependentUpon>PowerSpecificationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\security\SecurityClassificationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\security\SecurityClassificationControl.designer.cs">
+      <DependentUpon>SecurityClassificationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\signal\SignalInterfaceListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\signal\SignalInterfaceListControl.Designer.cs">
+      <DependentUpon>SignalInterfaceListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\StandardUnitControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\StandardUnitControl.Designer.cs">
+      <DependentUpon>StandardUnitControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\switching\MatrixPortForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\switching\MatrixPortForm.Designer.cs">
+      <DependentUpon>MatrixPortForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\switching\SwitchRelayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\switching\SwitchRelayForm.Designer.cs">
+      <DependentUpon>SwitchRelayForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\trigger\TriggerPortListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\trigger\TriggerPortListControl.Designer.cs">
+      <DependentUpon>TriggerPortListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\trigger\TriggerPortControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\trigger\TriggerPortControl.Designer.cs">
+      <DependentUpon>TriggerPortControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\common\ItemControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\common\ItemControl.Designer.cs">
+      <DependentUpon>ItemControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorLocationPinListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorLocationPinListControl.Designer.cs">
+      <DependentUpon>ConnectorLocationPinListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorPinControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorPinControl.Designer.cs">
+      <DependentUpon>ConnectorPinControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\capability\CapabilityControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\capability\CapabilityControl.Designer.cs">
+      <DependentUpon>CapabilityControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\collection\CollectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\collection\CollectionControl.Designer.cs">
+      <DependentUpon>CollectionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\collection\CollectionListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\collection\CollectionListControl.Designer.cs">
+      <DependentUpon>CollectionListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\collection\CollectionListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\collection\CollectionListView.Designer.cs">
+      <DependentUpon>CollectionListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\common\PhysicalInterfacePortControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\common\PhysicalInterfacePortControl.Designer.cs">
+      <DependentUpon>PhysicalInterfacePortControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\common\PortControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\common\PortControl.Designer.cs">
+      <DependentUpon>PortControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\common\PortDirectionComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\common\PortDirectionComboBox.Designer.cs">
+      <DependentUpon>PortDirectionComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\common\PortListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\common\PortListControl.Designer.cs">
+      <DependentUpon>PortListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\common\PortTypeComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\common\PortTypeComboBox.Designer.cs">
+      <DependentUpon>PortTypeComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\common\ValueControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\common\ValueControl.Designer.cs">
+      <DependentUpon>ValueControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorLocationPinControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorLocationPinControl.Designer.cs">
+      <DependentUpon>ConnectorLocationPinControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\datum\DatumTypeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\datum\DatumTypeControl.Designer.cs">
+      <DependentUpon>DatumTypeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\document\DocumentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\document\DocumentControl.Designer.cs">
+      <DependentUpon>DocumentControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\document\DocumentReferenceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\document\DocumentReferenceControl.Designer.cs">
+      <DependentUpon>DocumentReferenceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\hardware\HardwareItemDescriptionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\hardware\HardwareItemDescriptionControl.Designer.cs">
+      <DependentUpon>HardwareItemDescriptionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\HelpLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\HelpLabel.Designer.cs">
+      <DependentUpon>HelpLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\common\NamedValueControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\common\NamedValueControl.Designer.cs">
+      <DependentUpon>NamedValueControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\capability\CapabilityListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\capability\CapabilityListControl.Designer.cs">
+      <DependentUpon>CapabilityListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\limit\LimitControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\limit\LimitControl.Designer.cs">
+      <DependentUpon>LimitControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\limit\ExpectedLimitSimpleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\limit\ExpectedLimitSimpleControl.Designer.cs">
+      <DependentUpon>ExpectedLimitSimpleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\limit\LimitMaskControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\limit\LimitMaskControl.Designer.cs">
+      <DependentUpon>LimitMaskControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\limit\LimitPairControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\limit\LimitPairControl.Designer.cs">
+      <DependentUpon>LimitPairControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\limit\SingleLimitControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\limit\SingleLimitControl.Designer.cs">
+      <DependentUpon>SingleLimitControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\lists\ATMLListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\lists\ATMLListControl.Designer.cs">
+      <DependentUpon>ATMLListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\component\ComponentListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\component\ComponentListControl.Designer.cs">
+      <DependentUpon>ComponentListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\component\ComponentListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\component\ComponentListView.Designer.cs">
+      <DependentUpon>ComponentListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\document\DocumentListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\document\DocumentListControl.Designer.cs">
+      <DependentUpon>DocumentListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\document\DocumentListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\document\DocumentListView.Designer.cs">
+      <DependentUpon>DocumentListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\manufacturer\ManufacturerContactListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\manufacturer\ManufacturerContactListControl.Designer.cs">
+      <DependentUpon>ManufacturerContactListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\manufacturer\ManufacturerContactListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\manufacturer\ManufacturerContactListView.Designer.cs">
+      <DependentUpon>ManufacturerContactListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorListView.Designer.cs">
+      <DependentUpon>ConnectorListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\lists\PhysicalInterfaceListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\lists\PhysicalInterfaceListControl.Designer.cs">
+      <DependentUpon>PhysicalInterfaceListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorPinList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorPinList.Designer.cs">
+      <DependentUpon>ConnectorPinList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\lists\ExtensionListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\lists\ExtensionListControl.designer.cs">
+      <DependentUpon>ExtensionListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\IdentificationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\IdentificationControl.designer.cs">
+      <DependentUpon>IdentificationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\lists\IndentificationNumbersListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\lists\IndentificationNumbersListControl.designer.cs">
+      <DependentUpon>IndentificationNumbersListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\instrument\InstrumentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\instrument\InstrumentControl.Designer.cs">
+      <DependentUpon>InstrumentControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\ItemDescriptionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\ItemDescriptionControl.Designer.cs">
+      <DependentUpon>ItemDescriptionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\manufacturer\ManufacturerListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\manufacturer\ManufacturerListControl.designer.cs">
+      <DependentUpon>ManufacturerListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\lists\PortConnectorListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\lists\PortConnectorListView.designer.cs">
+      <DependentUpon>PortConnectorListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\lists\PowerOnDefaultsListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\lists\PowerOnDefaultsListControl.Designer.cs">
+      <DependentUpon>PowerOnDefaultsListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\trigger\PropertyListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\trigger\PropertyListControl.Designer.cs">
+      <DependentUpon>PropertyListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\network\MappingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\network\MappingControl.Designer.cs">
+      <DependentUpon>MappingControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\network\MappingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\network\MappingForm.Designer.cs">
+      <DependentUpon>MappingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\network\MappingListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\network\MappingListControl.Designer.cs">
+      <DependentUpon>MappingListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\network\NetworkControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\network\NetworkControl.Designer.cs">
+      <DependentUpon>NetworkControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\network\NetworkForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\network\NetworkForm.Designer.cs">
+      <DependentUpon>NetworkForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\network\NetworkListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\network\NetworkListControl.Designer.cs">
+      <DependentUpon>NetworkListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\network\NetworkNodeListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\network\NetworkNodeListControl.Designer.cs">
+      <DependentUpon>NetworkNodeListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\RepeatedItemControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\RepeatedItemControl.Designer.cs">
+      <DependentUpon>RepeatedItemControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\resource\ResourceListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\resource\ResourceListControl.Designer.cs">
+      <DependentUpon>ResourceListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\specification\SpecificationListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\specification\SpecificationListControl.Designer.cs">
+      <DependentUpon>SpecificationListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\switching\CrossPointSwitchControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\switching\CrossPointSwitchControl.Designer.cs">
+      <DependentUpon>CrossPointSwitchControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\switching\MatrixPortControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\switching\MatrixPortControl.Designer.cs">
+      <DependentUpon>MatrixPortControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\switching\MatrixSwitchControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\switching\MatrixSwitchControl.Designer.cs">
+      <DependentUpon>MatrixSwitchControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\switching\SwitchControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\switching\SwitchControl.Designer.cs">
+      <DependentUpon>SwitchControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\switching\SwitchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\switching\SwitchForm.Designer.cs">
+      <DependentUpon>SwitchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\switching\SwitchingListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\switching\SwitchingListControl.Designer.cs">
+      <DependentUpon>SwitchingListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\MailingAddressControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\MailingAddressControl.Designer.cs">
+      <DependentUpon>MailingAddressControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\resource\ResourceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\resource\ResourceControl.Designer.cs">
+      <DependentUpon>ResourceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\signal\SignalComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\signal\SignalComboBox.Designer.cs">
+      <DependentUpon>SignalComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\signal\SignalControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\signal\SignalControl.Designer.cs">
+      <DependentUpon>SignalControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\signal\SignalFunctionTypeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\signal\SignalFunctionTypeControl.Designer.cs">
+      <DependentUpon>SignalFunctionTypeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\signal\SignalInputControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\signal\SignalInputControl.Designer.cs">
+      <DependentUpon>SignalInputControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\signal\SignalInputListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\signal\SignalInputListControl.Designer.cs">
+      <DependentUpon>SignalInputListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\signal\SignalInputListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\signal\SignalInputListView.Designer.cs">
+      <DependentUpon>SignalInputListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\signal\SignalInputTypeComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\signal\SignalInputTypeComboBox.Designer.cs">
+      <DependentUpon>SignalInputTypeComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\signal\SignalPartControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\signal\SignalPartControl.Designer.cs">
+      <DependentUpon>SignalPartControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\signal\SignalPartListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\signal\SignalPartsListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\signal\SignalPartsListControl.Designer.cs">
+      <DependentUpon>SignalPartsListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\specification\SpecificationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\specification\SpecificationControl.Designer.cs">
+      <DependentUpon>SpecificationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\specification\SpecificationGroupControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\specification\SpecificationGroupControl.Designer.cs">
+      <DependentUpon>SpecificationGroupControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\specification\SpecificationsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\specification\SpecificationsControl.Designer.cs">
+      <DependentUpon>SpecificationsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\switching\SwitchPortControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\switching\SwitchPortControl.Designer.cs">
+      <DependentUpon>SwitchPortControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\switching\SwitchPortForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\switching\SwitchPortForm.Designer.cs">
+      <DependentUpon>SwitchPortForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\TestDescriptionTsfLibraryControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\TestDescriptionTsfLibraryControl.Designer.cs">
+      <DependentUpon>TestDescriptionTsfLibraryControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\trigger\TriggerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\trigger\TriggerControl.Designer.cs">
+      <DependentUpon>TriggerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\trigger\TriggerListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\trigger\TriggerListControl.Designer.cs">
+      <DependentUpon>TriggerListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\trigger\TriggerPortForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\trigger\TriggerPortForm.Designer.cs">
+      <DependentUpon>TriggerPortForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\trigger\TriggerPortTypeComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\trigger\TriggerPortTypeComboBox.Designer.cs">
+      <DependentUpon>TriggerPortTypeComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\trigger\TriggerPropertyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\trigger\TriggerPropertyForm.Designer.cs">
+      <DependentUpon>TriggerPropertyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\uut\HardwareUUTControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\uut\HardwareUUTControl.Designer.cs">
+      <DependentUpon>HardwareUUTControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\uut\SoftwareUUTControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\uut\SoftwareUUTControl.Designer.cs">
+      <DependentUpon>SoftwareUUTControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\uut\UUTDescriptionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\uut\UUTDescriptionControl.Designer.cs">
+      <DependentUpon>UUTDescriptionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\uut\UUTDescriptionListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\uut\UUTDescriptionListControl.Designer.cs">
+      <DependentUpon>UUTDescriptionListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\uut\UUTStatusCodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\uut\UUTStatusCodeForm.Designer.cs">
+      <DependentUpon>UUTStatusCodeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\validators\FieldValidator.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\validators\IdentifierValidator.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\validators\InstrumentDescriptionValidator.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\validators\IValidatable.cs" />
+    <Compile Include="controls\validators\ValidationErrorEventArgs.cs" />
+    <Compile Include="forms\ATMLTextForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLTextForm.Designer.cs">
+      <DependentUpon>ATMLTextForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLXslTranslationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLXslTranslationForm.Designer.cs">
+      <DependentUpon>ATMLXslTranslationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLDocumentBaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLDocumentBaseForm.Designer.cs">
+      <DependentUpon>ATMLDocumentBaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLErrorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLErrorForm.Designer.cs">
+      <DependentUpon>ATMLErrorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLForm.Designer.cs">
+      <DependentUpon>ATMLForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLErrorListBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLErrorListBox.Designer.cs">
+      <DependentUpon>ATMLErrorListBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLLibraryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLLibraryForm.Designer.cs">
+      <DependentUpon>ATMLLibraryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLOptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLOptionsForm.Designer.cs">
+      <DependentUpon>ATMLOptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLOutputWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLOutputWindow.Designer.cs">
+      <DependentUpon>ATMLOutputWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLPleaseWait.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLPleaseWait.Designer.cs">
+      <DependentUpon>ATMLPleaseWait.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLProjectCreationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLProjectCreationForm.Designer.cs">
+      <DependentUpon>ATMLProjectCreationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLSelectionCheckListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLSelectionCheckListForm.Designer.cs">
+      <DependentUpon>ATMLSelectionCheckListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\capability\CapabilityForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\capability\CapabilityForm.Designer.cs">
+      <DependentUpon>CapabilityForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\capability\CapabilityReferenceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\capability\CapabilityReferenceForm.Designer.cs">
+      <DependentUpon>CapabilityReferenceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLSpashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLSpashScreen.Designer.cs">
+      <DependentUpon>ATMLSpashScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\CheckedListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\CheckedListForm.Designer.cs">
+      <DependentUpon>CheckedListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\CollectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\CollectionForm.Designer.cs">
+      <DependentUpon>CollectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorLocationPinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorLocationPinForm.Designer.cs">
+      <DependentUpon>ConnectorLocationPinForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\datum\DatumForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\datum\DatumForm.Designer.cs">
+      <DependentUpon>DatumForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\document\DocumentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\document\DocumentForm.Designer.cs">
+      <DependentUpon>DocumentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\DirectorySelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\DirectorySelectionForm.Designer.cs">
+      <DependentUpon>DirectorySelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\document\DocumentLibraryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\document\DocumentLibraryForm.Designer.cs">
+      <DependentUpon>DocumentLibraryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\EditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\EditorForm.Designer.cs">
+      <DependentUpon>EditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\HelpMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\HelpMessageBox.Designer.cs">
+      <DependentUpon>HelpMessageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\IdentificationNumberForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\IdentificationNumberForm.Designer.cs">
+      <DependentUpon>IdentificationNumberForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ItemDescriptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ItemDescriptionForm.Designer.cs">
+      <DependentUpon>ItemDescriptionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ItemDescriptionReferenceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ItemDescriptionReferenceForm.Designer.cs">
+      <DependentUpon>ItemDescriptionReferenceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\NameValueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\NameValueForm.Designer.cs">
+      <DependentUpon>NameValueForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\NetworkNodeMappingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\NetworkNodeMappingForm.Designer.cs">
+      <DependentUpon>NetworkNodeMappingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\NetworkPathSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\NetworkPathSelectionForm.Designer.cs">
+      <DependentUpon>NetworkPathSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ObjectNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ObjectNameForm.Designer.cs">
+      <DependentUpon>ObjectNameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\PhysicalInterfacePortForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\PhysicalInterfacePortForm.Designer.cs">
+      <DependentUpon>PhysicalInterfacePortForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\PortForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\PortForm.Designer.cs">
+      <DependentUpon>PortForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\PortSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\PortSelectionForm.Designer.cs">
+      <DependentUpon>PortSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\signal\SignalForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\signal\SignalForm.Designer.cs">
+      <DependentUpon>SignalForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\signal\SignalFunctionTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\signal\SignalFunctionTypeForm.Designer.cs">
+      <DependentUpon>SignalFunctionTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\signal\SignalInputForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\signal\SignalInputForm.Designer.cs">
+      <DependentUpon>SignalInputForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\signal\SignalModelLibraryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\signal\SignalModelLibraryForm.Designer.cs">
+      <DependentUpon>SignalModelLibraryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\StatusCodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\StatusCodeForm.Designer.cs">
+      <DependentUpon>StatusCodeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\trigger\TriggerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\trigger\TriggerForm.Designer.cs">
+      <DependentUpon>TriggerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\TestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\TestForm.Designer.cs">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ATMLNavigationWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ATMLNavigationWindow.Designer.cs">
+      <DependentUpon>ATMLNavigationWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ValueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ValueForm.Designer.cs">
+      <DependentUpon>ValueForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ICommandProcessor.cs" />
+    <Compile Include="forms\ComponentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ComponentForm.designer.cs">
+      <DependentUpon>ComponentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorForm.designer.cs">
+      <DependentUpon>ConnectorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorPinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\connector\ConnectorPinForm.Designer.cs">
+      <DependentUpon>ConnectorPinForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ContactForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ContactForm.designer.cs">
+      <DependentUpon>ContactForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\IndentificationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\IndentificationForm.designer.cs">
+      <DependentUpon>IndentificationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\InstrumentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\InstrumentForm.designer.cs">
+      <DependentUpon>InstrumentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\MailingAddressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\MailingAddressForm.designer.cs">
+      <DependentUpon>MailingAddressForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ManufacturerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ManufacturerForm.designer.cs">
+      <DependentUpon>ManufacturerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\resource\ResourceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\resource\ResourceForm.Designer.cs">
+      <DependentUpon>ResourceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\specification\SpecificationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\specification\SpecificationForm.Designer.cs">
+      <DependentUpon>SpecificationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\specification\SpecificationGroupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\specification\SpecificationGroupForm.Designer.cs">
+      <DependentUpon>SpecificationGroupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\uut\UUTDescriptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls\uut\UUTDescriptionForm.Designer.cs">
+      <DependentUpon>UUTDescriptionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="managers\FormManager.cs" />
+    <Compile Include="managers\ImageManager.cs" />
+    <Compile Include="managers\TestStationManager.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="utils\SignalCalculator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="utils\SignalCalculator.Designer.cs">
+      <DependentUpon>SignalCalculator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="managers\UUTManager.cs" />
+    <Compile Include="model\IATMLDockableWindow.cs" />
+    <Compile Include="model\IListViewObject.cs" />
+    <Compile Include="model\navigator\IAllocatorNavigator.cs" />
+    <Compile Include="model\navigator\INavigator.cs" />
+    <Compile Include="model\navigator\IReaderNavigator.cs" />
+    <Compile Include="model\navigator\ITranslatorNavigator.cs" />
+    <Compile Include="model\navigator\ATMLNavigator.cs" />
+    <Compile Include="mvc\controllers\ATMLController.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="model\mtpsi\cass_mtpsi_rv4.designer.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="controls\bus\PXIBackplaneVoltagesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\bus\PXIBackplaneVoltagesControl.Designer.cs">
+      <DependentUpon>PXIBackplaneVoltagesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="test.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="test.Designer.cs">
+      <DependentUpon>test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="utils\ElectricalUtils.cs" />
+    <Compile Include="utils\GlobalKeyboardHook.cs" />
+    <Compile Include="utils\GlobalMouseHook.cs" />
+    <Compile Include="utils\HourGlass.cs" />
+    <Compile Include="utils\ParsingUtils.cs" />
+    <Compile Include="Win32.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="ClassDiagram3.cd" />
+    <None Include="Properties\DataSources\ATMLCommonLibrary.model.common.DatumType.datasource" />
+    <None Include="Properties\DataSources\ATMLCommonLibrary.model.common.Limit.datasource" />
+    <None Include="Properties\DataSources\ATMLCommonLibrary.model.common.LimitExpected.datasource" />
+    <None Include="Properties\DataSources\ATMLCommonLibrary.model.common.LimitMask.datasource" />
+    <None Include="Properties\DataSources\ATMLCommonLibrary.model.common.LimitMaskMaskValue.datasource" />
+    <None Include="Properties\DataSources\ATMLCommonLibrary.model.common.LimitPair.datasource" />
+    <None Include="Properties\DataSources\ATMLCommonLibrary.model.common.Value.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="utrs_ATMLCommonLibrary.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="controls\ATMLControl.resx">
+      <DependentUpon>ATMLControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\ATMLPreviewPanel.resx">
+      <DependentUpon>ATMLPreviewPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\awb\AWBDropListView.resx">
+      <DependentUpon>AWBDropListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\awb\AWBTextCollectionList.resx">
+      <DependentUpon>AWBTextCollectionList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\awb\AWBDurationControl.resx">
+      <DependentUpon>AWBDurationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\awb\ScrollBox.resx">
+      <DependentUpon>ScrollBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\BusControl.resx">
+      <DependentUpon>BusControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\BusListControl.resx">
+      <DependentUpon>BusListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\BusListView.resx">
+      <DependentUpon>BusListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\BusForm.resx">
+      <DependentUpon>BusForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\EthernetControl.resx">
+      <DependentUpon>EthernetControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\LXIControl.resx">
+      <DependentUpon>LXIControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\PCIControl.resx">
+      <DependentUpon>PCIControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\PCIeControl.resx">
+      <DependentUpon>PCIeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\PXIControl.resx">
+      <DependentUpon>PXIControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\PXIeControl.resx">
+      <DependentUpon>PXIeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\SupportedClockSourcesControl.resx">
+      <DependentUpon>SupportedClockSourcesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\USBControl.resx">
+      <DependentUpon>USBControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\VXIBackplaneVoltagesControl.resx">
+      <DependentUpon>VXIBackplaneVoltagesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\VXIControl.resx">
+      <DependentUpon>VXIControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\VXIKeyingControl.resx">
+      <DependentUpon>VXIKeyingControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\VXIModuleCoolingControl.resx">
+      <DependentUpon>VXIModuleCoolingControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\bus\VXITriggerLinesControl.resx">
+      <DependentUpon>VXITriggerLinesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\calibration\CalibrationRequirementListControl.resx">
+      <DependentUpon>CalibrationRequirementListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\calibration\CalibrationRequirementsForm.resx">
+      <DependentUpon>CalibrationRequirementsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\calibration\CalibrationRequirementsControl.resx">
+      <DependentUpon>CalibrationRequirementsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\capability\CapabilitiesControl.resx">
+      <DependentUpon>CapabilitiesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\capability\CapabilityInterfaceListControl.resx">
+      <DependentUpon>CapabilityInterfaceListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\collection\CollectionItemControl.resx">
+      <DependentUpon>CollectionItemControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\collection\CollectionItemForm.resx">
+      <DependentUpon>CollectionItemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\common\IndexArrayControl.resx">
+      <DependentUpon>IndexArrayControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\component\ComponentControl.resx">
+      <DependentUpon>ComponentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\connector\ConnectorConfigurationForm.resx">
+      <DependentUpon>ConnectorConfigurationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\connector\ConnectorSelectionForm.resx">
+      <DependentUpon>ConnectorSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\controller\ControllerControl.resx">
+      <DependentUpon>ControllerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\controller\ControllerDriveForm.resx">
+      <DependentUpon>ControllerDriveForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\controller\ControllerDriveListControl.resx">
+      <DependentUpon>ControllerDriveListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\controller\ControllerForm.resx">
+      <DependentUpon>ControllerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\controller\ControllerOperatingSystemControl.resx">
+      <DependentUpon>ControllerOperatingSystemControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\controller\ControllerOperatingSystemListControl.resx">
+      <DependentUpon>ControllerOperatingSystemListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\controller\ControllerOperatingSystemsForm.resx">
+      <DependentUpon>ControllerOperatingSystemsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\control\ControlControl.resx">
+      <DependentUpon>ControlControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\control\driver\ControlDriverForm.resx">
+      <DependentUpon>ControlDriverForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\control\language\ControlLanguageControl.resx">
+      <DependentUpon>ControlLanguageControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\control\language\ControlLanguageForm.resx">
+      <DependentUpon>ControlLanguageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\controller\ControllerDriveControl.resx">
+      <DependentUpon>ControllerDriveControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\controller\ControllerProcessorControl.resx">
+      <DependentUpon>ControllerProcessorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\control\tool\ControlToolControlForm.resx">
+      <DependentUpon>ControlToolControlForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\control\tool\ControlToolDependancyForm.resx">
+      <DependentUpon>ControlToolDependancyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\datum\DatumTextBox.resx">
+      <DependentUpon>DatumTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\datum\DatumTypeDoubleControl.resx">
+      <DependentUpon>DatumTypeDoubleControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\document\DocumentLibraryListControl.resx">
+      <DependentUpon>DocumentLibraryListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\document\DocumentLibrarySelectionForm.resx">
+      <DependentUpon>DocumentLibrarySelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\document\DocumentReferenceForm.resx">
+      <DependentUpon>DocumentReferenceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\document\LegalDocumentForm.resx">
+      <DependentUpon>LegalDocumentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\driver\DriverControl.resx">
+      <DependentUpon>DriverControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\control\driver\ControlDriverListControl.resx">
+      <DependentUpon>ControlDriverListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\driver\DriverModuleControl.resx">
+      <DependentUpon>DriverModuleControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\driver\DriverSelectionControl.resx">
+      <DependentUpon>DriverSelectionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\driver\DriverSelectionForm.resx">
+      <DependentUpon>DriverSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\driver\DriverUnifiedControl.resx">
+      <DependentUpon>DriverUnifiedControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\driver\IVICDriverControl.resx">
+      <DependentUpon>IVICDriverControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\driver\IVICOMDriverControl.resx">
+      <DependentUpon>IVICOMDriverControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\driver\IVIDriverControl.resx">
+      <DependentUpon>IVIDriverControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\driver\DriverForm.resx">
+      <DependentUpon>DriverForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\driver\IVINETDriverControl.resx">
+      <DependentUpon>IVINETDriverControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\driver\VPPDriverControl.resx">
+      <DependentUpon>VPPDriverControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\document\LegalDocumentControl.resx">
+      <DependentUpon>LegalDocumentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\environmental\EnvironmentalElementsControl.resx">
+      <DependentUpon>EnvironmentalElementsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\environmental\EnvironmentalElementsVibrationControl.resx">
+      <DependentUpon>EnvironmentalElementsVibrationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\environmental\EnvironmentalRequirementsControl.resx">
+      <DependentUpon>EnvironmentalRequirementsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\equipment\TerminalBlockControl.resx">
+      <DependentUpon>TerminalBlockControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\equipment\TerminalBlockListControl.resx">
+      <DependentUpon>TerminalBlockListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\equipment\TerminalBlockForm.resx">
+      <DependentUpon>TerminalBlockForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\equipment\TestAdapterControl.resx">
+      <DependentUpon>TestAdapterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\equipment\TestAdapterForm.resx">
+      <DependentUpon>TestAdapterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\equipment\TestEquipmentControl.resx">
+      <DependentUpon>TestEquipmentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\equipment\TestStationControl.resx">
+      <DependentUpon>TestStationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\equipment\TestStationDescriptionInstrumentListControl.resx">
+      <DependentUpon>TestStationDescriptionInstrumentListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\equipment\TestStationForm.resx">
+      <DependentUpon>TestStationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\equipment\TestStationListControl.resx">
+      <DependentUpon>TestStationListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\error\ErrorForm.resx">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\error\ErrorListControl.resx">
+      <DependentUpon>ErrorListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\error\ErrorControl.resx">
+      <DependentUpon>ErrorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\hardware\characteristics\PhysicalCharacteristicsControl.resx">
+      <DependentUpon>PhysicalCharacteristicsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\hardware\characteristics\PhysicalCharLinearControl.resx">
+      <DependentUpon>PhysicalCharLinearControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\equipment\FacilitiesRequirementsControl.resx">
+      <DependentUpon>FacilitiesRequirementsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\control\driver\ControlDriver.resx">
+      <DependentUpon>ControlDriver.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\control\driver\ControlDriverControl.resx">
+      <DependentUpon>ControlDriverControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\control\driver\ControlDriverDependenciesControl.resx">
+      <DependentUpon>ControlDriverDependenciesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\driver\platform\DriverPlatformControl.resx">
+      <DependentUpon>DriverPlatformControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\driver\platform\DriverPlatformHardDiskControl.resx">
+      <DependentUpon>DriverPlatformHardDiskControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\driver\platform\DriverPlatformOperatingSystemControl.resx">
+      <DependentUpon>DriverPlatformOperatingSystemControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\driver\platform\DriverPlatformPhysicalMemoryControl.resx">
+      <DependentUpon>DriverPlatformPhysicalMemoryControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\driver\platform\DriverPlatformProcessorControl.resx">
+      <DependentUpon>DriverPlatformProcessorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\hardware\FactoryDefaultsListControl.resx">
+      <DependentUpon>FactoryDefaultsListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\control\tool\ControlToolControl.resx">
+      <DependentUpon>ControlToolControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\hardware\VersionIdentifierControl.resx">
+      <DependentUpon>VersionIdentifierControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\hardware\VersionIdentifierForm.resx">
+      <DependentUpon>VersionIdentifierForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\equipment\TestStationDescriptionInstrumentControl.resx">
+      <DependentUpon>TestStationDescriptionInstrumentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\equipment\TestStationDescriptionInstrumentForm.resx">
+      <DependentUpon>TestStationDescriptionInstrumentForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\ItemDescriptionReferenceControl.resx">
+      <DependentUpon>ItemDescriptionReferenceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\limit\ExpectedLimitForm.resx">
+      <DependentUpon>ExpectedLimitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\limit\ExpectedLimitControl.resx">
+      <DependentUpon>ExpectedLimitControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\limit\LimitMaskValueControl.resx">
+      <DependentUpon>LimitMaskValueControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\limit\LimitMaskValueForm.resx">
+      <DependentUpon>LimitMaskValueForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\limit\LimitSimpleControl.resx">
+      <DependentUpon>LimitSimpleControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\manufacturer\ManufacturerControl.resx">
+      <DependentUpon>ManufacturerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\network\NetworkNodeControl.resx">
+      <DependentUpon>NetworkNodeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\network\NetworkNodeForm.resx">
+      <DependentUpon>NetworkNodeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\network\NetworkNodePathControl.resx">
+      <DependentUpon>NetworkNodePathControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\operational\OperationalRequirementsControl.resx">
+      <DependentUpon>OperationalRequirementsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\path\PathControl.resx">
+      <DependentUpon>PathControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\path\PathForm.resx">
+      <DependentUpon>PathForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\path\PathNodeControl.resx">
+      <DependentUpon>PathNodeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\path\PathNodeForm.resx">
+      <DependentUpon>PathNodeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\path\PathNodeListControl.resx">
+      <DependentUpon>PathNodeListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\path\PathSignalDelayControl.resx">
+      <DependentUpon>PathSignalDelayControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\path\PathSignalDelayForm.resx">
+      <DependentUpon>PathSignalDelayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\path\PathSParameterControl.resx">
+      <DependentUpon>PathSParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\path\PathSParameterListControl.resx">
+      <DependentUpon>PathSParameterListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\path\PathSParameterDataControl.resx">
+      <DependentUpon>PathSParameterDataControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\path\PathSParameterDataForm.resx">
+      <DependentUpon>PathSParameterDataForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\path\PathVSWRValueControl.resx">
+      <DependentUpon>PathVSWRValueControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\path\PathVSWRValueForm.resx">
+      <DependentUpon>PathVSWRValueForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\physical\PhysicalTypeControl.resx">
+      <DependentUpon>PhysicalTypeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\physical\PhysicalTypeErrorLimitControl.resx">
+      <DependentUpon>PhysicalTypeErrorLimitControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\physical\PhysicalTypeErrorLimitForm.resx">
+      <DependentUpon>PhysicalTypeErrorLimitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\physical\PhysicalTypeForm.resx">
+      <DependentUpon>PhysicalTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\physical\PhysicalTypeRangeControl.resx">
+      <DependentUpon>PhysicalTypeRangeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\physical\PhysicalTypeRangeForm.resx">
+      <DependentUpon>PhysicalTypeRangeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\power\PowerOnDefaultListControl.resx">
+      <DependentUpon>PowerOnDefaultListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\limit\LimitForm.resx">
+      <DependentUpon>LimitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\limit\SimpleLimitControl.resx">
+      <DependentUpon>SimpleLimitControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\limit\SingleLimitForm.resx">
+      <DependentUpon>SingleLimitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\limit\SingleLimitSimpleControl.resx">
+      <DependentUpon>SingleLimitSimpleControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\resource\ResourcePortSelectionForm.resx">
+      <DependentUpon>ResourcePortSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\power\ACPowerSpecificationControl.resx">
+      <DependentUpon>ACPowerSpecificationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\power\DCPowerSpecificationControl.resx">
+      <DependentUpon>DCPowerSpecificationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\power\PowerSpecificationForm.resx">
+      <DependentUpon>PowerSpecificationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\security\SecurityClassificationControl.resx">
+      <DependentUpon>SecurityClassificationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\signal\SignalInterfaceListControl.resx">
+      <DependentUpon>SignalInterfaceListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\StandardUnitControl.resx">
+      <DependentUpon>StandardUnitControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\switching\CrossPointSwitchControl.resx">
+      <DependentUpon>CrossPointSwitchControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\switching\MatrixPortForm.resx">
+      <DependentUpon>MatrixPortForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\switching\SwitchRelayForm.resx">
+      <DependentUpon>SwitchRelayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\trigger\TriggerPortListControl.resx">
+      <DependentUpon>TriggerPortListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\trigger\TriggerPortControl.resx">
+      <DependentUpon>TriggerPortControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\common\ItemControl.resx">
+      <DependentUpon>ItemControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\connector\ConnectorLocationPinListControl.resx">
+      <DependentUpon>ConnectorLocationPinListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\connector\ConnectorPinControl.resx">
+      <DependentUpon>ConnectorPinControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\capability\CapabilityControl.resx">
+      <DependentUpon>CapabilityControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\collection\CollectionControl.resx">
+      <DependentUpon>CollectionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\collection\CollectionListControl.resx">
+      <DependentUpon>CollectionListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\common\PhysicalInterfacePortControl.resx">
+      <DependentUpon>PhysicalInterfacePortControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\common\PortControl.resx">
+      <DependentUpon>PortControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\common\PortListControl.resx">
+      <DependentUpon>PortListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\common\PortTypeComboBox.resx">
+      <DependentUpon>PortTypeComboBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\common\ValueControl.resx">
+      <DependentUpon>ValueControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\connector\ConnectorLocationPinControl.resx">
+      <DependentUpon>ConnectorLocationPinControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\datum\DatumTypeControl.resx">
+      <DependentUpon>DatumTypeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\document\DocumentControl.resx">
+      <DependentUpon>DocumentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\document\DocumentReferenceControl.resx">
+      <DependentUpon>DocumentReferenceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\hardware\HardwareItemDescriptionControl.resx">
+      <DependentUpon>HardwareItemDescriptionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\common\NamedValueControl.resx">
+      <DependentUpon>NamedValueControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\capability\CapabilityListControl.resx">
+      <DependentUpon>CapabilityListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\limit\LimitControl.resx">
+      <DependentUpon>LimitControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\limit\ExpectedLimitSimpleControl.resx">
+      <DependentUpon>ExpectedLimitSimpleControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\limit\LimitMaskControl.resx">
+      <DependentUpon>LimitMaskControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\limit\LimitPairControl.resx">
+      <DependentUpon>LimitPairControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\limit\SingleLimitControl.resx">
+      <DependentUpon>SingleLimitControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\lists\ATMLListControl.resx">
+      <DependentUpon>ATMLListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\component\ComponentListControl.resx">
+      <DependentUpon>ComponentListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\component\ComponentListView.resx">
+      <DependentUpon>ComponentListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\connector\ConnectorListView.resx">
+      <DependentUpon>ConnectorListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\document\DocumentListControl.resx">
+      <DependentUpon>DocumentListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\document\DocumentListView.resx">
+      <DependentUpon>DocumentListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\lists\PhysicalInterfaceListControl.resx">
+      <DependentUpon>PhysicalInterfaceListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\connector\ConnectorPinList.resx">
+      <DependentUpon>ConnectorPinList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\lists\ExtensionListControl.resx">
+      <DependentUpon>ExtensionListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\IdentificationControl.resx">
+      <DependentUpon>IdentificationControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\lists\IndentificationNumbersListControl.resx">
+      <DependentUpon>IndentificationNumbersListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\instrument\InstrumentControl.resx">
+      <DependentUpon>InstrumentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\ItemDescriptionControl.resx">
+      <DependentUpon>ItemDescriptionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\manufacturer\ManufacturerContactListControl.resx">
+      <DependentUpon>ManufacturerContactListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\manufacturer\ManufacturerContactListView.resx">
+      <DependentUpon>ManufacturerContactListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\manufacturer\ManufacturerListControl.resx">
+      <DependentUpon>ManufacturerListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\lists\PortConnectorListView.resx">
+      <DependentUpon>PortConnectorListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\lists\PowerOnDefaultsListControl.resx">
+      <DependentUpon>PowerOnDefaultsListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\trigger\PropertyListControl.resx">
+      <DependentUpon>PropertyListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\network\MappingControl.resx">
+      <DependentUpon>MappingControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\network\MappingForm.resx">
+      <DependentUpon>MappingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\network\MappingListControl.resx">
+      <DependentUpon>MappingListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\network\NetworkControl.resx">
+      <DependentUpon>NetworkControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\network\NetworkForm.resx">
+      <DependentUpon>NetworkForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\network\NetworkListControl.resx">
+      <DependentUpon>NetworkListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\network\NetworkNodeListControl.resx">
+      <DependentUpon>NetworkNodeListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\RepeatedItemControl.resx">
+      <DependentUpon>RepeatedItemControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\resource\ResourceListControl.resx">
+      <DependentUpon>ResourceListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\specification\SpecificationListControl.resx">
+      <DependentUpon>SpecificationListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\switching\MatrixPortControl.resx">
+      <DependentUpon>MatrixPortControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\switching\MatrixSwitchControl.resx">
+      <DependentUpon>MatrixSwitchControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\switching\SwitchControl.resx">
+      <DependentUpon>SwitchControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\switching\SwitchForm.resx">
+      <DependentUpon>SwitchForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\switching\SwitchingListControl.resx">
+      <DependentUpon>SwitchingListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\MailingAddressControl.resx">
+      <DependentUpon>MailingAddressControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\resource\ResourceControl.resx">
+      <DependentUpon>ResourceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\signal\SignalControl.resx">
+      <DependentUpon>SignalControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\signal\SignalFunctionTypeControl.resx">
+      <DependentUpon>SignalFunctionTypeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\signal\SignalInputControl.resx">
+      <DependentUpon>SignalInputControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\signal\SignalInputListControl.resx">
+      <DependentUpon>SignalInputListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\signal\SignalPartControl.resx">
+      <DependentUpon>SignalPartControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\signal\SignalPartsListControl.resx">
+      <DependentUpon>SignalPartsListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\specification\SpecificationControl.resx">
+      <DependentUpon>SpecificationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\specification\SpecificationGroupControl.resx">
+      <DependentUpon>SpecificationGroupControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\specification\SpecificationsControl.resx">
+      <DependentUpon>SpecificationsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\switching\SwitchPortControl.resx">
+      <DependentUpon>SwitchPortControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\switching\SwitchPortForm.resx">
+      <DependentUpon>SwitchPortForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\TestDescriptionTsfLibraryControl.resx">
+      <DependentUpon>TestDescriptionTsfLibraryControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\trigger\TriggerControl.resx">
+      <DependentUpon>TriggerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\trigger\TriggerListControl.resx">
+      <DependentUpon>TriggerListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\trigger\TriggerPortForm.resx">
+      <DependentUpon>TriggerPortForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\trigger\TriggerPropertyForm.resx">
+      <DependentUpon>TriggerPropertyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\uut\HardwareUUTControl.resx">
+      <DependentUpon>HardwareUUTControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\uut\SoftwareUUTControl.resx">
+      <DependentUpon>SoftwareUUTControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\uut\UUTDescriptionControl.resx">
+      <DependentUpon>UUTDescriptionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\uut\UUTDescriptionListControl.resx">
+      <DependentUpon>UUTDescriptionListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\uut\UUTStatusCodeForm.resx">
+      <DependentUpon>UUTStatusCodeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLTextForm.resx">
+      <DependentUpon>ATMLTextForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLXslTranslationForm.resx">
+      <DependentUpon>ATMLXslTranslationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLDocumentBaseForm.resx">
+      <DependentUpon>ATMLDocumentBaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLErrorForm.resx">
+      <DependentUpon>ATMLErrorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLForm.resx">
+      <DependentUpon>ATMLForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLErrorListBox.resx">
+      <DependentUpon>ATMLErrorListBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLLibraryForm.resx">
+      <DependentUpon>ATMLLibraryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLOptionsForm.resx">
+      <DependentUpon>ATMLOptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLOutputWindow.resx">
+      <DependentUpon>ATMLOutputWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLPleaseWait.resx">
+      <DependentUpon>ATMLPleaseWait.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLProjectCreationForm.resx">
+      <DependentUpon>ATMLProjectCreationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLSelectionCheckListForm.resx">
+      <DependentUpon>ATMLSelectionCheckListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\capability\CapabilityForm.resx">
+      <DependentUpon>CapabilityForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\capability\CapabilityReferenceForm.resx">
+      <DependentUpon>CapabilityReferenceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLSpashScreen.resx">
+      <DependentUpon>ATMLSpashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\CheckedListForm.resx">
+      <DependentUpon>CheckedListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\CollectionForm.resx">
+      <DependentUpon>CollectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ComponentForm.resx">
+      <DependentUpon>ComponentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\connector\ConnectorForm.resx">
+      <DependentUpon>ConnectorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\connector\ConnectorLocationPinForm.resx">
+      <DependentUpon>ConnectorLocationPinForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\connector\ConnectorPinForm.resx">
+      <DependentUpon>ConnectorPinForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ContactForm.resx">
+      <DependentUpon>ContactForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\datum\DatumForm.resx">
+      <DependentUpon>DatumForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\document\DocumentForm.resx">
+      <DependentUpon>DocumentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\DirectorySelectionForm.resx">
+      <DependentUpon>DirectorySelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\document\DocumentLibraryForm.resx">
+      <DependentUpon>DocumentLibraryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\EditorForm.resx">
+      <DependentUpon>EditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\HelpMessageBox.resx">
+      <DependentUpon>HelpMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\IdentificationNumberForm.resx">
+      <DependentUpon>IdentificationNumberForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\IndentificationForm.resx">
+      <DependentUpon>IndentificationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\InstrumentForm.resx">
+      <DependentUpon>InstrumentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ItemDescriptionForm.resx">
+      <DependentUpon>ItemDescriptionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ItemDescriptionReferenceForm.resx">
+      <DependentUpon>ItemDescriptionReferenceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\MailingAddressForm.resx">
+      <DependentUpon>MailingAddressForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ManufacturerForm.resx">
+      <DependentUpon>ManufacturerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\NameValueForm.resx">
+      <DependentUpon>NameValueForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\NetworkNodeMappingForm.resx">
+      <DependentUpon>NetworkNodeMappingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\NetworkPathSelectionForm.resx">
+      <DependentUpon>NetworkPathSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ObjectNameForm.resx">
+      <DependentUpon>ObjectNameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\PhysicalInterfacePortForm.resx">
+      <DependentUpon>PhysicalInterfacePortForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\PortForm.resx">
+      <DependentUpon>PortForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\resource\ResourceForm.resx">
+      <DependentUpon>ResourceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\PortSelectionForm.resx">
+      <DependentUpon>PortSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\signal\SignalForm.resx">
+      <DependentUpon>SignalForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\signal\SignalFunctionTypeForm.resx">
+      <DependentUpon>SignalFunctionTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\signal\SignalInputForm.resx">
+      <DependentUpon>SignalInputForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\signal\SignalModelLibraryForm.resx">
+      <DependentUpon>SignalModelLibraryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\specification\SpecificationForm.resx">
+      <DependentUpon>SpecificationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\specification\SpecificationGroupForm.resx">
+      <DependentUpon>SpecificationGroupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\StatusCodeForm.resx">
+      <DependentUpon>StatusCodeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\trigger\TriggerForm.resx">
+      <DependentUpon>TriggerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\TestForm.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ATMLNavigationWindow.resx">
+      <DependentUpon>ATMLNavigationWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\uut\UUTDescriptionForm.resx">
+      <DependentUpon>UUTDescriptionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ValueForm.resx">
+      <DependentUpon>ValueForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="utils\SignalCalculator.resx">
+      <DependentUpon>SignalCalculator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="test.resx">
+      <DependentUpon>test.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="controllers\" />
+    <Folder Include="controls\platform\" />
+    <Folder Include="delegates\" />
+    <Folder Include="interfaces\" />
+    <Folder Include="model\hardware\" />
+    <Folder Include="mvc\views\" />
+    <Folder Include="Resources\32\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="application_form.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CollectionControl.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CollectionControl.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="controls\bus\PXIBackplaneVoltagesControl.resx">
+      <DependentUpon>PXIBackplaneVoltagesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\XMLMimeTypes.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\options.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Content Include="Resources\16\components16.png" />
+    <Content Include="Resources\16\characteristics16.png" />
+    <None Include="Resources\16\instrument161.png" />
+    <None Include="Resources\16\control161.png" />
+    <Content Include="Resources\16\warning16.png" />
+    <Content Include="Resources\16\defaults16.png" />
+    <Content Include="Resources\16\documentation16.png" />
+    <Content Include="Resources\16\buses16.png" />
+    <Content Include="Resources\16\legal16.png" />
+    <Content Include="Resources\16\capabilities16.png" />
+    <Content Include="Resources\16\errors16.png" />
+    <Content Include="Resources\16\instrument16.png" />
+    <Content Include="Resources\16\paths16.png" />
+    <Content Include="Resources\16\network16.png" />
+    <Content Include="Resources\16\configuration16.png" />
+    <Content Include="Resources\16\parent_components16.png" />
+    <Content Include="Resources\16\power_on_defaults16.png" />
+    <Content Include="Resources\16\requirements16.png" />
+    <Content Include="Resources\16\status_codes16.png" />
+    <Content Include="Resources\16\software16.png" />
+    <Content Include="Resources\16\specifications16.png" />
+    <Content Include="Resources\16\identification16.png" />
+    <Content Include="Resources\16\description16.png" />
+    <Content Include="Resources\16\resources16.png" />
+    <Content Include="Resources\16\switch16.png" />
+    <Content Include="Resources\16\warning.png" />
+    <Content Include="Resources\16\warnings16.png" />
+    <None Include="Resources\building.png" />
+    <Content Include="Resources\24\application_form_add24.png" />
+    <Content Include="Resources\24\application_form_delete24.png" />
+    <Content Include="Resources\24\application_form_edit24.png" />
+    <Content Include="Resources\about.xml" />
+    <Content Include="Resources\calibration.ico" />
+    <Content Include="Resources\16\chartplotter.png" />
+    <Content Include="Resources\16\chart_organisation.png" />
+    <Content Include="Resources\16\code.png" />
+    <Content Include="Resources\16\test_station16.png" />
+    <Content Include="Resources\16\interface16.png" />
+    <Content Include="Resources\chartplotter.png" />
+    <Content Include="Resources\computer.png" />
+    <Content Include="Resources\connect.png" />
+    <Content Include="Resources\controller.ico" />
+    <Content Include="Resources\16\control16.png" />
+    <Content Include="Resources\document-selection.ico" />
+    <Content Include="Resources\document.ico" />
+    <Content Include="Resources\document_library.ico" />
+    <Content Include="Resources\error.ico" />
+    <Content Include="Resources\instrument16.png" />
+    <Content Include="Resources\logo.ico" />
+    <Content Include="Resources\network_node.ico" />
+    <Content Include="Resources\pin.ico" />
+    <Content Include="Resources\selection.ico" />
+    <Content Include="Resources\server.png" />
+    <None Include="Resources\terminal_seats_blue.png" />
+    <Content Include="Resources\test-station.ico" />
+    <Content Include="Resources\uut.ico" />
+    <Content Include="Resources\warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ATMLDataAccessLibrary\ATMLDataAccessLibrary.csproj">
+      <Project>{F48E6BE2-2E30-4048-8E38-F4F3DEF51D03}</Project>
+      <Name>ATMLDataAccessLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLManagerLibrary\ATMLManagerLibrary.csproj">
+      <Project>{A82AAA85-A772-40A2-84C2-15C6997D029F}</Project>
+      <Name>ATMLManagerLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLModelLibrary\ATMLModelLibrary.csproj">
+      <Project>{99B831F6-9B1A-49DF-B836-B86CDDB6C682}</Project>
+      <Name>ATMLModelLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLProcessLibrary\ATMLProcessLibrary.csproj">
+      <Project>{7FCBCC82-F78E-400B-A160-B6DBF72D959F}</Project>
+      <Name>ATMLProcessLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLSchemaLibrary\ATMLSchemaLibrary.csproj">
+      <Project>{6BFD6798-ACEA-41B2-8EA3-8D5C8A8BD5FB}</Project>
+      <Name>ATMLSchemaLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLSignalModelLibrary\ATMLSignalModelLibrary.csproj">
+      <Project>{5386282E-A995-4E29-9FE6-C39D03B7C52B}</Project>
+      <Name>ATMLSignalModelLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLUtilities\ATMLUtilitiesLibrary.csproj">
+      <Project>{42F58F52-995B-4244-A4FB-17EF4C09A874}</Project>
+      <Name>ATMLUtilitiesLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

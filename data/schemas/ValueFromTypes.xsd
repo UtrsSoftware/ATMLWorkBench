@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:td="urn:IEEE-1671.1:2009:TestDescription" xmlns:c="urn:IEEE-1671:2010:Common" xmlns:hc="urn:IEEE-1671:2010:HardwareCommon" xmlns:te="urn:IEEE-1671:2010:TestEquipment" xmlns:uut="urn:IEEE-1671.3:2009.03:UUTDescription" xmlns:ta="urn:P-IEEE-1671.5:2008.03:TestAdapterDescription" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:IEEE-1671.1:2009:TestDescription" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.05">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+
+This schema is specified in IEEE Std 1671.1-20XX, "IEEE Standard for ATML: Test Description"
+ 
+This schema is a World Wide Web Consortium (W3C) Extensible Markup Language (XML) binding 
+of the ATML Test Description component defined in IEEE Std 1671.1-20XX,
+"IEEE Standard for ATML: Test Description."
+
+The purpose of this schema is to allow the creation of IEEE Std 1671.1-20XX
+Test Description instance documents.This schema uses the W3C XML Schema definition
+language as the encoding. This allows for interoperability and 
+the exchange of ATML component instances between various systems.
+This schema shall not be modified but may be included in 
+derivative works. 
+
+Copyright (c) 2011 Institute of Electrical and Electronics 
+Engineers, Inc.
+
+USE AT YOUR OWN RISK
+
+		</xs:documentation>
+	</xs:annotation>
+
+	<xs:import namespace="urn:IEEE-1671:2010:Common" schemaLocation="Common.xsd"/>
+	
+	<xs:complexType name="ValueFromTestGroupParameter">
+		<xs:annotation>
+			<xs:documentation>Indicates that a value originates from a parameter of a test group. Where applicable, can be assigned to elements of type DatumType. If present, the unit and qualifier shall be identical to those of the referenced parameter. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="c:DatumType">
+				<xs:attribute name="testGroupParameterID" type="c:NonBlankString" use="required">
+					<xs:annotation>
+						<xs:documentation>ID of the test group parameter.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ValueFromActionResults">
+		<xs:annotation>
+			<xs:documentation>Indicates that a value originates from one test result of a test, or from one session datum of a session action, or from multiple such child elements of different actions. Where applicable, can be assigned to elements of type DatumType. If the TestResult and SessionDatum child elements reference data items from more than one action, data shall be obtained from the action that is executed last (among the actions executed before the ancestor action of the element this complex type is assigned to). The TestResult and SessionDatum child elements shall not reference more than one data item from the same action. This constraint was introduced because in that situation there would be no way to determine which data item the data will be obtained from. Note that the constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically. If present, the unit and qualifier shall be identical to those of the referenced test results and session data. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically. Note that both child elements TestResult and SessionDatum are optional. Elements with this type shall not appear in instance documents unless at least one of these child elements exists. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="c:DatumType">
+				<xs:sequence>
+					<xs:choice maxOccurs="unbounded">
+						<xs:element name="SessionDatum">
+							<xs:annotation>
+								<xs:documentation>Shall identify one session datum the value originates from.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="sessionDatumID" type="c:NonBlankString" use="required">
+									<xs:annotation>
+										<xs:documentation>ID of the session datum.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="TestResult">
+							<xs:annotation>
+								<xs:documentation>Shall identify one test result the value originates from.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="testResultID" type="c:NonBlankString" use="required">
+									<xs:annotation>
+										<xs:documentation>ID of the test result.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ValueFromActionParameter">
+		<xs:annotation>
+			<xs:documentation>Indicates that a value originates from a parameter of an action (test or session action) that is an ancestor of the current element. Where applicable, can be assigned to elements of type DatumType. If present, the unit and qualifier shall be identical to those of the referenced parameter. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="c:DatumType">
+				<xs:attribute name="parameterID" type="c:NonBlankString" use="required">
+					<xs:annotation>
+						<xs:documentation>ID of the action parameter.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ValueFromOperationMeasurement">
+		<xs:annotation>
+			<xs:documentation>Indicates that a value originates from a measurement defined through an operation of type OperationRead. Where applicable, can be assigned to elements of type DatumType. If present, the unit and qualifier shall be identical to those of the referenced measurement. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="c:DatumType">
+				<xs:attribute name="measurementID" type="c:NonBlankString" use="required">
+					<xs:annotation>
+						<xs:documentation>ID of the measurement.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ValueFromOperationMessageIn">
+		<xs:annotation>
+			<xs:documentation>Indicates that a value originates from an ATE operator message obtained through an operation of type OperationMessageIn. Where applicable, can be assigned to elements of type DatumType. If present, the unit and qualifier shall be identical to those of the referenced message. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="c:DatumType">
+				<xs:attribute name="messageInID" type="c:NonBlankString" use="required">
+					<xs:annotation>
+						<xs:documentation>ID of the message.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ValueFromIterator">
+		<xs:annotation>
+			<xs:documentation>Indicates that a value originates from an iterator defined through an operation of type OperationRepeat. Where applicable, can be assigned to elements of type DatumType. If present, the unit and qualifier shall be identical to those of the referenced iterator. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="c:DatumType">
+				<xs:attribute name="iteratorID" type="c:NonBlankString" use="required">
+					<xs:annotation>
+						<xs:documentation>ID of the iterator.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="IncrementedValue">
+		<xs:annotation>
+			<xs:documentation>Shall describe a series of values generated through iteration.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="c:DatumType">
+				<xs:sequence>
+					<xs:element name="InitialValue" type="c:Value">
+						<xs:annotation>
+							<xs:documentation>Shall define the initial value of the iterator, i.e., the value assumed before executing the OperationRepeat operations. The type ValueFromActionParameter shall be assigned to the Datum child element to indicate an initial value that originates from a Parameter of the containing Test.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Increment">
+						<xs:annotation>
+							<xs:documentation>Shall define the increment for the iterator, i.e., the value to be added to the iterator after each execution of the OperationRepeat operations.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:choice>
+								<xs:element name="Linear" type="c:Value">
+									<xs:annotation>
+										<xs:documentation>The presence of this element shall indicate that a linear increment is used. The element shall define the value of the increment. The data type, unit and qualifier of theincremet shall be identical to those of the initial value. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically. The type ValueFromActionParameter shall be assigned to the element to indicate an increment value that originates from a parameter of the containing test.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="LogarithmicSteps" type="c:Value">
+									<xs:annotation>
+										<xs:documentation>The presence of this element shall indicate that a logarithmic increment is used. The element shall specify the number of steps between the Initial Value and the Limit. An integer data type shall be used to specify the number of steps in the instance document. The type ValueFromActionParameter shall be assigned to the element to indicate an initial value that originates from a parameter of the containing test.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="Other" type="c:NonBlankString">
+									<xs:annotation>
+										<xs:documentation>The presence of this element shall indicate that another type of increment is used. The element shall describe the increment through free-form text</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:choice>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

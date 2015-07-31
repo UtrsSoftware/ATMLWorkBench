@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{99B831F6-9B1A-49DF-B836-B86CDDB6C682}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ATMLModelLibrary</RootNamespace>
+    <AssemblyName>ATMLModelLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\common\debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\common\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>utrsATMLModelLibrary.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug%28x64%29|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\common\Debug%28x64%29\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release%28x64%29|AnyCPU'">
+    <OutputPath>..\..\common\Release%28x64%29\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\common\Debug\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ATMLCommon.cs" />
+    <Compile Include="interfaces\IAtmlObject.cs" />
+    <Compile Include="interfaces\ICapabilityEquiped.cs" />
+    <Compile Include="model\signal\basic\Signal.cs" />
+    <Compile Include="model\common\Common.cs" />
+    <Compile Include="model\common\TestConfigurationExtension.cs" />
+    <Compile Include="model\equipment\EquipmentCapabilities.cs" />
+    <Compile Include="model\equipment\HardwareCommon.cs" />
+    <Compile Include="model\equipment\HardwareDescription.cs" />
+    <Compile Include="model\equipment\InstrumentDescription.cs" />
+    <Compile Include="model\equipment\TestAdapterDescription1.cs" />
+    <Compile Include="model\Physical.cs" />
+    <Compile Include="model\ProjectInfo.cs" />
+    <Compile Include="model\signal\analysis\SignalAnalysis.cs" />
+    <Compile Include="model\TestDescriptionExtension.cs" />
+    <Compile Include="model\uut\UUTDescription.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestDescriptionReader.cs" />
+    <Compile Include="xsd\Capabilities.Designer.cs" />
+    <Compile Include="xsd\Common.Designer.cs" />
+    <Compile Include="xsd\HardwareCommon.Designer.cs" />
+    <Compile Include="xsd\InstrumentDescription.Designer.cs" />
+    <Compile Include="xsd\STDBSC.Designer.cs" />
+    <Compile Include="xsd\STDTAFLib.Designer.cs" />
+    <Compile Include="xsd\STDTSF.Designer.cs" />
+    <Compile Include="xsd\TestAdapterDescription.Designer.cs" />
+    <Compile Include="xsd\TestConfiguration.Designer.cs" />
+    <Compile Include="xsd\TestDescription.Designer.cs" />
+    <Compile Include="xsd\TestEquipment.Designer.cs" />
+    <Compile Include="xsd\TestResults.Designer.cs" />
+    <Compile Include="xsd\TestStationDescription.Designer.cs" />
+    <Compile Include="xsd\UUTDescription.Designer.cs" />
+    <Compile Include="xsd\WireLists.Designer.cs" />
+    <Compile Include="xsd\XSDController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="utrsATMLModelLibrary.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="xsd\TPSI.xslt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="model\hardware\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ATMLDataAccessLibrary\ATMLDataAccessLibrary.csproj">
+      <Project>{F48E6BE2-2E30-4048-8E38-F4F3DEF51D03}</Project>
+      <Name>ATMLDataAccessLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLSchemaLibrary\ATMLSchemaLibrary.csproj">
+      <Project>{6BFD6798-ACEA-41B2-8EA3-8D5C8A8BD5FB}</Project>
+      <Name>ATMLSchemaLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMLUtilities\ATMLUtilitiesLibrary.csproj">
+      <Project>{42F58F52-995B-4244-A4FB-17EF4C09A874}</Project>
+      <Name>ATMLUtilitiesLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

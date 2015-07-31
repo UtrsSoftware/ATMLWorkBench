@@ -1,0 +1,2484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="urn:IEEE-1641:2010:STDBSC" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:std="urn:IEEE-1641:2010:STDBSC" targetNamespace="urn:IEEE-1641:2010:STDBSC" elementFormDefault="qualified" version="2.02">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+This schema is specified in IEEE Std 1641-20XX, "IEEE Standard for Signal and Test Definition." This schema is a World Wide Web Consortium (W3C) Extensible Markup Language (XML) binding of Annex I Extensible markup language (XML) signal descriptions Clause I.2 XML signal schema definitions" The purpose of this schema is to provide unique types and attributes for IEEE 1641 schemas.This schema uses the W3C XML Schema definition language as the encoding. This allows for interoperability and the exchange of signal component instances between various systems.This schema shall not be modified but may be included in derivative works. 
+Copyright (c) 2009 Institute of Electrical and Electronics Engineers, Inc. USE AT YOUR OWN RISK
+</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="qualifier">
+		<xs:annotation>
+			<xs:documentation>provides different ways of observing the value</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="trms"/>
+			<xs:enumeration value="pk_pk"/>
+			<xs:enumeration value="pk"/>
+			<xs:enumeration value="pk_pos"/>
+			<xs:enumeration value="pk_neg"/>
+			<xs:enumeration value="av"/>
+			<xs:enumeration value="inst"/>
+			<xs:enumeration value="inst_max"/>
+			<xs:enumeration value="inst_min"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="quantity">
+		<xs:annotation>
+			<xs:documentation>All the occurrences of unit must belong to the same quantity (see Table B.4) or, where specified, may be expressed as a ratio quantity.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(\+|\-)?\d+(\.\d*)?((E|e)(\+|\-)?\d+)? *((y|z|a|f|p|n|µ|u|m|c|d|h|k|M|G|T|P|E|Z|Y|Ki|Mi|Gi|Ti|Pi|Ei)?(F|S|C|A|V|J|eV|T|N|Hz|lx|H|m|in|ft|mi|nmi|lm|cd|Wb|g|rad|deg|°|W|BW|Bm|Pa|bar|B(\(\d *m?W\))?|%|pc|decade|octave|Ohm|sr|kn|K|degC|°C|degF|°F|s|min|h|L|mol)\d*((·|\.|/)(y|z|a|f|p|n|µ|u|m|c|d|h|k|M|G|T|P|E|Z|Y|Ki|Mi|Gi|Ti|Pi|Ei)?(F|S|C|A|V|J|eV|T|N|Hz|lx|H|m|in|ft|mi|nmi|lm|cd|Wb|g|rad|deg|°|W|BW|Bm|Pa|bar|B|%|pc|decade|octave|Ohm|sr|kn|K|degC|°C|degF|°F|s|min|h|L|mol)\d*)*)?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="errlmt">
+		<xs:annotation>
+			<xs:documentation>The errlmt is always expressed as a relative range to the value either as a ratio or as plus and/or minus a fixed amount (e.g., "10 V ± 10 mV" or "10 V ± 0.1%") and represents the uncertainty of the value.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="errlmt|±|\+-"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="resolution">
+		<xs:annotation>
+			<xs:documentation>The resolution property is always held as an absolute value, identifying the granularity of the value.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="res"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="confidence">
+		<xs:annotation>
+			<xs:documentation>The confidence property is always held as an absolute value, as a ratio, and represents the level of confidence associated with the uncertainty (errlmt). </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="conf"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="load_">
+		<xs:annotation>
+			<xs:documentation>The load_ property is always held as an absolute value. </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="load"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="range">
+		<xs:annotation>
+			<xs:documentation>The range property is always held as absolute values, identifying the range of values that may be used, e.g., "10 V range 11 V to 9 V". The value syntax allows for relative range values to be specified (e.g., "10 V range ± 1 V" or "10 V range 1%") where these values are converted to absolute values</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="range|MAX|MIN"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="to">
+		<xs:annotation>
+			<xs:documentation>See range</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=":|\-|to"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="_physical">
+		<xs:list>
+			<xs:simpleType>
+				<xs:union memberTypes="qualifier range to errlmt resolution confidence load_ quantity"/>
+			</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	<xs:simpleType name="_expression">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(\{.+\})|([A-Za-z_][A-Za-z0-9_.-]*)|(\(.+\))"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Physical">
+		<xs:annotation>
+			<xs:documentation>The Physical base class (see Table B.1) is used to describe real physical values. It has a value, an associated dimension described by its units, and an uncertainty. Its value may be constrained. All physical types, e.g., time, voltage, are derived from the Physical class. These derived Physical classes can also offer other interfaces, e.g., a Period may be expressed as both Frequency and Time.</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="_expression">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="( *(trms|pk_pk|pk|pk_pos|pk_neg|inst|av|inst_max|inst_min|errlmt (±|\+-)?|±|\+-|range (MAX|MIN)?|MAX|MIN|to|:|\-|res|conf|load)? *((\+|\-)?\d+(\.\d*)?((E|e)(\+|\-)?\d+)? *((y|z|a|f|p|n|µ|u|m|c|d|h|k|M|G|T|P|E|Z|Y|Ki|Mi|Gi|Ti|Pi|Ei)?(F|S|C|A|V|J|eV|T|N|Hz|lx|H|m|in|ft|mi|nmi|lm|cd|Wb|g|rad|deg|°|W|BW|Bm|Pa|bar|B(\(\d *m?W\))?|%|pc|decade|octave|Ohm|sr|kn|K|degC|°C|degF|°F|s|min|h|L|mol)\d*((·|\.|/)\(*(y|z|a|f|p|n|µ|u|m|c|d|h|k|M|G|T|P|E|Z|Y|Ki|Mi|Gi|Ti|Pi|Ei)?(F|S|C|A|V|J|eV|T|N|Hz|lx|H|m|in|ft|mi|nmi|lm|cd|Wb|g|rad|deg|°|W|BW|Bm|Pa|bar|B(\(\d *m?W\))?|%|pc|decade|octave|Ohm|sr|kn|K|degC|°C|degF|°F|s|min|h|L|mol)\d*)*)?\)*) *)+"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+	<xs:simpleType name="Admittance">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="AmountOfInformation">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="AmountOfSubstance">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Capacitance">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Charge">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Conductance">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Current">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Voltage">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Resistance">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Energy">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Force">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Frequency">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Heat">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Illuminance">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Impedance">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Inductance">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Distance">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="LuminousFlux">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="LuminousIntensity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="MagneticFlux">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="MagneticFluxDensity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Mass">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="PlaneAngle">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Power">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Pressure">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Ratio">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Reactance">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="SolidAngle">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Susceptance">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Temperature">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Time">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Acceleration">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="AngularAcceleration">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="AngularSpeed">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Area">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Concentration">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="CurrentDensity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="DynamicViscosity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="ElectricChargeDensity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="ElectricFieldStrength">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="ElectricFluxDensity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="EnergyDensity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Entropy">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Exposure">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="HeatCapacity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="HeatFluxDensity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Irradiance">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="KinematicViscosity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Luminance">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="MagneticFieldStrength">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="MassDensity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="MassFlow">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="MolarEnergy">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="MolarEntropy">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="MolarHeatCapacity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="MomentOfForce">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="MomentOfInertia">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Momentum">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Permeability">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Permittivity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="PowerDensity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Radiance">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="RadiantIntensity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="SpecificEnergy">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="SpecificEntropy">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="SpecificHeatCapacity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="SpecificVolume">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Speed">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="SurfaceTension">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="ThermalConductivity">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="Volume">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="VolumeFlow">
+		<xs:restriction base="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="PulseDefn">
+		<xs:annotation>
+			<xs:documentation>The PulseDefn class defines an individual pulse</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="PulseDefns">
+		<xs:annotation>
+			<xs:documentation>The PulseDefns base class (see Table B.1) is used to define BSC signal properties that consist of a set of pulses. </xs:documentation>
+		</xs:annotation>
+		<xs:list itemType="PulseDefn"/>
+	</xs:simpleType>
+	<xs:simpleType name="enumCondition">
+		<xs:annotation>
+			<xs:documentation>Enumeration data type	enumCondition	std:enumCondition</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="_expression">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="NONE"/>
+					<xs:enumeration value="GT"/>
+					<xs:enumeration value="GE"/>
+					<xs:enumeration value="LE"/>
+					<xs:enumeration value="LT"/>
+					<xs:enumeration value="EQ"/>
+					<xs:enumeration value="NE"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+	<xs:simpleType name="enumMeasuredVariable">
+		<xs:annotation>
+			<xs:documentation>Enumeration data type	enumMeasuredVariable	std:enumMeasuredVariable</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="_expression">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="DEPENDENT"/>
+					<xs:enumeration value="INDEPENDENT"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+	<xs:simpleType name="enumPulseClass">
+		<xs:annotation>
+			<xs:documentation>Enumeration data type	enumPulseClass	std:enumPulseClass</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="_expression">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="NRZ"/>
+					<xs:enumeration value="RZ"/>
+					<xs:enumeration value="R1"/>
+					<xs:enumeration value="RZPulse"/>
+					<xs:enumeration value="BiPLevel"/>
+					<xs:enumeration value="BiPMark"/>
+					<xs:enumeration value="BiPSpace"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+	<xs:simpleType name="digitalString">
+		<xs:annotation>
+			<xs:documentation>Digital data type	BSTR	std:digitalString The digitalString comprises a list of digital characters separated with delimiters. Each comma ',' or semi-colon ';' is treated as a delimiter between blocks</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="_expression">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="(H|1|h|L|0|l|Z|X|;|,|\s)*"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+	<xs:simpleType name="pinString">
+		<xs:annotation>
+			<xs:documentation>A pin name shall be a contiguous string of characters which may include alphanumeric, hyphen and underscore characters. Pin names may not include a comma, semi-colon, or white-space character namely space, new-line, carriage-return, line-feed, and tab). </xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="_expression">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="([^;,\s]+|;|,|\s)*"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+	<xs:simpleType name="list_Physical">
+		<xs:annotation>
+			<xs:documentation>see Annex B	SAFEARRAY(Physical)	std:list_ Physical</xs:documentation>
+		</xs:annotation>
+		<xs:list itemType="Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="list_double">
+		<xs:annotation>
+			<xs:documentation>Real data type and Array data type	SAFEARRAY(double)	std:list_double</xs:documentation>
+		</xs:annotation>
+		<xs:list itemType="double"/>
+	</xs:simpleType>
+	<xs:simpleType name="list_int">
+		<xs:annotation>
+			<xs:documentation>Integer data type and Array data type	SAFEARRAY(long)	std:list_int</xs:documentation>
+		</xs:annotation>
+		<xs:list itemType="int"/>
+	</xs:simpleType>
+	<xs:simpleType name="list_long">
+		<xs:list itemType="long"/>
+	</xs:simpleType>
+	<xs:simpleType name="list_boolean">
+		<xs:annotation>
+			<xs:documentation>Boolean data type  Array data type	SAFEARRAY(VARIANT_BOOL)	std:list_boolean</xs:documentation>
+		</xs:annotation>
+		<xs:list itemType="boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="list_any">
+		<xs:annotation>
+			<xs:documentation>Data types and Array data type	SAFEARRAY(VARIANT)	std:list_any</xs:documentation>
+		</xs:annotation>
+		<xs:list itemType="any"/>
+	</xs:simpleType>
+	<xs:simpleType name="SAFEARRAY_BSTR">
+		<xs:restriction base="list_any"/>
+	</xs:simpleType>
+	<xs:simpleType name="SAFEARRAY_Physical">
+		<xs:restriction base="list_Physical"/>
+	</xs:simpleType>
+	<xs:simpleType name="SAFEARRAY_double">
+		<xs:restriction base="list_double"/>
+	</xs:simpleType>
+	<xs:simpleType name="SAFEARRAY_long">
+		<xs:restriction base="list_long"/>
+	</xs:simpleType>
+	<xs:simpleType name="SAFEARRAY_VARIANT">
+		<xs:restriction base="list_any"/>
+	</xs:simpleType>
+	<xs:simpleType name="int">
+		<xs:annotation>
+			<xs:documentation>Integer data type long	std:int</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="_expression xs:int"/>
+	</xs:simpleType>
+	<xs:simpleType name="long">
+		<xs:union memberTypes="_expression xs:long"/>
+	</xs:simpleType>
+	<xs:simpleType name="double">
+		<xs:annotation>
+			<xs:documentation>Real data type IEEE Std 754™ 2008 [B11] (binary64 format)	double	std:double</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="_expression xs:double"/>
+	</xs:simpleType>
+	<xs:simpleType name="boolean">
+		<xs:annotation>
+			<xs:documentation>Boolean data type	VARIANT_BOOL	std:boolean</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="_expression xs:boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="string">
+		<xs:union memberTypes="_expression xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="any">
+		<xs:annotation>
+			<xs:documentation>Data types	VARIANT	#any</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="string"/>
+	</xs:simpleType>
+	<xs:simpleType name="list_string">
+		<xs:list itemType="string"/>
+	</xs:simpleType>
+	<xs:simpleType name="SignalID">
+		<xs:restriction base="xs:ID"/>
+	</xs:simpleType>
+	<xs:simpleType name="SignalREF">
+		<xs:restriction base="xs:IDREF"/>
+	</xs:simpleType>
+	<xs:simpleType name="SignalREFS">
+		<xs:restriction base="xs:IDREFS"/>
+	</xs:simpleType>
+	<xs:complexType name="SignalFunctionType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>All BSCs originate from classes derived from the SignalFunction base class (see Table B.1). The SignalFunction class is described as a pure virtual class as it can only be used to derive classes rather than to create test objects</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="type" type="xs:string" use="optional"/>
+		<xs:attribute name="reftype" type="xs:string" use="optional"/>
+		<xs:attribute name="name" type="SignalID" use="required"/>
+		<xs:attribute name="In" type="SignalREFS" use="optional"/>
+		<xs:attribute name="channels" type="string" use="optional"/>
+		<xs:attribute name="Gate" type="SignalREF" use="optional"/>
+		<xs:attribute name="Sync" type="SignalREF" use="optional"/>
+		<xs:attribute name="Conn" type="SignalREFS" use="optional"/>
+		<xs:attribute name="pinsIn" type="pinString" use="optional"/>
+		<xs:attribute name="pinsOut" type="pinString" use="optional"/>
+		<xs:attribute name="pinsSync" type="pinString" use="optional"/>
+		<xs:attribute name="pinsGate" type="pinString" use="optional"/>
+		<xs:attribute ref="std:scriptEngine"/>
+		<xs:anyAttribute namespace="##other" processContents="strict"/>
+		<!--xs:anyAttribute namespace="##other" processContents="lax"/-->
+	</xs:complexType>
+	<xs:complexType name="SignalFunction" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="SignalFunctionType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Source" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Sources are the only BSCs from where signals can originate</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SignalFunction"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="NonPeriodic" abstract="true">
+		<xs:annotation>
+			<xs:documentation>NonPeriodic signals have no implicit period. They identify signals that do not repeat themselves.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Source"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Constant">
+		<xs:annotation>
+			<xs:documentation>A Constant signal retains its given level. See Figure B.4</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="NonPeriodic">
+				<xs:attribute name="amplitude" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>the level of the signal.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Step">
+		<xs:annotation>
+			<xs:documentation>A Step signal makes a transition from zero to a given level. See Figure B.5</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="NonPeriodic">
+				<xs:attribute name="amplitude" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>final value of step signal</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="startTime" type="Time" default="0.5s">
+					<xs:annotation>
+						<xs:documentation>defines when the step transition starts</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SingleTrapezoid">
+		<xs:annotation>
+			<xs:documentation>A SingleTrapezoid is a NonPeriodic signal defined by the geometric trapezoid shape. See Figure B.6</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="NonPeriodic">
+				<xs:attribute name="amplitude" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>value of pulse amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="startTime" type="Time" default="0s">
+					<xs:annotation>
+						<xs:documentation>time at which trapezoid starts relative to it initialization</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="riseTime" type="Time" default="0.25s">
+					<xs:annotation>
+						<xs:documentation>time taken to reach amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="pulseWidth" type="Time" default="0.5s">
+					<xs:annotation>
+						<xs:documentation>time that trapezoid is stable at amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="fallTime" type="Time" default="0.25s">
+					<xs:annotation>
+						<xs:documentation>Time taken to fall back to transient state</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Noise">
+		<xs:annotation>
+			<xs:documentation>Noise may be considered as unwanted disturbances superimposed upon a useful signal, which tend to obscure the signal’s information content. Noise may be genuinely random (as in white noise) or may be pseudo-random. Noise occurs across a range of frequencies and can be characterized by amplitude; it may take the form of a Sensor or Source signal. Pseudo-random noise is only of interest as a Source signal. In addition to amplitude, it also allows a frequency and an optional seed to be defined. See Figure B.7</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="NonPeriodic">
+				<xs:attribute name="amplitude" type="Physical" default="0"/>
+				<xs:attribute name="seed" type="int" default="0">
+					<xs:annotation>
+						<xs:documentation>used for pseudo-random noise</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="frequency" type="Frequency" default="50 Hz">
+					<xs:annotation>
+						<xs:documentation>upper bound frequency bandwidth for transient disturbances</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SingleRamp">
+		<xs:annotation>
+			<xs:documentation>A SingleRamp represents a linear transition from 0 to the defined amplitude level during a defined time period. See Figure B.8</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="NonPeriodic">
+				<xs:attribute name="amplitude" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>final value of ramp signal</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="riseTime" type="Time" default="1s">
+					<xs:annotation>
+						<xs:documentation>time for signal to reach final value</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="startTime" type="Time" default="0s">
+					<xs:annotation>
+						<xs:documentation>defines when the step transition starts</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Periodic" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Periodic signals are signals in which the amplitude value (a dependent variable) changes as a periodic function of time (an independent variable). These signals have an implicit period and frequency.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Source"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Sinusoid">
+		<xs:annotation>
+			<xs:documentation>A Sinusoid is a signal where the amplitude of the dependent variable is given by the formula in Equation B.1:</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Periodic">
+				<xs:attribute name="amplitude" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>Amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="frequency" type="Frequency" default="1Hz">
+					<xs:annotation>
+						<xs:documentation>Frequency</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="phase" type="PlaneAngle" default="0 rad">
+					<xs:annotation>
+						<xs:documentation>initial phase angle</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Trapezoid">
+		<xs:annotation>
+			<xs:documentation>A Trapezoidal signal is a Periodic signal that sequentially repeats the SingleTrapezoid. The period is defined by the duration of the SingleTrapezoid. All event times are referenced to local time, which is reset at the start of each pulse. See Figure B.10.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Periodic">
+				<xs:attribute name="amplitude" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>value of pulse amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="period" type="Time" default="1 s">
+					<xs:annotation>
+						<xs:documentation>time in which the signal repeats itself</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="riseTime" type="Time" default="0.25 s">
+					<xs:annotation>
+						<xs:documentation>time taken to reach amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="pulseWidth" type="Time" default="0.5 s">
+					<xs:annotation>
+						<xs:documentation>time that trapezoid is stable at amplitude</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="fallTime" type="Time" default="0.25 s">
+					<xs:annotation>
+						<xs:documentation>Time taken to fall back to transiant state</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Ramp">
+		<xs:annotation>
+			<xs:documentation>A Ramp signal is a Periodic signal whose instantaneous value follows a linear transition from zero to the defined amplitude during the riseTime, and back to zero during the remainder of the period. In the case that the period is less than the riseTime, the linear transition from zero will stop when the period is reached. See Figure B.11.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Periodic">
+				<xs:attribute name="amplitude" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>final level of the signal</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="period" type="Time" default="1s">
+					<xs:annotation>
+						<xs:documentation>time is which signal repeats itself</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="riseTime" type="Time" default="1s">
+					<xs:annotation>
+						<xs:documentation>Rise Time of ramp signal</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Triangle">
+		<xs:annotation>
+			<xs:documentation>A Triangle signal is a Periodic signal whose instantaneous value varies linearly and equally about 0. Duty cycle is a ratio between the time for which it increases to its positive value and the time for which it decreases to its negative value. Its parameters are defined by its amplitude, period, and duty cycle. See Figure B.12.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Periodic">
+				<xs:attribute name="amplitude" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>maximum amplitude level of the signal</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="period" type="Time" default="1s">
+					<xs:annotation>
+						<xs:documentation>time in which signal repeats itself</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="dutyCycle" type="Ratio" default="50%">
+					<xs:annotation>
+						<xs:documentation>ratio between time taken to increase from its minimum to its maximum value and the time for one period	</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SquareWave">
+		<xs:annotation>
+			<xs:documentation>A SquareWave is a Periodic signal whose amplitude (a dependent variable) alternately assumes one of two fixed values of amplitude. The amplitudes are equal to about 0, which is the reference base line. Duty cycle is a ratio between the time for which it remains at its positive value and the time for which it remains at its negative value. Its parameters are defined by its amplitude, period, and duty cycle. See Figure B.13</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Periodic">
+				<xs:attribute name="amplitude" type="Physical" default="0">
+					<xs:annotation>
+						<xs:documentation>Amplitude of signal</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="period" type="Time" default="1s">
+					<xs:annotation>
+						<xs:documentation>period of signal</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="dutyCycle" type="Ratio" default="50%">
+					<xs:annotation>
+						<xs:documentation>duty cycle of the wave</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WaveformRamp">
+		<xs:annotation>
+			<xs:documentation>A WaveformRamp is defined by a sampling interval and a list of values. The WaveformRamp cycles through those values sequentially and infinitely, starting from 0. The width of each window is the same, and each window consists of a Ramp signal. See Figure B.14.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Periodic">
+				<xs:attribute name="amplitude" type="Physical" default="1">
+					<xs:annotation>
+						<xs:documentation>amplitude of the output signal where the level factor (in points) </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="period" type="Time" default="1s">
+					<xs:annotation>
+						<xs:documentation>the time between each sequence	</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="samplingInterval" type="Time" default="0">
+					<xs:annotation>
+						<xs:documentation>the time between successive (points) outputs	</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="points" type="list_any">
+					<xs:annotation>
+						<xs:documentation>level factor of each waveform sample</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WaveformStep">
+		<xs:annotation>
+			<xs:documentation>A WaveformStep is defined by a sampling interval and a list of values. The WaveformStep cycles through those values sequentially and infinitely, starting from 0. The width of each window is the same, and each window consists of a line segment (i.e., a step signal). See Figure B.15.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Periodic">
+				<xs:attribute name="amplitude" type="Physical" default="1">
+					<xs:annotation>
+						<xs:documentation>amplitude of the output signal where the level factor (in points) </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="period" type="Time" default="1s">
+					<xs:annotation>
+						<xs:documentation>the time between each sequence</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="samplingInterval" type="Time" default="0">
+					<xs:annotation>
+						<xs:documentation>the time between successive (points) outputs	</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="points" type="list_any">
+					<xs:annotation>
+						<xs:documentation>level factor of each waveform sample	</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Conditioner" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Conditioners take one or more signal inputs and transform them to other signals or, as do Product or Sum, take multiple input signals and operate on these to produce a single signal output.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SignalFunction"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Filter" abstract="true">
+		<xs:annotation>
+			<xs:documentation>A Filter is a Conditioner that passes a defined set of frequencies from an input signal to produce an output signal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Conditioner"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BandPass">
+		<xs:annotation>
+			<xs:documentation>A BandPass Filter passes frequencies within the pass band from an input signal and filters out all frequencies outside of the band. The BandPass Filter is a symmetrical filter in which the rollOff values for the highpass and lowpass transition slopes are equal and opposite. The BandPass filter illustrated in Figure B.16 represents a perfect bandpass filter.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Filter">
+				<xs:attribute name="centerFrequency" type="Frequency" default="0">
+					<xs:annotation>
+						<xs:documentation>Center frequency of the filter's band</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="frequencyBand" type="Frequency" default="0">
+					<xs:annotation>
+						<xs:documentation>Bandwidth of filter. Zero implies narrowest band </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="gain" type="Ratio" default="0 dB">
+					<xs:annotation>
+						<xs:documentation> Aratio defining the scaling factor for the signal in the pass band </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="rollOff" type="Ratio" default="0">
+					<xs:annotation>
+						<xs:documentation>The rate at which the amplitude of the output signal will alter over frequency </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="passBandRipple" type="Ratio" default="0 dB">
+					<xs:annotation>
+						<xs:documentation>The maximum allowable variation in the amplitude of the passband signal </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="stopBandRipple" type="Ratio" default="0 dB">
+					<xs:annotation>
+						<xs:documentation>The maximum allowable variation in the amplitude of the stopband signal </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LowPass">
+		<xs:annotation>
+			<xs:documentation>The LowPass Filter suppresses all frequencies above the cutoff frequency. Frequencies below the cutoff frequency are passed to the output signal. The LowPass filter illustrated in Figure B.17 represents a perfect step filter.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Filter">
+				<xs:attribute name="cutoff" type="Frequency" default="0Hz">
+					<xs:annotation>
+						<xs:documentation>Cut off frequency filter. Zero implies DC offset</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="gain" type="Ratio" default="0 dB">
+					<xs:annotation>
+						<xs:documentation> Aratio defining the scaling factor for the signal in the pass band </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="rollOff" type="Ratio" default="0">
+					<xs:annotation>
+						<xs:documentation>The rate at which the amplitude of the output signal will alter over frequency </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="passBandRipple" type="Ratio" default="0 dB">
+					<xs:annotation>
+						<xs:documentation>The maximum allowable variation in the amplitude of the passband signal </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="stopBandRipple" type="Ratio" default="0 dB">
+					<xs:annotation>
+						<xs:documentation>The maximum allowable variation in the amplitude of the stopband signal </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="HighPass">
+		<xs:annotation>
+			<xs:documentation>The HighPass Filter suppresses all frequencies below the cutoff frequency. All frequencies above and including the cutoff frequency are passed (with equal gain) to the output signal. The HighPass Filter illustrated in Figure B.18 represents a perfect step filter. See Figure B.18.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Filter">
+				<xs:attribute name="cutoff" type="Frequency" default="0Hz">
+					<xs:annotation>
+						<xs:documentation>Start frequency of filter. Zero implies AC Coupled</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="gain" type="Ratio" default="0 dB">
+					<xs:annotation>
+						<xs:documentation> Aratio defining the scaling factor for the signal in the pass band </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="rollOff" type="Ratio" default="0">
+					<xs:annotation>
+						<xs:documentation>The rate at which the amplitude of the output signal will alter over frequency </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="passBandRipple" type="Ratio" default="0 dB">
+					<xs:annotation>
+						<xs:documentation>The maximum allowable variation in the amplitude of the passband signal </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="stopBandRipple" type="Ratio" default="0 dB">
+					<xs:annotation>
+						<xs:documentation>The maximum allowable variation in the amplitude of the stopband signal </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Notch">
+		<xs:annotation>
+			<xs:documentation>A Notch Filter blocks frequencies within the pass band from an input signal and passes  all frequencies outside of the band. The Notch Filter is a symmetrical filter in which the rollOff values for the highpass and lowpass transition slopes are equal and opposite. The Notch filter illustrated in Figure B.19 represents a perfect notch (bandstop) filter..</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Filter">
+				<xs:attribute name="centerFrequency" type="Frequency" default="0Hz">
+					<xs:annotation>
+						<xs:documentation>Center frrequency of the filter's notch</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="frequencyBand" type="Frequency" default="0Hz">
+					<xs:annotation>
+						<xs:documentation>Frequency band of filter. Zero implies minimum band</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="gain" type="Ratio" default="0 dB">
+					<xs:annotation>
+						<xs:documentation> Aratio defining the scaling factor for the signal in the pass band </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="rollOff" type="Ratio" default="0">
+					<xs:annotation>
+						<xs:documentation>The rate at which the amplitude of the output signal will alter over frequency </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="passBandRipple" type="Ratio" default="0 dB">
+					<xs:annotation>
+						<xs:documentation>The maximum allowable variation in the amplitude of the passband signal </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="stopBandRipple" type="Ratio" default="0 dB">
+					<xs:annotation>
+						<xs:documentation>The maximum allowable variation in the amplitude of the stopband signal </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Combiner" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Combiners take multiple input signals and combine them into a single output signal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Conditioner"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Sum">
+		<xs:annotation>
+			<xs:documentation>Sum makes signals from other signals by summing them together.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Combiner"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Product">
+		<xs:annotation>
+			<xs:documentation>Product makes signals from other signals by multiplying them together.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Combiner"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Diff">
+		<xs:annotation>
+			<xs:documentation>Diff makes a signal from other signals by subtracting the second and subsequent signals from the first signal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Combiner"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Modulator" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Modulator provides facilities to create a modulated signal where the modulation is proportional to the input signal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Conditioner"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FM">
+		<xs:annotation>
+			<xs:documentation>FM is a modulator where the instantaneous frequency of the sinusoidal carrier varies with the amplitude of the modulating input signal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Modulator">
+				<xs:attribute name="amplitude" type="Physical" default="1">
+					<xs:annotation>
+						<xs:documentation>Amplitude of  Sinusoidal Carrier wave</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="carrierFrequency" type="Frequency" default="1kHz">
+					<xs:annotation>
+						<xs:documentation>Frequency of Sinusoidal Carrier Wave</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="frequencyDeviation" type="Frequency" default="100Hz">
+					<xs:annotation>
+						<xs:documentation>Frequency deviation</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AM">
+		<xs:annotation>
+			<xs:documentation>AM is a modulator where the amplitude of the carrier varies with the amplitude of the modulating input signal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Modulator">
+				<xs:attribute name="modIndex" type="Ratio" default="0.3">
+					<xs:annotation>
+						<xs:documentation>Modulation Index</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="Carrier" type="SignalREFS"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PM">
+		<xs:annotation>
+			<xs:documentation>PM is a modulator where the phase of the sinusoidal carrier varies with the amplitude of the modulating input signal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Modulator">
+				<xs:attribute name="amplitude" type="Physical" default="1">
+					<xs:annotation>
+						<xs:documentation>Amplitude of  Sinusoidal Carrier wave</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="carrierFrequency" type="Frequency" default="1kHz">
+					<xs:annotation>
+						<xs:documentation>Frequency of Sinusoidal Carrier Wave</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="phaseDeviation" type="PlaneAngle" default="{pi/4}">
+					<xs:annotation>
+						<xs:documentation>Phase deviation</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Transformation" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Transformation takes a signal and transforms it (e.g., converting it from the time domain to the frequency domain). </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Conditioner"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SignalDelay">
+		<xs:annotation>
+			<xs:documentation>With SignalDelay, the In signal is delayed to become the Out signal, where the delay is defined by an initial fixed delay and where the delay may change over time.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Transformation">
+				<xs:attribute name="acceleration" type="Frequency" default="0">
+					<xs:annotation>
+						<xs:documentation>the rate at which the Rate will alter over time (Acceleration)</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="delay" type="Time" default="0">
+					<xs:annotation>
+						<xs:documentation>Fixed delay that signal will be delayed (Distance)</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="rate" type="Ratio" default="0">
+					<xs:annotation>
+						<xs:documentation>the rate at which the Delay will alter over time (Speed)</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Exponential">
+		<xs:annotation>
+			<xs:documentation>Exponential is a transformation that multiplies the input signal with a coefficient that decays exponentially over time. See Figure B.27.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Transformation">
+				<xs:attribute name="dampingFactor" type="double" default="1.0">
+					<xs:annotation>
+						<xs:documentation>value of damping factor</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="E">
+		<xs:annotation>
+			<xs:documentation>E is an exponential operation on a signal. See Figure B.28.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Transformation"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Ln">
+		<xs:annotation>
+			<xs:documentation>Ln is a natural logarithmic (inverse exponential) operation on a signal. See Figure B.29.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Transformation"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Negate">
+		<xs:annotation>
+			<xs:documentation>Negate modifies a signal so that its amplitude is the negative of the In signal amplitude. See Figure B.30</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Transformation"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Inverse">
+		<xs:annotation>
+			<xs:documentation>Inverse is the mathematical reciprocal of a signal. See Figure B.31.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Transformation"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PulseTrain">
+		<xs:annotation>
+			<xs:documentation>PulseTrain creates a train of pulses of the In signal by multiplying the input signal with the amplitude of the pulses.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Transformation">
+				<xs:attribute name="pulses" type="PulseDefns">
+					<xs:annotation>
+						<xs:documentation>list of pulses</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="repetition" type="int" default="0"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Attenuator">
+		<xs:annotation>
+			<xs:documentation>Attenuator scales the amplitude (a dependent variable) of the In signal and allows both the increase and decrease of the signal. See Figure B.33.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Transformation">
+				<xs:attribute name="gain" type="Ratio" default="1.0"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Load">
+		<xs:annotation>
+			<xs:documentation>Load provides an impedance to load a signal. See Figure B.34.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Transformation">
+				<xs:attribute name="resistance" type="Resistance" default="0 Ohm"/>
+				<xs:attribute name="reactance" type="Reactance" default="0 Ohm"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Limit">
+		<xs:annotation>
+			<xs:documentation>Limit restricts the values of the signal to ± the limit value.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Transformation">
+				<xs:attribute name="limit" type="Physical" default="1">
+					<xs:annotation>
+						<xs:documentation>limits the absolute value of the signal to +/- limit value</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FFT">
+		<xs:annotation>
+			<xs:documentation>FFT (i.e., Fourier transform) characterizes time domain signals in the frequency domain. It is more restricted than the other BSC signal combination mechanisms. It uses a number of samples (which is rounded up to the nearest power of 2), the time over which the signal will be sampled, and the signal to be converted.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Transformation">
+				<xs:attribute name="samples" type="int" default="1023"/>
+				<xs:attribute name="interval" type="Time" default="1s"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EventFunction" abstract="true">
+		<xs:annotation>
+			<xs:documentation>An EventFunction creates and manipulates events. Events are signals without value information, where the important information is when they become active and inactive.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SignalFunction"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EventSource" abstract="true">
+		<xs:annotation>
+			<xs:documentation>EventSources generate events.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EventFunction"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Clock">
+		<xs:annotation>
+			<xs:documentation>Clock generates an event at regular intervals. Each event is active for the first half of the clock period. See Figure B.37.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EventSource">
+				<xs:attribute name="clockRate" type="Frequency" default="1Hz">
+					<xs:annotation>
+						<xs:documentation>Frequency of the clock.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TimedEvent">
+		<xs:annotation>
+			<xs:documentation>TimedEvent generates an Out event at regular intervals. Each event is active for a specific duration. If the duration is longer than the event interval (Every), the Out event is signaled active at each interval, but never becomes paused. See Figure B.38.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EventSource">
+				<xs:attribute name="delay" type="Time" default="0s">
+					<xs:annotation>
+						<xs:documentation>the delay time before the first event will be start</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="duration" type="Time" default="1s">
+					<xs:annotation>
+						<xs:documentation>the duration that each event is active</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="period" type="Time" default="1s">
+					<xs:annotation>
+						<xs:documentation>the time interval for each event</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="repetition" type="int" default="0"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PulsedEvent">
+		<xs:annotation>
+			<xs:documentation>PulsedEvent generates an Out event in the form of a sequence of timing pulses primarily intended for use in generating Source signals. The sequence consists of a train of N pulses (where N may be any integer greater than 0). Where N is greater than 1, the pulses may be of unequal duration and spacing. The pulse train may be either output once or repeated infinitely and continuously for a periodic timing sequence. See Figure B.39.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EventSource">
+				<xs:attribute name="pulses" type="PulseDefns">
+					<xs:annotation>
+						<xs:documentation>list of pulses</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="repetition" type="int" default="0"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EventConditioner" abstract="true">
+		<xs:annotation>
+			<xs:documentation>EventConditioner takes a signal or event and outputs the event when the event conditions occur. EventConditioner allows events to be created and modified, based on the action of the events and signals</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EventFunction"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EventedEvent">
+		<xs:annotation>
+			<xs:documentation>EventedEvent conditioner allows events to be combined to produce complex event streams.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EventConditioner"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EventCount">
+		<xs:annotation>
+			<xs:documentation>EventCount filters out input events to only allow every count input event. See Figure B.41.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EventConditioner">
+				<xs:attribute name="count" type="int" default="0">
+					<xs:annotation>
+						<xs:documentation>Identifies the number of events that must happen before a event is generated</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ProbabilityEvent">
+		<xs:annotation>
+			<xs:documentation>ProbabilityEvent conditioner generates an event stream based upon the event stream present at the In event. It will replicate the same timing information, but will randomly suppress In pulses. Conceptually, the ProbabilityEvent comprises a random number generator and a comparator. At each event, the comparator compares the random number with the value of the attribute “probability” to determine whether to generate an event in the Out event stream. A seed is included so that the user can reliably reproduce test results. See Figure B.42.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EventConditioner">
+				<xs:attribute name="seed" type="int" default="0"/>
+				<xs:attribute name="probability" type="Ratio" default="50"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="NotEvent">
+		<xs:annotation>
+			<xs:documentation>The NotEvent conditioner is active when the In signal is not active. See Figure B.43.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EventConditioner"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Logical" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Logical event conditioners take multiple input event streams and combine them into a single event stream.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EventConditioner"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OrEvent">
+		<xs:annotation>
+			<xs:documentation>OrEvent is active when any In events are active.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Logical"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="XOrEvent">
+		<xs:annotation>
+			<xs:documentation>XOrEvent  is active when an odd number of In events is active.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Logical"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AndEvent">
+		<xs:annotation>
+			<xs:documentation>AndEvent is active when all In events are active.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Logical"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Sensor" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Sensors allow signal characteristics to be measured, monitored, and compared. A Sensor takes an input signal and generates measurement values. Any Sensor can be applied to any signal; however, the resultant value only has meaning when applied to the correct type of signal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SignalFunction">
+				<xs:attribute name="measuredVariable" type="enumMeasuredVariable" default="DEPENDENT">
+					<xs:annotation>
+						<xs:documentation>Whether the measurement made is of the dependent or independent variable. </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="measurement" type="any">
+					<xs:annotation>
+						<xs:documentation>Current value measured</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="measurements" type="list_any">
+					<xs:annotation>
+						<xs:documentation>Array of measurements made</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="samples" type="int" default="1">
+					<xs:annotation>
+						<xs:documentation>Number of consecutive measurement to be made. Zero indicates no measurement to be taken and indicates the Sensor is acting as a monitor only</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="count" type="int">
+					<xs:annotation>
+						<xs:documentation>Readonly number of measurements currently made</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="gateTime" type="double">
+					<xs:annotation>
+						<xs:documentation>Continuous range of independent variable (Time) over which measurement is made.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="nominal" type="Physical">
+					<xs:annotation>
+						<xs:documentation>Value against which any condition is checked. This can be either an absolute value (5V) or a ratio value (50%) representing the percentage value between the low-peak and high-peak values.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="condition" type="enumCondition" default="NONE">
+					<xs:annotation>
+						<xs:documentation>Test made between measurement and nominal value</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="GO" type="int">
+					<xs:annotation>
+						<xs:documentation>Read Only flag indicating last measurement Pass/Fail Status. If no measurement is taken GO is False</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="NOGO" type="int">
+					<xs:annotation>
+						<xs:documentation>Read Only flag indicating last measurement Pass/Fail Status If no measurement is taken GO is False.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="HI" type="int">
+					<xs:annotation>
+						<xs:documentation>Read Only flag indicating the last measurement High/Low Status.  If no measurement is taken HI is False</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="LO" type="int">
+					<xs:annotation>
+						<xs:documentation>Read Only flag indicating the last measurement High/Low Status.  If no measurement is taken LO is False</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="UL" type="Physical">
+					<xs:annotation>
+						<xs:documentation>Upper Limit value against which condition is checked</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="LL" type="Physical">
+					<xs:annotation>
+						<xs:documentation>Lower Limit value against which condition is checked</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="As" type="SignalREFS">
+					<xs:annotation>
+						<xs:documentation>reference to a Signal representing signal model of input signal</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Counter">
+		<xs:annotation>
+			<xs:documentation>For all Sensors, every time a measurement is taken, the attribute “count” is incremented. Counter is a Sensor that counts when a measurement would be taken, but does not take any specific measurement.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Sensor"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Interval">
+		<xs:annotation>
+			<xs:documentation>Interval measures the interval between the In/Sync event going active and the Gate event going active.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Sensor"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Instantaneous">
+		<xs:annotation>
+			<xs:documentation>Instantaneous measures the amplitude (i.e., value) of the signal in the dimension “type” at specified instances in time.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Sensor"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RMS">
+		<xs:annotation>
+			<xs:documentation>RMS measures the root-mean-square (rms) value of a signal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Sensor"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Average">
+		<xs:annotation>
+			<xs:documentation>Average is the arithmetic mean of all the signal values during the gate time.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Sensor"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PeakToPeak">
+		<xs:annotation>
+			<xs:documentation>PeakToPeak is the difference between the highest value and the lowest value during the gate time.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Sensor"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Peak">
+		<xs:annotation>
+			<xs:documentation>Peak is the measured value which is furthest away from the mean value.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Sensor"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PeakPos">
+		<xs:annotation>
+			<xs:documentation>PeakPos is the value obtained by subtracting the mean value from the maximum measurement of the signal during the gate time.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Sensor"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PeakNeg">
+		<xs:annotation>
+			<xs:documentation>PeakNeg measurement is the value obtained by subtracting the mean value from the minimum measurement of the signal during the gate time.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Sensor"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MaxInstantaneous">
+		<xs:annotation>
+			<xs:documentation>MaxInstantaneous measurement is the maximum measurement of the signal during the gate time.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Sensor"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MinInstantaneous">
+		<xs:annotation>
+			<xs:documentation>MinInstantaneous measurement is the minimum measurement of the signal during the gate time.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Sensor"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Measure">
+		<xs:annotation>
+			<xs:documentation>The Measure BSC measures any control attribute, as opposed to a capability attribute, of a BSC or TSF, or input signal value of a BSC or TSF.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Sensor">
+				<xs:attribute name="attribute" type="string">
+					<xs:annotation>
+						<xs:documentation>Attribute of the signal that is to be measured</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Decode">
+		<xs:annotation>
+			<xs:documentation>Decode converts a stream of bits represented by events into data information via bit values. </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Sensor">
+				<xs:attribute name="datatype" type="string">
+					<xs:annotation>
+						<xs:documentation>The measurement's resultant variant's datatype </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="encoding" type="xs:string" default="UTF-8">
+					<xs:annotation>
+						<xs:documentation>Character set used. This attribute allows alternative character set mappings and code pages to be applied </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Control" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Control is a class of signal that modifies the signal model depending on the Select value. The Control inputs (In) represent the various signal alternatives available, which are selected in turn as the selector changes and, if no Gate is provided, an output corresponding to the selected input is produced. If a Gate is provided, the output is only produced when the Gate event becomes Active.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SignalFunction"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SelectIf">
+		<xs:annotation>
+			<xs:documentation>SelectIf converts a single channel event stream into a physical signal</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Control">
+				<xs:attribute name="Selector" type="SignalREFS">
+					<xs:annotation>
+						<xs:documentation>the digital event stream.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SelectCase">
+		<xs:annotation>
+			<xs:documentation>SelectCase converts a multichannel digital stream into a physical signal</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Control">
+				<xs:attribute name="Selector" type="SignalREFS">
+					<xs:annotation>
+						<xs:documentation>the digital event stream.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="mask" type="int" default="0">
+					<xs:annotation>
+						<xs:documentation>selector channel mask, identifies which channels of the selector shall be used to select the input , the value can be expressed as a decimal (13) or hex value (0xC) to identify the binary pattern "1101" selecting channels 1,3 and 4.. A value of 0 implies all channels </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Encode">
+		<xs:annotation>
+			<xs:documentation>Encode provides a basic digital signal as a stream of bits derived from the data information, where the bit value 0 is represented by the event state InActive or digital L and bit value 1 is represented by the event state Active or digital H. The tri-state/Digital Z/gated Off are all identical and can not generally be deduced from the data information.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Control">
+				<xs:attribute name="data" type="any">
+					<xs:annotation>
+						<xs:documentation>The information to be streamed, or the URI identifying location of information. The type of the Variant defines the data type. When using XML descriptions, the attribute datatype shall be used to define a valid datatype</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="width" type="int" default="0">
+					<xs:annotation>
+						<xs:documentation>The number of output channels. Zero indicates that the number of outputs is the minimum required to represents a complete data symbol</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="repetition" type="int" default="1">
+					<xs:annotation>
+						<xs:documentation>the number of times the data is output. Zero indicates that the sequence is repeated indefinitely </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="datatype" type="string">
+					<xs:annotation>
+						<xs:documentation>Used in the XML to define the base type of the data.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="encoding" type="string" default="UTF-8">
+					<xs:annotation>
+						<xs:documentation>Character set used. This attribute allows alternative character set mappings and code pages to be applied </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Channels">
+		<xs:annotation>
+			<xs:documentation>Channels combines multiple signals into a single multiple channel signal</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Control">
+				<xs:attribute name="channelNames" type="pinString">
+					<xs:annotation>
+						<xs:documentation>List of pin names associated with each channel</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Digital" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Digital is a class of signal that represents one of two values (which are sometimes called by names such as true and false, low and high, 1 and 0, etc.), which can be gated off into a tri-state. A digital signal is a collection of one or more event signals, which can be converted into a range of physical signals.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SignalFunction"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SerialDigital">
+		<xs:annotation>
+			<xs:documentation>SerialDigital provides a (digital) control signal. These signals may take the form of a low signal, a high signal, or no signal (i.e., high impedance). They are defined by the characters L, H, Z, and X (“don’t care”) in a character string.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Digital">
+				<xs:attribute name="data" type="digitalString">
+					<xs:annotation>
+						<xs:documentation>String containing characters 'H', 'L', 'Z', 'X', '0', '1' identifying digital state. Commas or semi-colons may be used to indicate blocks of data</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="period" type="Time" default="1">
+					<xs:annotation>
+						<xs:documentation>Digital Clock Rate</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="logic_H_value" type="Voltage" default="1">
+					<xs:annotation>
+						<xs:documentation>Analog Logic High (1)</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="logic_L_value" type="Voltage" default="0">
+					<xs:annotation>
+						<xs:documentation>Analog Logic Low (0)</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="pulseClass" type="enumPulseClass" default="NRZ">
+					<xs:annotation>
+						<xs:documentation>Pulse Class type</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ParallelDigital">
+		<xs:annotation>
+			<xs:documentation>ParallelDigital provides parallel streams of [digital] control signals. These signals may take the form of a low signal, a high signal, or no signal (i.e., high impedance). They are represented by the characters L, H, Z and X in an array of character strings. The output is multi-channeled, and the number of channels is defined by the width of digital statements.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Digital">
+				<xs:attribute name="data" type="digitalString">
+					<xs:annotation>
+						<xs:documentation>where each string String containing characters 'H', 'L', 'Z', 'X', '0', '1' identifying digital state. Commas or semi-colons are used to indicate the start of a new parallel pattern. Incomplete strings are assumed to be padded out with 'Z's to the full pattern width. A comma (or multiple commas) at the end of the string indicates that the final pattern is all 'Z's. </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="period" type="Time" default="1">
+					<xs:annotation>
+						<xs:documentation>Digital Clock Rate</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="logic_H_value" type="Voltage" default="1">
+					<xs:annotation>
+						<xs:documentation>Analog Logic High (1)</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="logic_L_value" type="Voltage" default="0">
+					<xs:annotation>
+						<xs:documentation>Analog Logic low (0)</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="pulseClass" type="enumPulseClass" default="NRZ">
+					<xs:annotation>
+						<xs:documentation>Pulse Class type</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Connection" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Connection is the base class that collects signals into multiple channels.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SignalFunction">
+				<xs:attribute name="channelWidth" type="int">
+					<xs:annotation>
+						<xs:documentation>maximum number of channels allowed to be connected</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TwoWire">
+		<xs:annotation>
+			<xs:documentation>TwoWire is a two-wire connection in which the hi terminal represents the hot, or live, side of a circuit and the lo terminal represents the cold, or return, side of the circuit.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Connection">
+				<xs:attribute name="hi" type="pinString"/>
+				<xs:attribute name="lo" type="pinString"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TwoWireComp">
+		<xs:annotation>
+			<xs:documentation>TwoWireComp is a two-wire connection in which the true terminal represents the true signal for a differential digital signal and the comp terminal represents the complement signal for the differential digital signal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Connection">
+				<xs:attribute name="true" type="pinString"/>
+				<xs:attribute name="comp" type="pinString"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ThreeWireComp">
+		<xs:annotation>
+			<xs:documentation>ThreeWireComp is a three-wire connection in which the true terminal represents the true signal for a differential digital signal, the comp terminal represents the complement signal for the differential digital signal, and the lo terminal represents a ground, or screen, connection.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Connection">
+				<xs:attribute name="true" type="pinString"/>
+				<xs:attribute name="comp" type="pinString"/>
+				<xs:attribute name="lo" type="pinString"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SinglePhase">
+		<xs:annotation>
+			<xs:documentation>SinglePhase is a two-wire connection in which terminal a represents the live connection to one phase of a one-phase (or more) circuit and the terminal n represents the neutral connection to the circuit.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Connection">
+				<xs:attribute name="a" type="pinString"/>
+				<xs:attribute name="n" type="pinString"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TwoPhase">
+		<xs:annotation>
+			<xs:documentation>TwoPhase is a three-wire connection in which terminal a represents the live connection to one phase of a two-phase (or more) circuit, terminal b represents the live connection to the second phase of a two-phase (or more) circuit, and terminal n represents the neutral connection to the circuit.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Connection">
+				<xs:attribute name="a" type="pinString"/>
+				<xs:attribute name="b" type="pinString"/>
+				<xs:attribute name="n" type="pinString"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ThreePhaseDelta">
+		<xs:annotation>
+			<xs:documentation>ThreePhaseDelta is a three-wire connection in which terminal a represents the live connection to one phase of a three-phase circuit, terminal b represents the live connection to the second phase of a three-phase circuit, and terminal c represents the live connection to the third phase of a three-phase circuit. There is no neutral connection to the circuit.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Connection">
+				<xs:attribute name="a" type="pinString"/>
+				<xs:attribute name="b" type="pinString"/>
+				<xs:attribute name="c" type="pinString"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ThreePhaseWye">
+		<xs:annotation>
+			<xs:documentation>ThreePhaseWye is a four-wire connection in which terminal a represents the live connection to one phase of a three-phase circuit, terminal b represents the live connection to the second phase of a three-phase circuit, terminal c represents the live connection to the third phase of a three-phase circuit, and terminal n represents the neutral connection to the circuit.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Connection">
+				<xs:attribute name="a" type="pinString"/>
+				<xs:attribute name="b" type="pinString"/>
+				<xs:attribute name="c" type="pinString"/>
+				<xs:attribute name="n" type="pinString"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ThreePhaseSynchro">
+		<xs:annotation>
+			<xs:documentation>ThreePhaseSyncro is a three-wire connection for use with the three-stator outputs of a Synchro.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Connection">
+				<xs:attribute name="x" type="pinString"/>
+				<xs:attribute name="y" type="pinString"/>
+				<xs:attribute name="z" type="pinString"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FourWireResolver">
+		<xs:annotation>
+			<xs:documentation>FourWireResolver is a four-wire connection for use with the four-stator terminals of a Resolver.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Connection">
+				<xs:attribute name="s1" type="pinString"/>
+				<xs:attribute name="s2" type="pinString"/>
+				<xs:attribute name="s3" type="pinString"/>
+				<xs:attribute name="s4" type="pinString"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SynchroResolver">
+		<xs:annotation>
+			<xs:documentation>SynchroResolver consists of up to four connections for use with the rotor terminals of a Synchro or Resolver.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Connection">
+				<xs:attribute name="r1" type="pinString"/>
+				<xs:attribute name="r2" type="pinString"/>
+				<xs:attribute name="r3" type="pinString"/>
+				<xs:attribute name="r4" type="pinString"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Series">
+		<xs:annotation>
+			<xs:documentation>A series connection “via” is used when only one connection is required at the test subject.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Connection">
+				<xs:attribute name="via" type="pinString"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FourWire">
+		<xs:annotation>
+			<xs:documentation>FourWire is a four-wire connection in which the hi terminal represents the hot, or live, side of a circuit, the lo terminal represents the cold, or return, side of the circuit, refHi represents a terminal for a reference associated with the hi terminal and the refLo represents a terminal for a reference associated with the lo terminal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Connection">
+				<xs:attribute name="hi" type="pinString"/>
+				<xs:attribute name="lo" type="pinString"/>
+				<xs:attribute name="hiRef" type="pinString"/>
+				<xs:attribute name="loRef" type="pinString"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="NonElectrical">
+		<xs:annotation>
+			<xs:documentation>NonElectrical is a connection for use with nonelectrical signals (such as the connection of fluids and gasses).</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Connection">
+				<xs:attribute name="to" type="pinString"/>
+				<xs:attribute name="from" type="pinString"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DigitalBus">
+		<xs:annotation>
+			<xs:documentation>DigitalBus is a connection comprising one or more terminals. One terminal is used for each simultaneous (i.e., parallel) digital data channel.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Connection">
+				<xs:attribute name="pins" type="pinString">
+					<xs:annotation>
+						<xs:documentation>List of pin names associated with each channel</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:attribute name="minInclusive">
+		<xs:annotation>
+			<xs:documentation>Global attributes minInclusive and maxInsclusive in place of the W3C XSD minInclusive and maxInclusive elements, e.g., <xs:restriction base="PlaneAngle" std:minInclusive="0" std:maxInclusive="2*pi rad"/>
+			</xs:documentation>
+		</xs:annotation>
+	</xs:attribute>
+	<xs:attribute name="maxInclusive">
+		<xs:annotation>
+			<xs:documentation>Global attributes minInclusive and maxInsclusive in place of the W3C XSD minInclusive and maxInclusive elements, e.g., <xs:restriction base="PlaneAngle" std:minInclusive="0" std:maxInclusive="2*pi rad"/>
+			</xs:documentation>
+		</xs:annotation>
+	</xs:attribute>
+	<xs:attribute name="scriptEngine" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>The global attribute "std scriptEngine" may be used. The rule is that the default engine supports the SML definitions until overwritten by a new value. This new value remains in place for the current scope until over-written by a new value. </xs:documentation>
+		</xs:annotation>
+	</xs:attribute>
+	<xs:element name="Signal">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Ins" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Preferred method of defining inputs. Allows multiple definitions with input signals for In, Gate, Sync or user defined</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:choice minOccurs="0" maxOccurs="unbounded">
+							<xs:element name="In">
+								<xs:annotation>
+									<xs:documentation>Defines an individual Input as either a system input In, Gate, Sync or user defined. This field overrides any values specified in the legacy signal attribute values of In</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="name" type="SignalID" use="required"/>
+									<xs:attribute name="maxChannels" type="xs:int" use="optional" default="0"/>
+									<xs:attribute name="In" use="optional">
+										<xs:annotation>
+											<xs:documentation>If used;specifies the type of system input;
+e.g. In, Gate,Sync.
+
+Gate can only appear once in the list of Ins 
+Sync can only appear once in the list of Ins </xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="In"/>
+												<xs:enumeration value="Gate"/>
+												<xs:enumeration value="Sync"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="Constant" type="Constant">
+						<xs:annotation>
+							<xs:documentation>A constant signal retains its given level.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Step" type="Step">
+						<xs:annotation>
+							<xs:documentation>A Step signal has two properties: the start time of the transition and the final amplitude level. The step transition is regarded as instantaneous. Before start time, the value is 0; after start time, the value is the amplitude.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SingleTrapezoid" type="SingleTrapezoid">
+						<xs:annotation>
+							<xs:documentation>A SingleTrapezoid may have zero values for any of its properties. The trapezoid is regarded as its geometric shape.
+Its properties are defined by its amplitude and the times that bound each signal segment of start time, rise time, pulse width, and fall time
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Noise" type="Noise">
+						<xs:annotation>
+							<xs:documentation>Noise is the term most frequently applied to the limiting case where the number of transient disturbances per unit time is large. 
+Noise has amplitude, frequency, and seed as parameters, of the type of the dependent variable, and has a recurring pattern as determined by the generating algorithms and the seed. These parameters define the mean frequency and amplitude of the transient disturbances.
+The pseudo-random effect applies only to multiple sequences of the same implementation, and different implementations will give different pseudo-random values. A seed value of 0 implies true random noise. Therefore, it could be generated from a thermal noise generator and is not necessarily repeatable.
+The frequency attribute provides the bandwidth of the frequency spectrum of the noise. The use of zero (0 Hz) implies noise is independent of frequencies, i.e., white noise.
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SingleRamp" type="SingleRamp">
+						<xs:annotation>
+							<xs:documentation>A SingleRamp takes the form of a linear signal with the transition time defining the event window of that signal. The slope of the linear signal is defined by the difference between the amplitudes divided by the transition time. In a high-to-low transition, the gradient is negative; and in a low-to-high transition, the gradient is positive.during a defined time period.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Sinusoid" type="Sinusoid">
+						<xs:annotation>
+							<xs:documentation>Sinusoid has amplitude, frequency, and phase as parameters. The amplitude has the type of the dependent variable, the frequency is of type Frequency, and the initial phase angle is a PlaneAngle. See Figure B.9.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Trapezoid" type="Trapezoid">
+						<xs:annotation>
+							<xs:documentation>A Trapezoid signal represents the trapezoidal geometric shape. The continuous signal always starts on the rising edge, and the trapezoid is repeated every period even if the trapezoid has not been completed.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Ramp" type="Ramp">
+						<xs:annotation>
+							<xs:documentation>A Ramp Signal is a periodic signal whose instantaneous value varies alternately and linearly between two specified values.  Its parameters are defined by its amplitude, the time to rise from zero and the period.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Triangle" type="Triangle">
+						<xs:annotation>
+							<xs:documentation>Triangle signal has amplitude and period as parameters. The amplitude has the type of the dependent variable; the period is of type Time.
+NOTE—The value of the attribute dutyCycle is a ratio, which can include values outside of the range of 0% to 100% (i.e., 0 to 1).  The use of values outside of the range of 0% to 100% may have unintended effects upon the signal.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SquareWave" type="SquareWave">
+						<xs:annotation>
+							<xs:documentation>SquareWave has amplitude and period as parameters. The amplitude has the type of the dependent variable; the period is of type Time.
+NOTE—The value of the attribute dutyCycle is a ratio, which can include values outside of the range of 0% to 100% (i.e., 0 to 1).  The use of values outside of the range of 0% to 100% may have unintended effects upon the signal.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="WaveformRamp" type="WaveformRamp">
+						<xs:annotation>
+							<xs:documentation>WaveformRamp takes the form of a sequence of linear signals with the sampling interval defining the event window. The slope of the linear signal is defined by the difference between the previous point and the current point divided by the sampling interval. In a high-to-low transition, the slope is negative; and in a low-to-high transition, the slope is positive. The offset is defined by the previous point. WaveformRamp cycles through the points sequentially and continuously.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="WaveformStep" type="WaveformStep">
+						<xs:annotation>
+							<xs:documentation>WaveformStep takes the form of a sequence of constant signals. The level of the constant signal is defined by the points, and a transition in level occurs at each increment of the sampling interval. WaveformStep cycles through the points sequentially and continuously.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BandPass" type="BandPass">
+						<xs:annotation>
+							<xs:documentation>In the case of the pure filter, the output (eout) is given as defined in Equation B.2 and Equation B.3:</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="LowPass" type="LowPass">
+						<xs:annotation>
+							<xs:documentation>In the case of the pure filter, the output (eout) is given as defined in Equation B.4 and Equation B.5:</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="HighPass" type="HighPass">
+						<xs:annotation>
+							<xs:documentation>In the case of the pure filter, the output (eout) is given as defined in Equation B.6 and Equation B.7:</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Notch" type="Notch">
+						<xs:annotation>
+							<xs:documentation>In the case of the pure filter, the output (eout) is given as defined in Equation B.8 and Equation B.9:</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Sum" type="Sum">
+						<xs:annotation>
+							<xs:documentation>Figure B.20 shows the sum of two sinusoidal signals, one with an amplitude of 1 V and a frequency of 30 Hz and the other with an amplitude of 1 V and a frequency of 960 Hz.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Product" type="Product">
+						<xs:annotation>
+							<xs:documentation>Figure B.21 shows the product of two sinusoidal signals, one with an amplitude of 1 V and a frequency of 30 Hz and the other with an amplitude of 1 V and a frequency of 960 Hz).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Diff" type="Diff">
+						<xs:annotation>
+							<xs:documentation>Figure B.22 shows the difference between two sinusoidal signals, one with an amplitude of 1 V and a frequency of 30 Hz and the other with an amplitude of 1 V and a frequency of 960 Hz.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="FM" type="FM">
+						<xs:annotation>
+							<xs:documentation>The instantaneous frequency of a signal is defined as rate of change of φ (dφ/dt). For FM, the general solution is given as defined in Equation B.10:</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AM" type="AM">
+						<xs:annotation>
+							<xs:documentation>The formula for AM signal is given in Equation B.12:</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PM" type="PM">
+						<xs:annotation>
+							<xs:documentation>The formula for PM signal is given in Equation B.14:</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SignalDelay" type="SignalDelay">
+						<xs:annotation>
+							<xs:documentation>SignalDelay can be applied to both signals and events. The SignalDelay can be used for two distinct operations on the input signal:
+1)	Delay signals (delay)
+2)	Change the time base (rate, acceleration)
+Both these operations can be combined into a single SignalDelay.
+The delay at time t (td) between the input and output is calculated from the initialization time (t0) as defined in Equation B.16:</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Exponential" type="Exponential">
+						<xs:annotation>
+							<xs:documentation>Any signal may be damped over a given time, according to a floating-point damping factor. An Exponential is determined by the damping factor, using the expression e-t/τ, where τ is equal to the damping factor.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="E" type="E">
+						<xs:annotation>
+							<xs:documentation>The output of the signal may be expressed by Equation B.17:</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Ln" type="Ln">
+						<xs:annotation>
+							<xs:documentation>The output of the signal may be expressed by Equation B21:</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Negate" type="Negate">
+						<xs:annotation>
+							<xs:documentation>The output of the signal may be expressed by Equation B.18:</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Inverse" type="Inverse">
+						<xs:annotation>
+							<xs:documentation>The output of the signal may be expressed by Equation B.19:</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PulseTrain" type="PulseTrain">
+						<xs:annotation>
+							<xs:documentation>Figure B.32 shows the creation of a PulseTrain where the In signal is a sinusoid of amplitude 1 V with a frequency of 30 Hz and the pulses are defined by the PulseDefns [(0.2, 0.5, 0.5), (0.4, 0.3, 0.5)]. The default repetition value of 0 is assumed.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Attenuator" type="Attenuator">
+						<xs:annotation>
+							<xs:documentation>The output of the signal may be expressed by Equation B.20:</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Load" type="Load">
+						<xs:annotation>
+							<xs:documentation>Load provides an impedance, defined in terms of resistance and reactance, which can load a signal. 
+The Load does not modify a signal but is used to indicate an impedance required to ensure the correct operation of a signal at its point of connection. It is not to be used as a circuit element, in which case a Constant of type Impedance may be used.
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Limit" type="Limit">
+						<xs:annotation>
+							<xs:documentation>Limit has a generic type. Therefore, using a Limit(Voltage) on a voltage signal limits the signal voltage. Using a Limit(Current) on a voltage signal restricts the voltage to limit the current  using the equation V=IR. Using Limit(Power) restricts the voltage to limit the power using the expression I.V.
+Figure B.35 shows the effect of a limit of 0.90 V on a sinusoid of amplitude 1 V and frequency 30 Hz. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="FFT" type="FFT">
+						<xs:annotation>
+							<xs:documentation>The number of samples used is always the next power of 2.
+FFT converts time to frequency domain signals, useful for measuring frequency characteristics or performing signal analysis. The FFT returns the magnitude of the value of the signal within each frequency band, where the frequency band is defined by 1/interval, and the axis defined from 0 Hz to the Nyquist frequency defined by half of the sampling frequency (samples/(2 × interval)).
+FFT loses any signal phase information because it provides only real values and does not provide any complex components.
+NOTE—the use of the FFT as a transform is deprecated, as it is no longer considered to be a transformation of a signal, but a method of providing the characteristics of a signal in the frequency domain. Signal transformation is inherent in the standard for related physical types and reference types (see B.3.3).
+Figure B.36 shows the FFT of a phase-modulated signal where the carrier has a frequency of 960 Hz with an amplitude of 1 V and the modulating signal has a frequency of 30 Hz.
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Clock" type="Clock">
+						<xs:annotation>
+							<xs:documentation>Clock generates an event at regular intervals. Each event is active for the first half of the Clock period.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TimedEvent" type="TimedEvent">
+						<xs:annotation>
+							<xs:documentation>TimedEvent generates an OutEvent at regular intervals. Each event is active for a specific duration, if the duration is longer that than the event interval (Every) the OutEvent is signaled Active at each interval but never becomes Paused.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PulsedEvent" type="PulsedEvent">
+						<xs:annotation>
+							<xs:documentation>Changes in state (e.g., pulse start and stop) are specified from t = 0. Cycling is facilitated by resetting the time (t) to 0.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EventedEvent" type="EventedEvent">
+						<xs:annotation>
+							<xs:documentation>EventedEvent uses multiple inputs to successively enable and disable its own output. The first input (In(at=1)) is regarded as the enable event; subsequent inputs are regarded as disable inputs.
+The output is enabled (i.e., active) when the input goes active.
+If a second input is assigned, the output is disabled (i.e., inactive) when the second input goes active. The output is then enabled (i.e., active) when the first input goes active again, and so forth.
+If multiple inputs are assigned, the behavior is determined by cascading the inputs through multiple EventedEvent pairs.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EventCount" type="EventCount">
+						<xs:annotation>
+							<xs:documentation>The EventCount counts events and produces an event when count events are received. The EventCount acts as an event divider in which the divider is dependent on the value of the count property</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProbabilityEvent" type="ProbabilityEvent">
+						<xs:annotation>
+							<xs:documentation>ProbabilityEvent filters out a proportion of input events. The number it lets through is determined by the probability event. The bigger the ratio, the more events pass through; the lower the ratio, the more events are filtered out. ProbabilityEvent filters out complete active sections regardless of their length.
+NOTE—The value of probability is a ratio, which can include values outside of the range of 0% to 100% (i.e., 0 to 1).  The use of values outside of the range of 0% to 100% may have unintended effects upon the signal.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NotEvent" type="NotEvent">
+						<xs:annotation>
+							<xs:documentation>The NotEvent is Active when the In Signal is not Active</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="OrEvent" type="OrEvent">
+						<xs:annotation>
+							<xs:documentation>The OrEvent is Active when any in events is Active</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="XOrEvent" type="XOrEvent">
+						<xs:annotation>
+							<xs:documentation>The XOrEvent is Active when an odd number of in events is Active</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AndEvent" type="AndEvent">
+						<xs:annotation>
+							<xs:documentation>The AndEvent is Active when all in events is Active</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Counter" type="Counter">
+						<xs:annotation>
+							<xs:documentation>For all Sensors every time a measurement is taken, the 'count' property is incremented. A Counter is a sensor that counts when a measurement would be taken, but does not take any specific measurement.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Interval" type="Interval">
+						<xs:annotation>
+							<xs:documentation>The measurement is taken only when the In event is active and Gate event goes active. The counter is set to 0 every time the In or Sync signal becomes active.
+If no Gate is present (i.e., unassigned), the interval is measured between consecutive In events going active (e.g., period). If the Gate event is present (i.e., allocated), the interval is recorded when the Gate event becomes active. The measurement is reset when the In event goes active.
+The Sync event clears the count (count = 0) and resets the measurement.
+The previous revision of this standard used the name TimeInterval for this BSC. The name is changed to reflect the fact that the measurement may be referenced to any valid independent variable. This standard also supports the name TimeInterval, but the use of the name is deprecated. 
+NOTE—The independent measurement value corresponds to the width of the active signal being monitored. So if no Gate is assigned, it’s the width of the Active state of the In signal.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TimeInterval" type="Interval">
+						<xs:annotation>
+							<xs:documentation>See Interval</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Instantaneous" type="Instantaneous">
+						<xs:annotation>
+							<xs:documentation>The instantaneous type value of the signal with respect to the independent variable (e.g., time) is returned. The signal is not sampled over a gate time or Gate. The Gate is used only to indicate when the Instantaneous measurement should be made.
+NOTE—When measuring the independent variable, the measurement value is the value of the independent variable at the instant that the measurement was taken.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RMS" type="RMS">
+						<xs:annotation>
+							<xs:documentation>The default rms gate time should be a whole number of periods of the input signal to achieve maximum accuracy.
+NOTE—When measuring the independent variable, the measurement value is the RMS value of the independent variable while the measurement was taken.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Average" type="Average">
+						<xs:annotation>
+							<xs:documentation>The default average gate time should be a whole number of periods of the input signal to achieve maximum accuracy
+NOTE—When measuring the independent variable, the measurement value is the average of the independent variable while the measurement was taken, e.g., Average time when measurement was made, or center frequency of the bandwidth</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PeakToPeak" type="PeakToPeak">
+						<xs:annotation>
+							<xs:documentation>NOTE—When measuring the independent variable, the measurement value is the difference in the values of the independent variable when the (last) maximum and the (first) minimum values of the dependent variable occurred.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Peak" type="Peak">
+						<xs:annotation>
+							<xs:documentation>Peak returns either the PeakNeg or PeakPos which ever has the largest absolute value.
+NOTE—When measuring the independent variable, the measurement value is the difference in the values of the independent variable when the (last) peak and the average (center) values of the dependent variable occurred, e.g., how far the peak is from the center.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PeakPos" type="PeakPos">
+						<xs:annotation>
+							<xs:documentation>NOTE—When measuring the independent variable, the measurement value is the difference in the values of the independent variable when the (last) peak and the average (center) values of the dependent variable occurred, e.g., how far the peak is from the center.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PeakNeg" type="PeakNeg">
+						<xs:annotation>
+							<xs:documentation>NOTE—When measuring the independent variable, the measurement value is the difference in the values of the independent variable when the average (center) and the (last) minimum values of the dependent variable occurred, e.g., how far the peak negative point is from the center.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MaxInstantaneous" type="MaxInstantaneous">
+						<xs:annotation>
+							<xs:documentation>When measuring the independent variable, the measurement value is the value of the independent variable at the instant that the maximum peak occurred.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MinInstantaneous" type="MinInstantaneous">
+						<xs:annotation>
+							<xs:documentation>When measuring the independent variable, the measurement value is the value of the independent variable at the instant that the minimum peak occurred.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Measure" type="Measure">
+						<xs:annotation>
+							<xs:documentation>This subclass provides the ability to measure any attribute for any TSF or BSC. The Signal and properties referenced by As and attribute are used to indicate the measurement required. The method of measurement is not defined by this standard.
+The Measure BSC conceptually compares the actual input signal against all possible allowed reference signals and selects a resultant reference signal that provides the best match. The returned values are the corresponding values of the identified resultant reference signal. The best match is defined as the minimum rms value of the difference between the actual input signal and the reference signal defined by As.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Decode" type="Decode">
+						<xs:annotation>
+							<xs:documentation>Decode measures the digital stream and converts it via a stream of bits into a required (type). Each measurement is collected in the measurements property and the last value read is available through the measurement attribute. The UL, LL or nominal value can be used where the physical value will be initially converted to measurement type prior to any comparison.
+If the default encoding (UTF-8) is selected and the data is type string (BSTR), the characters will be represented as UNICODE across the runtime call and will be dependent on the encoding of the XML document for XML static models.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SelectIf" type="SelectIf">
+						<xs:annotation>
+							<xs:documentation>SelectIf cycles through its In signals starting from In(1) on each subsequent change of the selector event state between Low and High. If the selector enters the X state (tri-state), the output is gated off. If the selector enters the Z state (no signal), the previous output continues.Once started, the initial state of selector is considered Inactive and the initial signal selected for output is In(1). Prior to starting the output is considered to be in the ZRep (No Signal) state.
+As an example, when there are two Inputs, the selector event state Inactive corresponds to In(1) and Active corresponds to In(2). </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SelectCase" type="SelectCase">
+						<xs:annotation>
+							<xs:documentation>SelectCase selects the Input that corresponds to the masked Selector value (Active/Inactive state). The mask is converted into bit mask and applied (as an And function) over the Selector digital stream, where channel 1 is LSB. The resulting pattern is converted to a one based index to select the corresponding input signal.
+When the resultant Selector value exceeds the number of inputs a Z state (tri-state) output signal is provided. When the selector channel is Active it is considered '1' and Inactive is considered '0'. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Encode" type="Encode">
+						<xs:annotation>
+							<xs:documentation>Encode allows any data representation to be packaged up and streamed as a sequence of parallel bits. It turns messages such as "Hello World" into a bit stream represented by an event where the event state represent the individual bit state. Since the width attribute does not necessarily need to match the data information type, the data is converted into a stream of bits and each bit assigned to consecutive channels such that channel 1 is the LSB and the channel number corresponding to the channelWidth is the MSB. In this way the following are equivalent: 
+data="11010100"  type="xs:boolean"
+data="HHLHLHLL" type="digital"
+data="C4" type="hex"
+data="212" type="byte". 
+Each pattern is delivered when In goes Active (1,H). If the input becomes tri-state (Gated Off), the output is Gated off 
+Digital signals are unique in that their values do not take on physical values; rather, they take on event states that can be converted into physical values. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Channels" type="Channels">
+						<xs:annotation>
+							<xs:documentation>Channels combines each channel of its input signal into a linear set of channels, optionally identified by the attribute channels to form a multiple channel output. All signal phase information is maintained 
+Gating off turns all output channels to the Z state, prior to the first Sync there is no value on any channel (Null), subsequent Syncs have no effect</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SerialDigital" type="SerialDigital">
+						<xs:annotation>
+							<xs:documentation>The characters represent the digital signals as follows:
+H	logic high (or logic 1)
+1	logic high (or logic 1)
+L	logic low (or logic 0)
+0	logic low (or logic 0)
+Z	high impedance (absence of logic signal)
+X	unknown or indeterminate logic level 
+Where an external clock is provided at In, this becomes the external clock used as the digital clock rate. The internal clock defined by the period attribute is not used</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ParallelDigital" type="ParallelDigital">
+						<xs:annotation>
+							<xs:documentation>The characters represent the digital signals as follows:
+H	logic high (or logic 1)
+1	logic high (or logic 1)
+L	logic low (or logic 0)
+0	logic low (or logic 0)
+Z	high impedance (absence of logic signal)
+X	unknown or indeterminate logic level
+Where an external clock is provided at In, this becomes the external clock used as the digital clock rate. The period attribute is not used.
+The digital string comprises a list of digital characters separated with delimiters, each comma ',' or semi-colon ';' delimiter is treated as a new step.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TwoWire" type="TwoWire">
+						<xs:annotation>
+							<xs:documentation>Connection is the base class that collects signals into multiple channels</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TwoWireComp" type="TwoWireComp">
+						<xs:annotation>
+							<xs:documentation>Connection is the base class that collects signals into multiple channels</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ThreeWireComp" type="ThreeWireComp">
+						<xs:annotation>
+							<xs:documentation>Connection is the base class that collects signals into multiple channels</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SinglePhase" type="SinglePhase">
+						<xs:annotation>
+							<xs:documentation>Connection is the base class that collects signals into multiple channels</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TwoPhase" type="TwoPhase">
+						<xs:annotation>
+							<xs:documentation>Connection is the base class that collects signals into multiple channels</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ThreePhaseDelta" type="ThreePhaseDelta">
+						<xs:annotation>
+							<xs:documentation>Connection is the base class that collects signals into multiple channels</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ThreePhaseWye" type="ThreePhaseWye">
+						<xs:annotation>
+							<xs:documentation>Connection is the base class that collects signals into multiple channels</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ThreePhaseSynchro" type="ThreePhaseSynchro">
+						<xs:annotation>
+							<xs:documentation>Terminals x, y, and z represent the stator terminals S1, S2, and S3. The stator is connected in a delta format, and the output voltages are developed between x and y, y and z, and x and z.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="FourWireResolver" type="FourWireResolver">
+						<xs:annotation>
+							<xs:documentation>Terminals s1 and s3 are used for the sine output, and terminals s2 and s4 are used for the cosine output.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SynchroResolver" type="SynchroResolver">
+						<xs:annotation>
+							<xs:documentation>In many applications, only two terminals (i.e., r1 and r2) are required for the R1 and R2 excitation connections of a Synchro or a Resolver unit.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Series" type="Series">
+						<xs:annotation>
+							<xs:documentation>This connection is used for series signals (such as the application or measurement of current) where only one terminal is connected to the test subject.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="FourWire" type="FourWire">
+						<xs:annotation>
+							<xs:documentation>This connector is intended for use where the UUT requires four pins for what is effectively a two-wire type of connection, e.g., the UUT has power connections with sense terminals which must be identified separately from the force terminals. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NonElectrical" type="NonElectrical">
+						<xs:annotation>
+							<xs:documentation>The terminals to and from are both used where a fluid flows to and from the test subject. Either terminal may be used on its own if the fluid passes only one way (to or from the test subject).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DigitalBus" type="DigitalBus">
+						<xs:annotation>
+							<xs:documentation>The number of parallel connections is specified by the channelWidth of the signal. Each pin name is associated with its corresponding channel. Ground or signal return connections may be added after the active channel pins. The last ground pin will be used to return any remaining channels without a specified signal return pin. If no return pin is specified a common return is assumed.
+Each channel is delimited by a single comma or semi-colon character, e.g., for a two channel system (channelWidth = 2), the pinString PL1-1, PL1-2 SK1-2, GND indicates that channel 1 uses connection pin PL1-1, channel 2 uses connection pins PL1-1 and SK1-2, and the common return pin is GND.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TSF" type="SignalFunction"/>
+					<xs:any namespace="##other" processContents="strict"/>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute name="type" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Physical Type of sIgnal's dependent variable</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="reftype" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Physical type of signal's independent variable</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="name" type="xs:NMTOKEN" use="optional"/>
+			<xs:attribute name="Out" type="SignalREFS" use="optional">
+				<xs:annotation>
+					<xs:documentation>Explicit signal outputs</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="In" type="SignalID" use="optional">
+				<xs:annotation>
+					<xs:documentation>Provided for legacy suppot (See Ins)</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute ref="std:scriptEngine" use="optional">
+				<xs:annotation>
+					<xs:documentation>name of script language or script langauge GUID</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:anyAttribute namespace="##other" processContents="strict"/>
+			<!--xs:anyAttribute namespace="##other" processContents="lax"/-->
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2014 (x64) (http://www.altova.com) by XMLSpy User1 (Universal Technical Resource Services) -->
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by Chris Gorringe (Racal Instruments Ltd) -->
+<xs:schema xmlns:ts="urn:IEEE-1671.6:2009.03:TestStationDescription" xmlns:te="urn:IEEE-1671:2010:TestEquipment" xmlns:hc="urn:IEEE-1671:2010:HardwareCommon" xmlns:c="urn:IEEE-1671:2010:Common" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:IEEE-1671.6:2009.03:TestStationDescription" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.06">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+
+This schema is specified in IEEE Std 1671.6-2008, "IEEE Trial-Use Standard
+for Automatic Test Markup Language (ATML) for Exchanging Automatic Test 
+Equipment and Test Information via XML:Exchanging Test Station Descriptions."
+ 
+This schema is a World Wide Web Consortium (W3C) Extensible 
+Markup Language (XML) binding of the ATML Test Station component defined in IEEE
+Std 1671.6-2008,"IEEE Trial-Use Standard for Automatic Test Markup 
+Language (ATML) for Exchanging Automatic Test Equipment and Test
+Information via XML:Exchanging Test Station Descriptions."
+
+The purpose of this schema is to allow the creation of IEEE Std 1671.6-2008
+Test Station Description instance documents.
+This schema uses the W3C XML Schema definition
+language as the encoding. This allows for interoperability and 
+the exchange of ATML component instances between various systems.
+This schema shall not be modified but may be included in 
+derivative works. 
+
+Copyright (c) 2009 Institute of Electrical and Electronics 
+Engineers, Inc.
+
+USE AT YOUR OWN RISK
+
+</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="urn:IEEE-1671:2010:Common" schemaLocation="Common.xsd"/>
+	<xs:import namespace="urn:IEEE-1671:2010:TestEquipment" schemaLocation="TestEquipment.xsd"/>
+	<xs:element name="TestStationDescription">
+		<xs:annotation>
+			<xs:documentation>This schema defines the information associated with a Test Station.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ts:TestStationDescription">
+					<xs:attributeGroup ref="c:DocumentRootAttributes"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="TestStationDescription">
+		<xs:complexContent>
+			<xs:extension base="te:TestEquipment">
+				<xs:sequence>
+					<xs:element name="Instruments">
+						<xs:annotation>
+							<xs:documentation>This element is a list of all instruments in the test station.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Instrument" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="c:ItemDescriptionReference">
+												<xs:sequence minOccurs="0">
+													<xs:element name="PhysicalLocation" type="c:NonBlankString" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Where the instrument is located physically (reference designator).</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Address" type="c:NonBlankString" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>The address used to communicate with the instrument.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="ID" type="c:NonBlankString" use="required">
+													<xs:annotation>
+														<xs:documentation>ID for the instrument</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

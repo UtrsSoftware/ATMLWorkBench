@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="release-notes.xsl"?>
+
+<release-notes>
+  <release>
+    <date>07/29/2015</date>
+    <version>1.0.51</version>
+    <item>Fixed issue with Signal Mapping XSL</item>
+    <item>Added a Filter to the Signal Mapper to only show signals actually used for the open TPS</item>
+  </release>
+  <release>
+    <date>07/28/2015</date>
+    <version>1.0.50</version>
+    <item>Cleanup Install</item>
+  </release>
+  <release>
+    <date>07/20/2015</date>
+    <version>1.0.48</version>
+    <item>Fixed several bugs</item>
+  </release>
+  <release>
+    <date>07/15/2015</date>
+    <version>1.0.47</version>
+    <item>Added ATLAS Statistical Report</item>
+    <item>Enhanced AIXML</item>
+  </release>
+  <release>
+    <date>06/15/2015</date>
+    <version>1.0.46</version>
+    <item>Added ability to export an ATML view</item>
+  </release>
+  <release>
+    <date>06/05/2015</date>
+    <version>1.0.45</version>
+    <item>Fixed issue updating ATML view for library forms</item>
+    <item>When saving an xml document - the cusror position is now maintained.</item>
+    <item>Continued AIXML to ATML Translation</item>
+    <item>Fix issue with deleting projects</item>
+  </release>
+  <release>
+    <date>05/15/2015</date>
+    <version>1.0.44</version>
+    <item>Includes updated ATLAS parser - v1.0.0.193</item>
+    <item>Added tabs to output window based on message source. Also added some formatting to distinguish message types.</item>
+    <item>Added reset ability to Translator Configuration</item>
+    <item>Added multiple file select for deleting.</item>
+    <item>Added Translation Configuration screen to collect for Translator.</item>
+    <item>Added Signal Mapping screen for mapping ATLAS signal names to Signal Model Library names.</item>
+    <item><![CDATA[<b>Mantis: 0000604</b> - fixed - Errors on opening.]]></item>
+    <item><![CDATA[<b>Mantis: 0000605</b> - fixed - Errors on Add Files.]]></item>
+  </release>
+  <release>
+    <date>04/15/2015</date>
+    <version>1.0.43</version>
+    <item>Implemented Signal Analysis to Allocator.</item>
+    <item>Added Print button for html and source views.</item>
+    <item>Added Error, Warning and Information events to the Windows Event Log.</item>
+    <item>Fix problem with select/paste functionality</item>
+    <item>Fix problem opening multiple copies of a form at the same time.</item>
+    <item>Now requires the Ctrl key to be pressed while using the "Select Paste" functionality.</item>
+    <item>When editing "name" or "in" on signal function type form - the correct cell is now updated in the grid.</item>
+  </release>
+  <release>
+    <date>03/25/2015</date>
+    <version>1.0.42</version>
+    <item>Added Allocator functionality.</item>
+    <item>Fixed issue saving capability.</item>
+    <item>Fixed resize problem with Validate button on Instrument form.</item>
+    <item>Fixed Component Description - added new document type for Component Description.</item>
+    <item>Fixed issue with tpsi asset identification on translation.</item>
+    <item><![CDATA[<b>Mantis: 0000602</b> - fixed - 1671.4 Test Configuration File does not appear in ATML folder.]]></item>
+  </release>
+  <release>
+    <date>02/26/2015</date>
+    <version>1.0.41</version>
+    <item>Fixed issue with document preview not releasing the instance properly.</item>
+    <item>When a project is closed, any open forms will be closed as well.</item>
+    <item>Add validation button to Test Configuration 1671.4 output window.</item>
+    <item>Changed Test Configuration Test Station and UUT lists to show document references - to be more inline with the XSD</item>
+    <item>Fixed issue with TPSI translations creating IDs for referenced documents.</item>
+  </release>
+  <release>
+    <date>02/04/2015</date>
+    <version>1.0.40</version>
+    <item>Added Project Renaming Ability.</item>
+    <item><![CDATA[<b>Mantis: 0000593</b> - fixed - The Project Explorer Creates Duplicate Tabs for Same File.]]></item>
+    <item>Test Configuration form now keeps in sync with direct file changes to the Test Configuration XML file.</item>
+    <item>Added better error handling during translation if there is no AIXML file.</item>
+  </release>
+  <release>
+    <date>02/03/2015</date>
+    <version>1.0.39</version>
+    <item>Added auto-incrementing version numbers with finer grained versioning so multiple releases for a particular build is possible.This will aid in the development/debug/test build cycle.</item>
+    <item>Fixed issue with TPSI translate</item>
+    <item>Handle tabbed pages better on main view. </item>
+    <item><![CDATA[<b>Mantis: 0000584</b> - fixed - Tab Forms Closing problem by disabling Ctrl+F4 for main windows.]]></item>
+    <item><![CDATA[<b>Mantis: 0000586</b> - fixed - For the "Delete Project" function, the confirmation popup misspelled "delete"..]]></item>
+    <item><![CDATA[<b>Mantis: 0000587</b> - fixed - Program Prompts to Overwrite File when Trying to Open the File.]]></item>
+    <item><![CDATA[<b>Mantis: 0000589</b> - fixed - IDE Moving Around Window Bug - Test Description.]]></item>
+    <item><![CDATA[<b>Mantis: 0000590</b> - fixed - IDE Moving Around Window Bug - Test Configuration.]]></item>
+  </release>
+  <release>
+    <date>02/03/2015</date>
+    <version>1.0.38</version>
+    <item>Fixed New Project Error - An error has occurred writing to file "C:\ProgramData\UTRS\ATMLWorkBench\TestSets\F-18 DSU\project-info.xml"</item>
+  </release>
+  <release>
+    <date>02/02/2015</date>
+    <version>1.0.37</version>
+    <item>Increased the size of the List toolbar icons to 32x32 for interface controls</item>
+    <item>Connector Form - added validators for required fields</item>
+    <item>Connector Form - re-ordered tabs to place identifier on tab 1</item>
+    <item>Reworked ATMLListControl to be more generic - added Populate, Harvest, SetData and GetData methods</item>
+    <item><![CDATA[Project Creation - Auto assign the project id and changed the label from "UUID" to "Project Id" for clarification.]]></item>
+    <item><![CDATA[UUT Description - Implemented Software UUT controls.]]></item>
+    <item><![CDATA[<b>Mantis: 0000581</b> - Fixed delete UUT bug.]]></item>
+    <item><![CDATA[Improved file saving messages - now shows results in the output window]]></item>
+    <item><![CDATA[Added a Refresh button on the Library list page.]]></item>
+    <item><![CDATA[<b>Mantis: 0000582</b> - Failed to Reproduce - added better error handling and log messages.]]></item>
+  </release>
+  <release>
+    <date>01/23/2015</date>
+    <version>1.0.34</version>
+    <item>Increased the size of the List toolbar icons to 32x32.</item>
+    <item>Add Help Main Menu Option</item>
+    <item>Add Access to the About Document to the Help Main Menu</item>
+    <item>Add Access to the Release Notes Document to the Help Main Menu</item>
+    <item>Add Access to the Log Files to the Help Main Menu</item>
+    <item>Add Access to the ATMLWorkbench Help Document to the Help Main Menu</item>
+    <item>Add log file writing and access</item>
+    <item>Add release notes</item>
+    <item>Fixed Standard User problem.</item>
+    <item>Improved Installer Functionality.</item>
+  </release>
+</release-notes>

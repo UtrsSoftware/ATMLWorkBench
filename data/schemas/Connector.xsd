@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema 
+	xmlns="urn:IEEE-1671:2014:Connector" 
+	xmlns:c="urn:IEEE-1671:2010:Common" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="urn:IEEE-1671:2014:Connector" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	version="3.17">
+	<xs:import namespace="urn:IEEE-1671:2010:Common" schemaLocation="http://localhost:8081/document?name=common.xsd"/>
+	<xs:element name="Connector" type="c:Connector"/>
+</xs:schema>

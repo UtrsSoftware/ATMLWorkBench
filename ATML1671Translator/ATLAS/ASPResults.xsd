@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <!-- definition of root element -->
+    <xsd:element name="asp_resultspatterns" type="ASP_ResultsPatterns" />
+
+    <!-- definition of base elements -->
+    <xsd:element name="asp_resultsparameters" type="ASP_ResultsParameters" />
+    
+    <!-- definition of attributes -->
+    <xsd:attribute name="tpsname" type="xsd:string" />
+    <xsd:attribute name="aspstatno" type="xsd:string" />
+    <xsd:attribute name="asptestno" type="xsd:string" />
+    <xsd:attribute name="aspstepno" type="xsd:string" />
+    <xsd:attribute name="aspfile" type="xsd:string" />
+    <xsd:attribute name="lineno" type="xsd:int" />
+  
+    <!-- definition of simple elements -->
+    <xsd:element name="tps" type="xsd:string" />
+    <xsd:element name="type" type="xsd:string" />
+    <xsd:element name="name" type="xsd:string" />
+    <xsd:element name="min" type="xsd:string" />
+    <xsd:element name="max" type="xsd:string" />
+    <xsd:element name="source" type="xsd:string" />
+
+    <!-- definition of complex types -->
+    <xsd:complexType name="ASPRTestPrograms">
+        <xsd:sequence>
+            <xsd:element ref="tps" minOccurs="1" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ASPRParam">
+        <xsd:sequence>
+            <xsd:element ref="name" />
+            <xsd:element ref="min" />
+            <xsd:element ref="max" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ASPRParams">
+        <xsd:sequence>
+            <xsd:element name="Param" type="ASPRParam" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ASPRStatement">
+        <xsd:sequence>
+            <xsd:element ref="source" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+        <xsd:attribute ref="tpsname" />
+        <xsd:attribute ref="aspstatno" />
+        <xsd:attribute ref="asptestno" />
+        <xsd:attribute ref="aspstepno" />
+        <xsd:attribute ref="aspfile" />
+        <xsd:attribute ref="lineno" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ASPRStatements">
+        <xsd:sequence>
+            <xsd:element name="Statement" type="ASPRStatement" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ASPRStatementPattern">
+        <xsd:sequence>
+            <xsd:element ref="type" />
+            <xsd:element name="Statements" type="ASPRStatements" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ASPRStatementPatterns">
+        <xsd:sequence>
+            <xsd:element name="Pattern" type="ASPRStatementPattern" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ASPRParamPattern">
+        <xsd:sequence>
+            <xsd:element ref="type" />
+            <xsd:element name="Params" type="ASPRParams" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="Statements" type="ASPRStatements" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ASPRParamPatterns">
+        <xsd:sequence>
+            <xsd:element name="Pattern" type="ASPRParamPattern" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!-- definition of root element type -->
+    <xsd:complexType name="ASP_ResultsPatterns">
+        <xsd:sequence>
+            <xsd:element name="TestPrograms" type="ASPRTestPrograms" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="Patterns" type="ASPRStatementPatterns" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!-- definition of base element types -->
+    <xsd:complexType name="ASP_ResultsParameters">
+        <xsd:sequence>
+            <xsd:element name="TestPrograms" type="ASPRTestPrograms" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="Parameters" type="ASPRParamPatterns" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+</xsd:schema>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="urn:IEEE-1671.3:2009.03:UUTDescription" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.10" xmlns:uut="urn:IEEE-1671.3:2009.03:UUTDescription" xmlns:c="urn:IEEE-1671:2010:Common" xmlns:hc="urn:IEEE-1671:2010:HardwareCommon" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation xml:lang="en">
+
+      This schema is specified in IEEE Std 1671.3-2007, "IEEE Trial-Use Standard
+      for Automatic Test Markup Language (ATML) for Exchanging Automatic Test
+      Equipment and Test Information via XML:Exchanging UUT Descriptions."
+
+      This schema is a World Wide Web Consortium (W3C) Extensible
+      Markup Language (XML) binding of the ATML UUT Description component defined in IEEE
+      Std 1671.3-2007,"IEEE Trial-Use Standard for Automatic Test Markup
+      Language (ATML) for Exchanging Automatic Test Equipment and Test
+      Information via XML:Exchanging UUT Descriptions."
+
+      The purpose of this schema is to allow the creation of IEEE Std 1671.3-2007
+      UUT Description instance documents.
+      This schema uses the W3C XML Schema definition
+      language as the encoding. This allows for interoperability and
+      the exchange of ATML component instances between various systems.
+      This schema shall not be modified but may be included in
+      derivative works.
+
+      Copyright (c) 2009 Institute of Electrical and Electronics
+      Engineers, Inc.
+
+      USE AT YOUR OWN RISK
+
+    </xs:documentation>
+  </xs:annotation>
+  <xs:import namespace="urn:IEEE-1671:2010:Common" schemaLocation="Common.xsd"/>
+  <xs:import namespace="urn:IEEE-1671:2010:HardwareCommon" schemaLocation="HardwareCommon.xsd"/>
+  <xs:element name="UUTDescription">
+    <xs:annotation>
+      <xs:documentation>This schema defines the static information associated with a class or type of UUT. Information specific to an instance of a UUT (e.g., a serial number) is not accommodated in this schema.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element name="Hardware" type="uut:HardwareUUT">
+            <xs:annotation>
+              <xs:documentation>This element and branch will be used for description information related to a hardware UUT.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Software" type="uut:SoftwareUUT">
+            <xs:annotation>
+              <xs:documentation>This element and branch will be used for description information related to a software UUT.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="version" type="c:NonBlankString" use="optional"/>
+      <xs:attribute name="name" type="c:NonBlankString" use="optional"/>
+      <xs:attributeGroup ref="c:DocumentRootAttributes"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="HardwareUUT">
+    <xs:complexContent>
+      <xs:extension base="hc:HardwareItemDescription">
+        <xs:sequence>
+          <xs:group ref="uut:UUTStatus"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SoftwareUUT">
+    <xs:complexContent>
+      <xs:extension base="c:ItemDescription">
+        <xs:sequence>
+          <xs:group ref="uut:UUTStatus"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:group name="UUTStatus">
+    <xs:sequence>
+      <xs:element name="StatusCodes" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>This collector permits the inclusion of an unbounded set of StatusCode elements.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="StatusCode" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>This element is intended to contain any status or BIT code data which might be produced by the UUT. The codeID attribute must be unique within the context of an instance document. The codeString attribute shall contain the actual code or BIT data produced. The codeMeaning attribute shall contain a human readable prose explanation of the codeString.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:all>
+                  <xs:element name="CodeString" type="c:NonBlankString">
+                    <xs:annotation>
+                      <xs:documentation>For the unique codeID, this attribute will contain the string produced by the UUT in association with the status or event.</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="CodeMeaning" type="c:NonBlankString">
+                    <xs:annotation>
+                      <xs:documentation>A human readable prose explanation of the status code.</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:all>
+                <xs:attribute name="codeID" type="c:NonBlankString" use="required">
+                  <xs:annotation>
+                    <xs:documentation>For the subject UUT, a unique identifier for the code listed in the StatusCode element.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="uniqueCodeID">
+          <xs:selector xpath="StatusCode"/>
+          <xs:field xpath="StatusCode/@codeID"/>
+        </xs:unique>
+      </xs:element>
+      <xs:element name="Warnings" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>This collector permits listing any hazard or warning information related to operation of the UUT. These may be simple text strings or documents referenced by a URL or some other unique ID.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice maxOccurs="unbounded">
+            <xs:element name="Document" type="c:Document">
+              <xs:annotation>
+                <xs:documentation>For UUTs with extensive warning documentation that may be contained in ancillary documents, this element provides for a referential link to such documentation.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="WarningText" type="c:NonBlankString">
+              <xs:annotation>
+                <xs:documentation>This element may be used for short warning messages or text strings.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+</xs:schema>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="urn:IEEE-1641:2010:STDBSC" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="urn:IEEE-1641:2010:DigitalTSFLib" targetNamespace="urn:IEEE-1641:2010:DigitalTSFLib" elementFormDefault="qualified" version="2.01">
+	<xs:import namespace="urn:IEEE-1641:2010:STDBSC" schemaLocation="STDBSC.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+The IEEE P1641 default Test Signal Framework Library for certain digital Signals
+This schema is specified in IEEE Std 1641-20XX, "IEEE Standard for Signal and Test Definition." This schema is a World Wide Web Consortium (W3C) Extensible Markup Language (XML) binding of Annex L Test signal framework (TSF) for Digital Pulse Classes TSF library definition in XML" The purpose of this schema is to provide unique types and attributes for IEEE 1641 schemas.This schema uses the W3C XML Schema definition language as the encoding. This allows for interoperability and the exchange of TSF component instances between various systems.This schema shall not be modified but may be included in derivative works. 
+Copyright (c) 2009 Institute of Electrical and Electronics Engineers, Inc. USE AT YOUR OWN RISK
+        </xs:documentation>
+	</xs:annotation>
+	<xs:element name="BasicNRZ" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Pulse Class to condition a digital stream to a Basic Non Return-to-Zero physical output.
+			A pulse class in which the digital data is carried by two physical signal levels (most often two voltage levels), in which one level represents a logic one or High and the other represents a logic zero or Low. 
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="logic_H_value" type="Physical">
+						<xs:annotation>
+							<xs:documentation>The amplitude of the Logic High in voltage or current.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="logic_L_value" type="Physical">
+						<xs:annotation>
+							<xs:documentation>The amplitude of the Logic Low in voltage or current.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BasicRZ" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Pulse Class to condition a digital stream to a Basic Return-to-Zero physical output.
+A pulse class in which each bit period is subdivided into two sub-periods. The binary data is carried in the first sub-period. A logic one or High is carried by a pulse of one amplitude and the logic zero or Low is carried by a pulse of a different amplitude. The second sub-period contains a "no pulse" condition, which is at the same level as the logic zero amplitude.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="logic_H_value" type="Physical">
+						<xs:annotation>
+							<xs:documentation>The amplitude of the Logic High in voltage or current.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="logic_L_value" type="Physical">
+						<xs:annotation>
+							<xs:documentation>The amplitude of the Logic Low in voltage or current.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="brz_clock" type="SignalREF">
+						<xs:annotation>
+							<xs:documentation>Input for the digital clock.  This is a signal input and does not require a value.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BiPLevel" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Pulse Class to condition a digital stream to a Bi-Phase Level physical output.
+A pulse class in which each bit period is subdivided into two sub-periods. The binary data is carried by the transition of the signal level during each bit period, i.e. the amplitude is at one level during the first sub-period and at another level during the second sub-period. 
+A logic one or High is carried by two sub-periods in which the first is at the high amplitude level and the second sub-period is at the low (zero) amplitude. A logic zero or Low is carried by two sub-periods in which the first is at the low (zero) amplitude level and the second sub-period is at the high amplitude. 
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="logic_H_value" type="Physical">
+						<xs:annotation>
+							<xs:documentation>The amplitude of the Logic High in voltage or current.
+							</xs:documentation>	
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="logic_L_value" type="Physical">
+						<xs:annotation>
+							<xs:documentation>The amplitude of the Logic Low in voltage or current.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="bipl_clock" type="SignalREF">
+						<xs:annotation>
+							<xs:documentation>Input for the digital clock.  This is a signal input and does not require a value.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BiPSpace" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Pulse Class to condition a digital stream to a Bi-Phase Space physical output.
+A pulse class in which each bit period is subdivided into two sub-periods. A transition occurs at the start of each full bit period. The logic one or High is represented by a second transition at the start of the second sub-period. The logic zero or Low has no second transition and the level remains unchanged for the whole period.			
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="logic_H_value" type="Physical">
+						<xs:annotation>
+							<xs:documentation>The amplitude of the Logic High in voltage or current.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="logic_L_value" type="Physical">
+						<xs:annotation>
+							<xs:documentation>The amplitude of the Logic Low in voltage or current.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="bips_clock" type="SignalREF">
+						<xs:annotation>
+							<xs:documentation>Input for the digital clock.  This is a signal input and does not require a value.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="bips_clock_x2" type="SignalREF">
+						<xs:annotation>
+							<xs:documentation>Input for the doubled digital clock.  This is a signal input and does not require a value.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BiPMark" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Pulse Class to condition a digital stream to a Bi-Phase Mark physical output.
+A pulse class in which each bit period is subdivided into two sub-periods. A transition occurs at the start of each full bit period. The logic zero or Low is represented by a second transition at the start of the second sub-period. The logic one or High has no second transition and the level remains unchanged for the whole period. 
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="logic_H_value" type="Physical">
+						<xs:annotation>
+							<xs:documentation>The amplitude of the Logic High in voltage or current.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="logic_L_value" type="Physical">
+						<xs:annotation>
+							<xs:documentation>The amplitude of the Logic Low in voltage or current.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="bipm_clock" type="SignalREF">
+						<xs:annotation>
+							<xs:documentation>Input for the digital clock.  This is a signal input and does not require a value.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="bipm_clock_x2" type="SignalREF">
+						<xs:annotation>
+							<xs:documentation>Input for the doubled digital clock.  This is a signal input and does not require a value.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RZBipolar" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Pulse Class to condition a digital stream to a Return-to-Zero Bipolar physical output.
+A pulse class in which each bit period is subdivided into two sub-periods. Three signal levels are used and each bit is represented by the level during the first sub-period. The logic one or High is represented by the first sub period at a specified amplitude followed by the second sub-period at zero amplitude. The logic zero or Low is represented by the first sub period at second (normally negative) amplitude followed by the second sub-period at zero amplitude.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="logic_H_value" type="Physical">
+						<xs:annotation>
+							<xs:documentation>The amplitude of the Logic High in voltage or current.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="logic_L_value" type="Physical">
+						<xs:annotation>
+							<xs:documentation>The amplitude of the Logic Low in voltage or current.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="rzb_clock" type="SignalREF">
+						<xs:annotation>
+							<xs:documentation>Input for the digital clock.  This is a signal input and does not require a value.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RZPulse" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Pulse Class to condition a digital stream to a Return-to-Zero Pulse physical output.
+This pulse class is very similar to BasicRZ, but with a duty cycle of 25 percent.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="logic_H_value" type="Physical">
+						<xs:annotation>
+							<xs:documentation>The amplitude of the Logic High in voltage or current.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="logic_L_value" type="Physical">
+						<xs:annotation>
+							<xs:documentation>The amplitude of the Logic Low in voltage or current.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="rzp_clock" type="SignalREF">
+						<xs:annotation>
+							<xs:documentation>Input for the digital clock.  This is a signal input and does not require a value.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="rzp_clock_x2" type="SignalREF">
+						<xs:annotation>
+							<xs:documentation>Input for the doubled digital clock.  This is a signal input and does not require a value.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AMI" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Pulse Class to condition a digital stream to an Alternate Mark Inversion physical output.
+The alternate mark inversion (AMI) pulse class requires three amplitude levels need to be defined. In this TSF only two of the amplitudes are specified as the inverted logic one or High level is assumed to be of the same amplitude as the non-inverted logic one or High but with the opposite sign. The logic one amplitudes are offset from the amplitude specified for the logic zero or Low. 
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="logic_H_value" type="Physical">
+						<xs:annotation>
+							<xs:documentation>The amplitude of the Logic High in voltage or current.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="logic_L_value" type="Physical">
+						<xs:annotation>
+							<xs:documentation>The amplitude of the Logic Low in voltage or current.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ami_clock" type="SignalREF">
+						<xs:annotation>
+							<xs:documentation>Input for the digital clock.  This is a signal input and does not require a value.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DTIF" nillable="false">
+		<xs:annotation>
+			<xs:documentation>The DTIF TSF represents a simple TSF and contains only the 'location' of the DTIF files and a definition of how they will be used. This TSF allows for the generation of a complete digital signal stream containing all the digital patterns and necessary timing information. 
+This TSF provides support for digital data files defined in IEEE Std 1445™–1998, IEEE Standard for Digital Test Interchange Format.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="path" type="string" default="C:\TPS\UUT\DTIF">
+						<xs:annotation>
+							<xs:documentation>The path to the directory containing the DTIF files.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="run_mode" default="Go_Nogo">
+						<xs:annotation>
+							<xs:documentation>Type of test run to be performed.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="int">
+								<xs:enumeration value="Go_Nogo"/>
+								<xs:enumeration value="Fault_Dictionary"/>
+								<xs:enumeration value="Guided_Probe"/>
+								<xs:enumeration value="GP_FD"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

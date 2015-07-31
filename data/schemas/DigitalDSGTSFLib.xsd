@@ -1,0 +1,906 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with newWaveX Signal Development  (http://www.newWaveX.com) -->
+<xs:schema targetNamespace="DigitalDSGTSFLib" elementFormDefault="qualified" version="1.4" xmlns="urn:IEEE-1641:2010:STDBSC" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:import namespace="urn:IEEE-1641:2010:STDBSC" schemaLocation="STDBSC.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Key components used by DSG for digital programming.
+
+
+
+This Library defines digital components used to both define digital signals and create (map on to) DTB files.
+
+The use of these components allow digital signals to be defined that can be represented both as digital signals and implemented as DTB file format for execution of the DG TerM9 hardware
+
+See Tutorial section for eamples.</xs:documentation>
+	</xs:annotation>
+	<xs:element name="PhaseClock" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Key Phase for timing set
+
+
+
+This is a hidden component and is used to create TSet and TSet4 components.
+
+The model and definition is provided for completeness ONLY. 
+
+Do not use within user defined TSFs or Signals</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="clockPeriod" type="Time" default="100 ns">
+						<xs:annotation>
+							<xs:documentation>Clock period</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="phaseAssert" type="Time" default="0 ns">
+						<xs:annotation>
+							<xs:documentation>time when clock asserts</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="phaseReturn" type="Time" default="25 ns">
+						<xs:annotation>
+							<xs:documentation>time when clock retiurns</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TSet" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Represents a timing set for a single phase and measure window
+
+
+
+The TSet can be used by the TSet input of the following components
+
+	Test
+
+	WaitFor
+
+	IfFail
+
+
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="clockPeriod" type="Time" default="100 ns">
+						<xs:annotation>
+							<xs:documentation>Clock Period - must be multiple of the system or pattern clock</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="phaseAssert0" type="Time" default="0 ns">
+						<xs:annotation>
+							<xs:documentation>time when pattern asserts</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="phaseReturn0" type="Time" default="25 ns">
+						<xs:annotation>
+							<xs:documentation>time when pattern returns</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="windowOpen0" type="Time" default="10 ns">
+						<xs:annotation>
+							<xs:documentation>time when measure window opens</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="windowClose0" type="Time" default="20 ns">
+						<xs:annotation>
+							<xs:documentation>time when measure window closes</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TSet4" nillable="false">
+		<xs:annotation>
+			<xs:documentation>This component represents the four phase cloacks available on the TerM9 cards
+
+
+
+The TSet4 can be used by the TSet input of the following components
+
+	Test
+
+	WaitFor
+
+	IfFail
+
+
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="clockPeriod" type="Time" default="100 ns">
+						<xs:annotation>
+							<xs:documentation>Clock Period - must be multiple of the system or pattern clock</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="phaseAssert0" type="Time" default="0 ns">
+						<xs:annotation>
+							<xs:documentation>time when pattern asserts
+
+</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="phaseReturn0" type="Time" default="25 ns">
+						<xs:annotation>
+							<xs:documentation>time when pattern returns</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="phaseAssert1" type="Time" default="0 ns">
+						<xs:annotation>
+							<xs:documentation>time when pattern asserts</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="phaseReturn1" type="Time" default="25 ns">
+						<xs:annotation>
+							<xs:documentation>time when pattern returns</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="phaseAssert2" type="Time" default="0 ns">
+						<xs:annotation>
+							<xs:documentation>time when pattern asserts</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="phaseReturn2" type="Time" default="25 ns">
+						<xs:annotation>
+							<xs:documentation>time when pattern returns</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="phaseAssert3" type="Time" default="0 ns">
+						<xs:annotation>
+							<xs:documentation>time when pattern asserts</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="phaseReturn3" type="Time" default="25 ns">
+						<xs:annotation>
+							<xs:documentation>time when pattern returns</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="windowOpen0" type="Time" default="10 ns">
+						<xs:annotation>
+							<xs:documentation>time when measure window opens</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="windowClose0" type="Time" default="20 ns">
+						<xs:annotation>
+							<xs:documentation>time when measure window closes</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="windowOpen1" type="Time" default="10 ns">
+						<xs:annotation>
+							<xs:documentation>time when measure window opens</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="windowClose1" type="Time" default="20 ns">
+						<xs:annotation>
+							<xs:documentation>time when measure window closes</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="windowOpen2" type="Time" default="10 ns">
+						<xs:annotation>
+							<xs:documentation>time when measure window opens</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="windowClose2" type="Time" default="20 ns">
+						<xs:annotation>
+							<xs:documentation>time when measure window closes</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="windowOpen3" type="Time" default="10 ns">
+						<xs:annotation>
+							<xs:documentation>time when measure window opens</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="windowClose3" type="Time" default="20 ns">
+						<xs:annotation>
+							<xs:documentation>time when measure window closes</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DigitalSignal" nillable="false">
+		<xs:annotation>
+			<xs:documentation>This converts a digital stream into a digital signal by adding voltage/current levels
+
+
+
+The output of DigitalSignal is a physical signal conforming to the correct voltage and pulse class.
+
+Multiple DigitalSignals represent different Pattern Sets
+
+
+
+The DigitalSignal should always be the last component of a (DTB) digital TSF.
+
+The inputs for DigitalSignal should be a digital stream from one of
+
+	Test
+
+	WaitFor
+
+	Wait
+
+	IfFail
+
+
+
+Note:
+
+The value of the following attributes are inherited from the individual channels. 
+
+If they are provided they should match the definitions in the corresponding DigitalStream component.
+
+	channels
+
+	pins
+
+	VIH
+
+	VIL
+
+	VOH
+
+	VOL
+
+	IOH
+
+	IOL
+
+	VCom
+
+	
+
+Note;
+
+The model definition only currently only defines the inputs/outputs and not the full behaviour</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="pins" type="string">
+						<xs:annotation>
+							<xs:documentation>list of pin names</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="VIH" type="Voltage" default="5 V">
+						<xs:annotation>
+							<xs:documentation>Logic High Source Voltage</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="VIL" type="Voltage" default="0 V">
+						<xs:annotation>
+							<xs:documentation>Logic Low Source Voltage</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="VOH" type="Voltage" default="2.4 V">
+						<xs:annotation>
+							<xs:documentation>Sense threashold for logic high</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="VOL" type="Voltage" default="0.5 V">
+						<xs:annotation>
+							<xs:documentation>Sense threashold for logic low</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="IOH" type="Current" default="-0.4 mA">
+						<xs:annotation>
+							<xs:documentation>Capability - Load sink current at the UUT when output voltage is higher than VCOM, specified in amperes</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="IOL" type="Current" default="8 mA">
+						<xs:annotation>
+							<xs:documentation>Capability - Load source current at the UUT when output voltage is lower than VCOM, specified in amperes</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="VCom" type="Voltage" default="1.5 V">
+						<xs:annotation>
+							<xs:documentation>Capability - Load commutating voltage, specified in volts</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DigitalStream" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Create a digital stream from a digital signal based of voltage/current levels.
+
+A digital stream represents a multi-channel logical digital signal where each channel is considered to be in one of the states ZXHL.
+
+
+
+A digital  stream can be consumed by one of the following
+
+	DigitalSignal
+
+	Test
+
+	WaitFor
+
+	Wait
+
+	IfFail
+
+	(Channels)
+
+
+
+Note;
+
+The model definition only currently only defines the inputs/outputs and not the full behaviour</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="pins" type="string">
+						<xs:annotation>
+							<xs:documentation>list of pins</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="VIH" type="Voltage" default="5 V">
+						<xs:annotation>
+							<xs:documentation>Logic High Source Voltage</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="VIL" type="Voltage" default="0 V">
+						<xs:annotation>
+							<xs:documentation>Logic Low Source Voltage</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="VOH" type="Voltage" default="2.4 V">
+						<xs:annotation>
+							<xs:documentation>Sense threashold for logic high</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="VOL" type="Voltage" default="0.5 V">
+						<xs:annotation>
+							<xs:documentation>Sense threashold for logic low</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="IOH" type="Current" default="-0.4 mA">
+						<xs:annotation>
+							<xs:documentation>Capability - Load sink current at the UUT when output voltage is higher than VCOM, specified in amperes</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="IOL" type="Current" default="8 mA">
+						<xs:annotation>
+							<xs:documentation>Capability - Load source current at the UUT when output voltage is lower than VCOM, specified in amperes</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="VCom" type="Voltage" default="1.5 V">
+						<xs:annotation>
+							<xs:documentation>Capability - Load commutating voltage, specified in volts</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="impedance" type="Resistance" default="50Ohm">
+						<xs:annotation>
+							<xs:documentation>
+								<!--Insert a description for 'impedance' here.-->
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="format" default="NRet">
+						<xs:annotation>
+							<xs:documentation>
+								<!--Insert a description for 'format' here.-->
+							</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="string">
+								<xs:enumeration value="NRet"/>
+								<xs:enumeration value="RZero"/>
+								<xs:enumeration value="ROne"/>
+								<xs:enumeration value="RComp"/>
+								<xs:enumeration value="CompS"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="phase" default="0">
+						<xs:annotation>
+							<xs:documentation>
+								<!--Insert a description for 'phase' here.-->
+							</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="int">
+								<xs:enumeration value="0"/>
+								<xs:enumeration value="1"/>
+								<xs:enumeration value="2"/>
+								<xs:enumeration value="3"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="window" default="0">
+						<xs:annotation>
+							<xs:documentation>
+								<!--Insert a description for 'window' here.-->
+							</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="int">
+								<xs:enumeration value="0"/>
+								<xs:enumeration value="1"/>
+								<xs:enumeration value="2"/>
+								<xs:enumeration value="3"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="capture" default="Window">
+						<xs:annotation>
+							<xs:documentation>
+								<!--Insert a description for 'capture' here.-->
+							</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="string">
+								<xs:enumeration value="Window"/>
+								<xs:enumeration value="Open"/>
+								<xs:enumeration value="Close"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Test" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Provides a collection of digital test patterns that all share the same group attributes.
+
+This is simillar to the bidirectional ParallelTest using L200 patterns to define the patterns 
+
+and produces a digital stream using the signal HLZX states
+
+
+
+The inputs for this component should be a digital stream from one of
+
+	DigitalStream
+
+	Test
+
+	WaitFor
+
+	Wait
+
+	IfFail
+
+
+
+The pattern data accepts two formals
+
+pinName=pinState
+
+pinState pinName [pinName] [;]
+
+
+
+where pinState can be IOX, IL, IH, OL, OH, MIL, MIH
+
+and pinName is name of pin or '*' character
+
+
+
+Note
+
+The model represents indicative behaviour</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="pattern" type="string">
+						<xs:annotation>
+							<xs:documentation>Digital Pattern sequence (Channel=[IOX|OH|OL|IH|IL|MH|ML|ILOH|IHOL|TOG|KEEP])* [,;]*</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="cpp" type="int" default="1">
+						<xs:annotation>
+							<xs:documentation>cycles per pattern</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="repeat" type="int" default="1">
+						<xs:annotation>
+							<xs:documentation>The whole digital pattern is  repeated n times</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="TSet" type="SignalREFS">
+						<xs:annotation>
+							<xs:documentation>Phase clocks consisting of (stimulus phase clock,  measure window)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="delay" type="Time" default="0 ns">
+						<xs:annotation>
+							<xs:documentation>delay after pattern - alows time for UUT to settle</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="IfFail" nillable="false">
+		<xs:annotation>
+			<xs:documentation>IfFail Tests for the single pattern and if it fails outputs the fail Pattern
+
+
+
+If the response within the pattern passes the component acts like a Test, 
+
+if it should fail the fail pattern is output and the testing terminated.
+
+
+
+The inputs for this component should be a digital stream from one of
+
+	DigitalStream
+
+	Test
+
+	WaitFor
+
+	Wait
+
+	IfFail
+
+
+
+The pattern data accepts two formals
+
+pinName=pinState
+
+pinState pinName [pinName] [;]
+
+
+
+where pinState can be IOX, IL, IH, OL, OH, MIL, MIH
+
+and pinName is name of pin or '*' character
+
+
+
+Note
+
+The model represents ionly inputs and outputs</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="pattern" type="string">
+						<xs:annotation>
+							<xs:documentation>Digital Pattern sequence (Channel=[IOX|OH|OL|IH|IL|MH|ML|ILOH|IHOL|TOG|KEEP])* [,;]*</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="cpp" type="int" default="1">
+						<xs:annotation>
+							<xs:documentation>cycles per pattern</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="TSet" type="SignalREFS">
+						<xs:annotation>
+							<xs:documentation>Phase clocks consisting of (stimulus phase clock,  measure window)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="delay" type="Time" default="0 ns">
+						<xs:annotation>
+							<xs:documentation>delay after trigger</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="failPattern">
+						<xs:annotation>
+							<xs:documentation>
+								<!--Insert a description for 'failPattern' here.-->
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="WaitFor" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Repeats a series of pattern looking for a specific response where all patterns share the same group attributes.
+This is simillar to the bidirectional ParallelTest using L200 patterns to define the patterns and produces a digital stream using the signal HLZX states
+
+
+
+The inputs for this component should be a digital stream from one of
+
+	DigitalStream
+
+	Test
+
+	WaitFor
+
+	Wait
+
+	IfFail
+
+
+
+Note
+
+The model represents ionly inputs and outputs</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="pattern" type="string">
+						<xs:annotation>
+							<xs:documentation>Digital Pattern sequence (IOX|OH|OL|IH|IL|MH|ML|ILOH|IHOL|TOG|KEEP]) ChannelList)*; </xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="cpp" type="int" default="1">
+						<xs:annotation>
+							<xs:documentation>cycles per pattern</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="repeat" default="0">
+						<xs:annotation>
+							<xs:documentation>maximum number of attempts to match pattern = value of zero(0) implies try for ever.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="TSet" type="SignalREFS">
+						<xs:annotation>
+							<xs:documentation>Phase clocks consisting of (stimulus phase clock,  measure window)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="delay" type="Time" default="0 ns">
+						<xs:annotation>
+							<xs:documentation>delay after trigger</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Wait" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Waits a predefine ampunt of time - Wait does not perform an testing and maintains the current pin states
+
+
+
+The inputs for this component should be a digital stream from one of
+
+	DigitalStream
+
+	Test
+
+	WaitFor
+
+	Wait
+
+	IfFail
+
+
+
+Users try and use the delay property for the signal compomponent, thater that the Wait TSF
+
+
+
+Note
+
+The model represents ionly inputs and outputs</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="delay" type="Time" default="0 ns">
+						<xs:annotation>
+							<xs:documentation>minimum amout of time to wait.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Levels" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Programable Voltage Levels
+
+
+
+The inputs for this component should be a digital stream from one of
+
+	DigitalStream
+
+	Test
+
+	WaitFor
+
+	Wait
+
+	IfFail
+
+
+
+This is a hidden component used within the TSF Library.
+
+Note:
+
+The model only shows the indicative inputs/outputs</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="VIH" type="Voltage" default="5 V">
+						<xs:annotation>
+							<xs:documentation>Logic High Source Voltage</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="VIL" type="Voltage" default="0 V">
+						<xs:annotation>
+							<xs:documentation>Logic Low Source Voltage</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="VOH" type="Voltage" default="2.4 V">
+						<xs:annotation>
+							<xs:documentation>Sense threashold for logic high</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="VOL" type="Voltage" default="0.5 V">
+						<xs:annotation>
+							<xs:documentation>Sense threashold for logic low</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="IOH" type="Current" default="-0.4 mA">
+						<xs:annotation>
+							<xs:documentation>Capability - Load sink current at the UUT when output voltage is higher than VCOM, specified in amperes</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="IOL" type="Current" default="8 mA">
+						<xs:annotation>
+							<xs:documentation>Capability - Load source current at the UUT when output voltage is lower than VCOM, specified in amperes</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="VCom" type="Voltage" default="1.5 V">
+						<xs:annotation>
+							<xs:documentation>Capability - Load commutating voltage, specified in volts</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NRet" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Non Return (phased to Clk Assert)
+
+
+
+Note:
+
+This is a hidden component used within the DigitalStream/Signal TSFs to define PulseClasses</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="Clk" type="SignalREFS">
+						<xs:annotation>
+							<xs:documentation>Reference to a phase clock</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RZero" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Signal return To Zero (Uses Clock assert and  return)
+
+
+
+Note:
+
+This is a hidden component used within the DigitalStream/Signal TSFs to define PulseClasses</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="Clk" type="SignalREFS">
+						<xs:annotation>
+							<xs:documentation>Reference to a phase clock</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ROne" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Signal return To One (Uses Clock assert and  return)
+
+
+
+Note:
+
+This is a hidden component used within the DigitalStream/Signal TSFs to define PulseClasses</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="Clk" type="SignalREFS">
+						<xs:annotation>
+							<xs:documentation>Reference to a phase clock</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RComp" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Return To Compliment (Using Clk Return)
+
+
+
+Note:
+
+This is a hidden component used within the DigitalStream/Signal TSFs to define PulseClasses</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="Clk" type="SignalREFS">
+						<xs:annotation>
+							<xs:documentation>Reference to a phase clock</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CompS" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Complement Surround</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="Clk" type="SignalREFS">
+						<xs:annotation>
+							<xs:documentation>Reference to a phase clock</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="_detectEnd" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Identies when a digital pattern has ended (all chanels entered the Z state)
+
+
+
+Note:
+
+This is a hidden component which is used by the other TSFs within the library.
+
+The model definition is indicative of the behaviour
+
+When in input channels are all 'Z' the output is enabled, otherwise the output is disabled</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="SignalFunctionType">
+					<xs:attribute name="_detectEnd" type="SignalREFS">
+						<xs:annotation>
+							<xs:documentation>
+								<!--Insert a description for '_detectEnd' here.-->
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

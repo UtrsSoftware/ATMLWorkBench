@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<folders>
+  <folder name="atml" />
+  <folder name="doc" />
+  <folder name="reader" />
+  <folder name="reports" />
+  <folder name="translator">
+    <folder name="source" />
+    <folder name="aixml" />
+    <folder name="out" />
+  </folder>
+  <folder name="allocator" />
+</folders>

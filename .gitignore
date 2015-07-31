@@ -1,0 +1,10 @@
+*.swp
+Thumbs.db
+*.suo
+*.user
+*.obj
+*.ncb
+*.log
+[Dd]ebug*/
+[Rr]elease*/
+obj/

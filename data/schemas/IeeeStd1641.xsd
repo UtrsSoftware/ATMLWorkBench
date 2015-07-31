@@ -1,0 +1,354 @@
+<xs:schema xmlns:td="urn:IEEE-1671.1:2009:TestDescription" xmlns:c="urn:IEEE-1671:2010:Common" xmlns:hc="urn:IEEE-1671:2010:HardwareCommon" xmlns:te="urn:IEEE-1671:2010:TestEquipment" xmlns:uut="urn:IEEE-1671.3:2009.03:UUTDescription" xmlns:ta="urn:P-IEEE-1671.5:2008.03:TestAdapterDescription" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:IEEE-1671.1:2009:TestDescription" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.05">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+
+This schema is specified in IEEE Std 1671.1-20XX, "IEEE Standard for ATML: Test Description"
+ 
+This schema is a World Wide Web Consortium (W3C) Extensible Markup Language (XML) binding 
+of the ATML Test Description component defined in IEEE Std 1671.1-20XX,
+"IEEE Standard for ATML: Test Description."
+
+The purpose of this schema is to allow the creation of IEEE Std 1671.1-20XX
+Test Description instance documents.This schema uses the W3C XML Schema definition
+language as the encoding. This allows for interoperability and 
+the exchange of ATML component instances between various systems.
+This schema shall not be modified but may be included in 
+derivative works. 
+
+Copyright (c) 2011 Institute of Electrical and Electronics 
+Engineers, Inc.
+
+USE AT YOUR OWN RISK
+
+		</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="urn:IEEE-1671:2010:Common" schemaLocation="Common.xsd"/>
+	<xs:import namespace="urn:IEEE-1671:2010:HardwareCommon" schemaLocation="HardwareCommon.xsd"/>
+	<xs:include schemaLocation="DatumTypes.xsd"/>
+	<xs:complexType name="IeeeStd1641">
+		<xs:annotation>
+			<xs:documentation>Shall contain a test definition conformant to IEEE Std. 1641, describing the behavior of a test or session action. Shall specify the relationships between the test definition and other elements of the current instance document such as global signals, parameters and test results.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:sequence minOccurs="0">
+				<xs:any namespace="STDBSC urn:IEEE-1641:2010:STDBSC">
+					<xs:annotation>
+						<xs:documentation>Shall contain a test definition conforming to the STDBSC.xsd schema of IEEE Std. 1641. Note that this test definition can in turn reference TSF signal definitions defined in any TSF Library conformant with IEEE Std. 1641. With one exception described below, IEEE Std 1641 signals defined under this element shall be started (by calling their Run method) when the execution of the current action begins and shall be stopped (by calling the Stop method) when execution of the action finishes. Refer to C.2.2.2 of IEEE Std 1641 for detailed information on the Run and Stop methods. There shall be one exceptions to the above rule: IEEE Std 1641 signals identified as global signals shall not be stopped when execution of the current action finishes; instead, they shall be stopped when execution of the test program finishes, or when executing an action that contains a signal operation of type Stop, whichever comes first. See 4.4.61 for information on identifying global signals. See 4.4.101 for information on the Stop global signal operation. See B.3 for an example on using global signals. </xs:documentation>
+					</xs:annotation>
+				</xs:any>
+				<xs:element name="InValues" type="td:IeeeStd1641InValues" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Shall describe the mapping of action parameters to IEEE Std. 1641 signal attributes. The signal attributes shall receive at run time, prior to action execution, the values of the mapped parameters. The element shall not appear in instance documents unless it has at least one child element. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OutValues" type="td:IeeeStd1641OutValues" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Shall describe the mapping of IEEE Std. 1641 measured signal attributes to test results or session data. The test results or session data will receive at run time, after action execution, the values of the mapped signal attributes. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PortValues" type="td:IeeeStd1641PortValues" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Shall describe the mapping of IEEE Std. 1641 signal attributes representing Connection ports to UUT ports (i.e., ports of interface connectors, test points, or component pins). Whenever possible, the mapping of IEEE Std. 1641 ports to ports of UUT connectors should be described through the values of IEEE Std. 1641 signal attributes, using he "pseudo pin name" format connectorID-pinID. For example, the ports of a TwoWire Connection signal to be connected to pins 1 and 2 of connector J1 should be named "J1-1" and "J1-2". When the above solution is used, this element is not needed. In some situations the above solution cannot be applied: when IEEE Std. 1641 ports are mapped to test points or component pins, when preexisting IEEE Std. 1641 contents using a different port name format is integrated into an ATML Test Description instance document, etc. In these cases the mapping of IEEE Std. 1641 ports to UUT ports shall be described using this element.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Extension" type="c:Extension" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Provided to permit schema extensibility.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:element name="GlobalSignalOperations" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Describes operations performed on global IEEE Std. 1641 signals. Global signals are identified through GlobalSignal descendants of DetailedTestInformation.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="GlobalSignalOperation" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Describes one operation performed on a global IEEE Std. 1641 signal. </xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:choice>
+									<xs:element name="Define">
+										<xs:annotation>
+											<xs:documentation>Used to identify a locally defined IEEE 1641 signal as a global signal. Note that, for conformance with IEEE Std 1641, the name of the referenced signal's Connection shall be included in the Out attribute of the std:Signal parent of that signal. See B.3 for an example.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="signalName" type="c:NonBlankString" use="required">
+												<xs:annotation>
+													<xs:documentation>Name of the IEEE Std 1641 signal identified as a global signal. This XML attribute shall contain the name of a signal defined under the IeeeStd1641 ancestor of the current element. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Change">
+										<xs:annotation>
+											<xs:documentation>This element describes a global signal operation of type Change. The global signal referenced by the parent of this element shall be changed (by calling its Change method) when the action that contains the element is executed. During the Change operation, signal attributes will be assigned the values described through the AttributeChange child elements. See C.2.2.2 of IEEE Std 1641 for detailed information on the Change method.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="AttributeChanges" type="td:IeeeStd1641AttributeChanges">
+													<xs:annotation>
+														<xs:documentation>Describes the change of one or more signal attributes during the Change global signal operation.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Stop">
+										<xs:annotation>
+											<xs:documentation>This element specifies a global signal operation of type Stop. The global signal referenced by the parent of this element shall be stopped (by calling its Stop method) when the action that contains the element is executed. See C.2.2.2 of IEEE Std 1641 for detailed information on the Stop method.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:choice>
+								<xs:attribute name="globalSignalID" type="c:NonBlankString" use="required">
+									<xs:annotation>
+										<xs:documentation>ID of the global signal on which the operation will be performed.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IeeeStd1641InValues">
+		<xs:annotation>
+			<xs:documentation>Shall describe the mapping of action parameters and iterators to IEEE Std. 1641 signal attributes. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="InValue" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Shall describe the mapping of one action parameter to an IEEE Std. 1641 signal attribute.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ValueFrom" type="td:ValueFrom"/>
+					</xs:sequence>
+					<xs:attribute name="signalName" type="c:NonBlankString" use="required">
+						<xs:annotation>
+							<xs:documentation>Name of IEEE Std 1641 signal whose attribute is mapped. This XML attribute shall contain the name of an IEEE Std. 1641 signal defined under the IeeeStd1641 ancestor of the current element.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="signalAttribute" type="c:NonBlankString" use="required">
+						<xs:annotation>
+							<xs:documentation>Name of mapped IEEE Std 1641 signal attribute. This XML attribute shall contain the name of one of the attributes of the signal referenced by XML attribute 'signalName' of the current element. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="IteratorInValue" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Shall describes the mapping of one iterator to an IEEE Std. 1641 signal attribute. Shall be used only in conjuction with OperationRepeat operations.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="iteratorID" type="c:NonBlankString" use="required">
+						<xs:annotation>
+							<xs:documentation>ID of the iterator.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="signalName" type="c:NonBlankString" use="required">
+						<xs:annotation>
+							<xs:documentation>Name of IEEE Std 1641 signal whose attribute is mapped. This XML attribute shall contain the name of an IEEE Std. 1641 signal defined under the IeeeStd1641 ancestor of the current element.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="signalAttribute" type="c:NonBlankString" use="required">
+						<xs:annotation>
+							<xs:documentation>Name of mapped IEEE Std 1641 signal attribute. This XML attribute shall contain the name of one of the attributes of the signal referenced by XML attribute 'signalName' of the current element. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IeeeStd1641OutValues">
+		<xs:annotation>
+			<xs:documentation>Shall describe the mapping of IEEE Std. 1641 measured signal attributes to test results and session data. </xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="OutValue" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Shall dscribe the mapping of one IEEE Std. 1641 measured signal attribute to a test result. Shall be used only in conjunction with actions of type Test.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ValueTo" type="td:ValueTo"/>
+					</xs:sequence>
+					<xs:attribute name="testResultID" type="c:NonBlankString" use="required">
+						<xs:annotation>
+							<xs:documentation>ID of test result.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="signalName" type="c:NonBlankString" use="required">
+						<xs:annotation>
+							<xs:documentation>Name of IEEE Std 1641 signal whose attribute is mapped. This XML attribute shall contain the name of an IEEE Std. 1641 signal defined under the IeeeStd1641 ancestor of the current element.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="signalAttribute" type="c:NonBlankString" default="measurement">
+						<xs:annotation>
+							<xs:documentation>Name of mapped IEEE Std 1641 signal attribute. If this XML attribute is absent, the "measurement" signal attribute shall be mapped. When present, this XML attribute shall contain the name of one of the attributes of the signal referenced by XML attribute 'signalName' of the current element. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SessionDatumOutValue-TODO" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Shall describe the mapping of one IEEE Std. 1641 measured signal attribute to a session datum. Shall be used only in conjunction with actions of type SessionAction.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="testResultID" type="c:NonBlankString" use="required">
+						<xs:annotation>
+							<xs:documentation>ID of test result.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="signalName" type="c:NonBlankString" use="required">
+						<xs:annotation>
+							<xs:documentation>Name of IEEE Std 1641 signal whose attribute is mapped. This XML attribute shall contain the name of an IEEE Std. 1641 signal defined under the IeeeStd1641 ancestor of the current element.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="signalAttribute" type="c:NonBlankString" default="measurement">
+						<xs:annotation>
+							<xs:documentation>Name of mapped IEEE Std 1641 signal attribute. If this XML attribute is absent, the "measurement" signal attribute shall be mapped. When present, this XML attribute shall contain the name of one of the attributes of the signal referenced by XML attribute 'signalName' of the current element. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="IeeeStd1641PortValues">
+		<xs:annotation>
+			<xs:documentation>Shall describe the mapping of IEEE Std. 1641 signal attributes representing Connection ports to physical UUT ports. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PortValue" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Shall describe the mapping of an IEEE Std. 1641 signal attribute representing a Connection port to one or more UUT ports.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="Network" type="hc:Network">
+							<xs:annotation>
+								<xs:documentation>Identifies the UUT port or ports mapped to the IEEE Std. 1641 signal attribute identified by the XML attributes of the parent element. Each Node children shall reference a Port of an interface connector, a test point, or a component.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ValueFrom" type="td:ValueFrom">
+							<xs:annotation>
+								<xs:documentation>Shall reference a data item storing a value of type ConnectionDatun</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:attribute name="signalName" type="c:NonBlankString" use="required">
+						<xs:annotation>
+							<xs:documentation>Name of IEEE Std 1641 signal whose attribute is mapped. This XML attribute shall contain the name of an IEEE Std. 1641 signal defined under the IeeeStd1641 ancestor of the current element.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="signalAttribute" type="c:NonBlankString" use="required">
+						<xs:annotation>
+							<xs:documentation>Name of mapped IEEE Std 1641 signal attribute. This XML attribute shall contain the name of one of the attributes of the signal referenced by XML attribute 'signalName' of the current element. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IeeeStd1641AttributeChanges">
+		<xs:annotation>
+			<xs:documentation>Shall describe the change of one or more IEEE Std 1461 signal attributes</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AttributeChange" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Shall describe the change of one signal attribute .</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="Immediate" type="c:Value">
+							<xs:annotation>
+								<xs:documentation>This element shall specify the value to be assigned to the signal attribute.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ValueFrom" type="td:ValueFrom">
+							<xs:annotation>
+								<xs:documentation>The presence of this element shall indicate that the value to be assigned to the signal attribute shall be obtained at run time from a data item. The element shall identify the data item.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="IteratorInValue">
+							<xs:annotation>
+								<xs:documentation>The presence of this element shall indicate that the value to be assigned to the signal attribute shall be obtained at run time from the iterator of the OperationRepeat operation that contains the parent operation of the current element. The element shall identify the iterator.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="iteratorID" type="c:NonBlankString" use="required">
+									<xs:annotation>
+										<xs:documentation>ID of the iterator.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+					<xs:attribute name="attributeName" type="c:NonBlankString" use="required">
+						<xs:annotation>
+							<xs:documentation>Name of the IEEE Std 1641 signal attribute to change. This XML attribute shall contain the name of one of the attributes of the signal changed by the current operation. Note that this constraint is not enforced by the XML schema. Consumers should verify the constraint programmatically.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TsfClass">
+		<xs:annotation>
+			<xs:documentation>Shall identify a TSF class in a TSF Library. </xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="tsfLibraryID" type="c:NonBlankString" use="required">
+			<xs:annotation>
+				<xs:documentation> ID of the TSF Library. The TSF Library shall be defined under the TsfLibraries child of the root element. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="tsfClassName" type="c:NonBlankString" use="required">
+			<xs:annotation>
+				<xs:documentation>Name identifying the TSF class within the TSF Library. Shall match the name of a TSF class defined in the TSF Library. Note that this constraint is not enforced by the XML schema. Consumers should verify this constraint programmatically.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TsfClassAttribute">
+		<xs:annotation>
+			<xs:documentation>Shall specify a value for an attribute of a TSF class.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Name" type="td:TsfClassAttributeName">
+				<xs:annotation>
+					<xs:documentation>Name identifying the TSF class attribute. If a TSF class is specified for the signal, this element shall contain the name of an attribute of that TSF class. If a TSF class is not specified, it shall contain one of the attributes defined in H.7.1.3.1 of IEEE Std. 1641. Note that the previous constraints are not enforced by the XML schema. Consumers should verify these constraints programmatically.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Value" type="c:Value" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Shall specify the value of the attribute. For control attributes, this shall be the required value. For measured attributes, it shall be the expected value. Resolution, ErrorLimit, Range and Confidence information can be provided under DatumQuality descendants.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="role" type="td:SignalCharacteristicRole" use="required">
+			<xs:annotation>
+				<xs:documentation>Specifies the role of the signal characteristic, e.g., control, limit, measurement, capability.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TsfClassAttributeName">
+		<xs:annotation>
+			<xs:documentation>Shall describe the name of an attribute of a TSF class. The name provided using this type shall match the name of an attribute of the TSF class specified for the current signal. Note that this constraint is not enforced by the XML schema. Consumers should verify this constraint programmatically.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="c:NonBlankString"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="SignalCharacteristicRole">
+		<xs:annotation>
+			<xs:documentation>Enumeration of signal characteristic roles, as follows: Control: The characteristic is controlled by an ATE resource. Limit: The characteristic is limited by an ATE resource. Measurement: The characteristic is measured by an ATE resource. Capability: The characteristic is related to the capacity of an ATE resource to satisfy a test requirement, but is not required to be controlled, limited or measured.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Control"/>
+			<xs:enumeration value="Limit"/>
+			<xs:enumeration value="Measurement"/>
+			<xs:enumeration value="Capability"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

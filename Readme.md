@@ -32,6 +32,7 @@ re-hosting ATLAS Test Program Sets (TPSs). The suite of tools includes:
 
 
 Installation files are available for both 32-bit and 64-bit Windows.
+They can be downoaded from [https://atml.utrs.com/](https://atml.utrs.com/).
 
 
 **License and Support**
